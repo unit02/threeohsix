@@ -1,2 +1,0 @@
-
--DCATKIN_DEVEL_PREFIX=/home/eliza/306project/devel -DCMAKE_INSTALL_PREFIX=/home/eliza/306project/install -G Unix Makefiles
