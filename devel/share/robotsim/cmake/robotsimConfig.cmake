@@ -67,14 +67,23 @@ set(robotsim_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
+<<<<<<< HEAD
   set(robotsim_SOURCE_PREFIX /afs/ec.auckland.ac.nz/users/z/a/zall747/unixhome/threeohsix/src/robotsim)
   set(robotsim_DEVEL_PREFIX /afs/ec.auckland.ac.nz/users/z/a/zall747/unixhome/threeohsix/devel)
+=======
+  set(robotsim_SOURCE_PREFIX /afs/ec.auckland.ac.nz/users/c/c/ccha504/unixhome/threeohsix/src/robotsim)
+  set(robotsim_DEVEL_PREFIX /afs/ec.auckland.ac.nz/users/c/c/ccha504/unixhome/threeohsix/devel)
+>>>>>>> f13782164eafc7b386204ed4d234628a19530598
   set(robotsim_INSTALL_PREFIX "")
   set(robotsim_PREFIX ${robotsim_DEVEL_PREFIX})
 else()
   set(robotsim_SOURCE_PREFIX "")
   set(robotsim_DEVEL_PREFIX "")
+<<<<<<< HEAD
   set(robotsim_INSTALL_PREFIX /afs/ec.auckland.ac.nz/users/z/a/zall747/unixhome/threeohsix/install)
+=======
+  set(robotsim_INSTALL_PREFIX /afs/ec.auckland.ac.nz/users/c/c/ccha504/unixhome/threeohsix/install)
+>>>>>>> f13782164eafc7b386204ed4d234628a19530598
   set(robotsim_PREFIX ${robotsim_INSTALL_PREFIX})
 endif()
 
@@ -103,7 +112,11 @@ if(NOT "" STREQUAL "")
         message(FATAL_ERROR "Project 'robotsim' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  Ask the maintainer 'eliza <eliza@todo.todo>' to fix it.")
       endif()
     else()
+<<<<<<< HEAD
       message(FATAL_ERROR "Project 'robotsim' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/afs/ec.auckland.ac.nz/users/z/a/zall747/unixhome/threeohsix/src/robotsim/${idir}'.  Ask the maintainer 'eliza <eliza@todo.todo>' to fix it.")
+=======
+      message(FATAL_ERROR "Project 'robotsim' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/afs/ec.auckland.ac.nz/users/c/c/ccha504/unixhome/threeohsix/src/robotsim/${idir}'.  Ask the maintainer 'eliza <eliza@todo.todo>' to fix it.")
+>>>>>>> f13782164eafc7b386204ed4d234628a19530598
     endif()
     _list_append_unique(robotsim_INCLUDE_DIRS ${include})
   endforeach()
@@ -122,7 +135,11 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
+<<<<<<< HEAD
     foreach(path /afs/ec.auckland.ac.nz/users/z/a/zall747/unixhome/threeohsix/devel/lib;/opt/ros/indigo/lib)
+=======
+    foreach(path /afs/ec.auckland.ac.nz/users/c/c/ccha504/unixhome/threeohsix/devel/lib;/afs/ec.auckland.ac.nz/users/c/c/ccha504/unixhome/threeohsix/devel/lib;/opt/ros/indigo/lib)
+>>>>>>> f13782164eafc7b386204ed4d234628a19530598
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

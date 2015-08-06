@@ -8,7 +8,11 @@
 
 # since this file is sourced either use the provided _CATKIN_SETUP_DIR
 # or fall back to the destination set at configure time
+<<<<<<< HEAD
 : ${_CATKIN_SETUP_DIR:=/afs/ec.auckland.ac.nz/users/z/a/zall747/unixhome/threeohsix/devel}
+=======
+: ${_CATKIN_SETUP_DIR:=/afs/ec.auckland.ac.nz/users/c/c/ccha504/unixhome/threeohsix/devel}
+>>>>>>> f13782164eafc7b386204ed4d234628a19530598
 _SETUP_UTIL="$_CATKIN_SETUP_DIR/_setup_util.py"
 unset _CATKIN_SETUP_DIR
 
