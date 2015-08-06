@@ -10,8 +10,11 @@ from geometry_msgs.msg import Twist
 
 def talker():
     #pub = rospy.Publisher('chatter', String, queue_size=10)
+
+    #node is publishing "cmd_val" topic
     pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
 
+    #initilasing a node named "talker"
     rospy.init_node('talker', anonymous=True)
     rate = rospy.Rate(10) # 10hz
 
@@ -25,6 +28,8 @@ def talker():
         pub.publish(twist)
         rate.sleep()
 
+# ROSInterruptException can be thrown when we shutdown the process
+# by ctrl+C
 if __name__ == '__main__':
     try:
         talker()
