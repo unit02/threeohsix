@@ -42,5 +42,5 @@ define myRobot position
 ) 
 
 # throw in a robot 
-myRobot( pose [ 70 70 0 0 ] name "bob" color "pink") 
-myRobot( pose [ 1 1 0 0 ] name "lucy" color "cyan")
+myRobot( pose [ -8 8 0 0 ] name "bob" color "pink") 
+myRobot( pose [ -8 5 0 0 ] name "lucy" color "cyan")

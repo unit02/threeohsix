@@ -13,7 +13,7 @@ define myShape model(
 
 define fence model(
  	color "yellow" 
- 	size [11 11 3] 	
+ 	size [35 35 2] 	
 	bitmap "2.png" 	
 ) 
 
