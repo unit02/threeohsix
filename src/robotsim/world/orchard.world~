@@ -19,11 +19,13 @@ define myLaser ranger
 	) 
 ) 
 
+
+
 # define picker
 define picker position 
 ( 
   #properties as name value pairs
-  myLaser(pose [ 0.6 0 -0.2 0 ]) 
+  myLaser(pose [ 1.25 0 -0.8 0 ]) 
   size [2.5 1.5 1] 
   drive "diff" 
 
@@ -41,7 +43,7 @@ define picker position
 define carrier position 
 ( 
   #properties as name value pairs
-  myLaser(pose [ 0.6 0 -0.2 0 ]) 
+  myLaser(pose [ 0.9 0 -0.2 0 ]) 
   size [1.8 1.5 0.5] 
   drive "diff" 
 
@@ -58,5 +60,5 @@ define carrier position
 
 
 # throw in a robot 
-picker( pose [ -8 8 0 0 ] name "picker1" color "pink") 
-carrier( pose [ -8 5 0 0 ] name "carrier1" color "cyan")
+picker( pose [ -34.5 11.25 0 0 ] name "picker1" color "pink") 
+carrier( pose [-34.5 7 0 0  ] name "carrier1" color "cyan")
