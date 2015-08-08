@@ -40,10 +40,6 @@ def listener():
     # anonymous=True flag means that rospy will choose a unique
     # name for our 'talker' node so that multiple talkers can
     # run simultaneously.
-    global a
-    global b
-    a.x = 0
-    b.x = 5
     rospy.init_node('listener', anonymous=True)
 
 
@@ -56,25 +52,22 @@ def listener():
     rate = rospy.Rate(10) # 10hz
 
     twist = Twist()
-    twist.linear.x = 0.5
+    twist.linear.x = 1.0
+    distanceX = abs(abs(a.x)-abs(b.x))
 
-    while not rospy.is_shutdown():
-        if (abs(a.x - b.x) < 2 and abs(a.y - b.y) < 2):
-            twist = Twist()
-            twist.linear.x = 0.0
+ 
 
-        #hello_str = "hello world %s" % rospy.get_time()
-        rospy.loginfo(twist)
+    for i in range(100):
         pub.publish(twist)
-        rate.sleep()
+        rospy.sleep(0.1) # 30*0.1 = 3.0 seconds
 
-
+    # create a new message
     twist = Twist()
-    twist.linear.x = 0.0
-    twist.angular.x = 90.0
+
+    # note: everything defaults to 0 in twist, if we don't fill it in, we stop!
     rospy.loginfo("Stopping!")
     pub.publish(twist)
-# spin() simply keeps python from exiting until this node is stopped
+#on from exiting until this node is stopped
     rospy.spin()
 
 if __name__ == '__main__':

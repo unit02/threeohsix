@@ -21,7 +21,7 @@ def talker():
     while not rospy.is_shutdown():
         #hello_str = "hello world %s" % rospy.get_time()
 	twist = Twist()
-	twist.linear.x = 1.0
+	twist.linear.x = 0.0
 	twist.angular.z = 0
 	
         rospy.loginfo(twist)

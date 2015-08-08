@@ -1,5 +1,6 @@
 #!/bin/bash
-
+rm -r build
+rm -r devel
 gnome-terminal -x sh -c 'roscore'
 catkin_make
 source devel/setup.bash
