@@ -1,0 +1,17 @@
+#!/usr/bin/env python
+
+class picker(havestingRobot):
+
+	def __init__(self):
+	dynamicObjects.__init__(self, square, 1,1, "red")
+
+	def pick ():
+	#every 1 second "pick" kiwifruit
+	#sends signal to nearest carrier to updateBin()
+
+	def goThroughRow():
+	#
+
+	def goToNextRow():
+	#assumes the picker is 
+

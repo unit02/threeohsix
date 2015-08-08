@@ -18,7 +18,7 @@ import rospy
 from geometry_msgs.msg import Vector3, Twist
 
 
-class dynamicObjects(object):
+class dynamicObject(object):
 	def __init__(self,shape,topSpeed,workingSpeed,color):
         self.shape = shape
 	self.topSpeed = topSpeed

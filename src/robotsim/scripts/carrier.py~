@@ -18,6 +18,4 @@ class carrier(havestingRobot):
 	def followPicker():
 	# after reciving the signal from the picker, begins to follow it. use tutlebot follower as a beginning on how to do this
 
-
-
 	

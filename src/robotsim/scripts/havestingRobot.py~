@@ -5,6 +5,8 @@ class havestingRobot(dynamicObjects):
 	#def __init__(self):
 	#dynamicObjects.__init__(self, square, 1,1, "red")
 
+	
+
 	def siren ():
 	#leave for after alpha
 
