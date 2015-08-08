@@ -34,7 +34,7 @@ macro(_pack_libraries_with_build_configuration VAR)
   set(_index 0)
   while(${_index} LESS ${_count})
     list(GET _argn ${_index} lib)
-    if("${lib}" MATCHES "^debug|optimized|general$")
+    if("${lib}" MATCHES "^(debug|optimized|general)$")
       math(EXPR _index "${_index} + 1")
       if(${_index} EQUAL ${_count})
         message(FATAL_ERROR "_pack_libraries_with_build_configuration() the list of libraries '${ARGN}' ends with '${lib}' which is a build configuration keyword and must be followed by a library")
@@ -67,23 +67,14 @@ set(robotsim_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
-<<<<<<< HEAD
-  set(robotsim_SOURCE_PREFIX /afs/ec.auckland.ac.nz/users/z/a/zall747/unixhome/threeohsix/src/robotsim)
-  set(robotsim_DEVEL_PREFIX /afs/ec.auckland.ac.nz/users/z/a/zall747/unixhome/threeohsix/devel)
-=======
-  set(robotsim_SOURCE_PREFIX /afs/ec.auckland.ac.nz/users/c/c/ccha504/unixhome/threeohsix/src/robotsim)
-  set(robotsim_DEVEL_PREFIX /afs/ec.auckland.ac.nz/users/c/c/ccha504/unixhome/threeohsix/devel)
->>>>>>> f13782164eafc7b386204ed4d234628a19530598
+  set(robotsim_SOURCE_PREFIX /home/eliza/threeohsix/src/robotsim)
+  set(robotsim_DEVEL_PREFIX /home/eliza/threeohsix/devel)
   set(robotsim_INSTALL_PREFIX "")
   set(robotsim_PREFIX ${robotsim_DEVEL_PREFIX})
 else()
   set(robotsim_SOURCE_PREFIX "")
   set(robotsim_DEVEL_PREFIX "")
-<<<<<<< HEAD
-  set(robotsim_INSTALL_PREFIX /afs/ec.auckland.ac.nz/users/z/a/zall747/unixhome/threeohsix/install)
-=======
-  set(robotsim_INSTALL_PREFIX /afs/ec.auckland.ac.nz/users/c/c/ccha504/unixhome/threeohsix/install)
->>>>>>> f13782164eafc7b386204ed4d234628a19530598
+  set(robotsim_INSTALL_PREFIX /home/eliza/threeohsix/install)
   set(robotsim_PREFIX ${robotsim_INSTALL_PREFIX})
 endif()
 
@@ -100,23 +91,19 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(robotsim_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "" STREQUAL "")
+if(NOT " " STREQUAL " ")
   set(robotsim_INCLUDE_DIRS "")
   set(_include_dirs "")
   foreach(idir ${_include_dirs})
     if(IS_ABSOLUTE ${idir} AND IS_DIRECTORY ${idir})
       set(include ${idir})
-    elseif("${idir}" STREQUAL "include")
+    elseif("${idir} " STREQUAL "include ")
       get_filename_component(include "${robotsim_DIR}/../../../include" ABSOLUTE)
       if(NOT IS_DIRECTORY ${include})
         message(FATAL_ERROR "Project 'robotsim' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  Ask the maintainer 'eliza <eliza@todo.todo>' to fix it.")
       endif()
     else()
-<<<<<<< HEAD
-      message(FATAL_ERROR "Project 'robotsim' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/afs/ec.auckland.ac.nz/users/z/a/zall747/unixhome/threeohsix/src/robotsim/${idir}'.  Ask the maintainer 'eliza <eliza@todo.todo>' to fix it.")
-=======
-      message(FATAL_ERROR "Project 'robotsim' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/afs/ec.auckland.ac.nz/users/c/c/ccha504/unixhome/threeohsix/src/robotsim/${idir}'.  Ask the maintainer 'eliza <eliza@todo.todo>' to fix it.")
->>>>>>> f13782164eafc7b386204ed4d234628a19530598
+      message(FATAL_ERROR "Project 'robotsim' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/eliza/threeohsix/src/robotsim/${idir}'.  Ask the maintainer 'eliza <eliza@todo.todo>' to fix it.")
     endif()
     _list_append_unique(robotsim_INCLUDE_DIRS ${include})
   endforeach()
@@ -125,7 +112,7 @@ endif()
 set(libraries "")
 foreach(library ${libraries})
   # keep build configuration keywords, target names and absolute libraries as-is
-  if("${library}" MATCHES "^debug|optimized|general$")
+  if("${library}" MATCHES "^(debug|optimized|general)$")
     list(APPEND robotsim_LIBRARIES ${library})
   elseif(TARGET ${library})
     list(APPEND robotsim_LIBRARIES ${library})
@@ -135,11 +122,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-<<<<<<< HEAD
-    foreach(path /afs/ec.auckland.ac.nz/users/z/a/zall747/unixhome/threeohsix/devel/lib;/opt/ros/indigo/lib)
-=======
-    foreach(path /afs/ec.auckland.ac.nz/users/c/c/ccha504/unixhome/threeohsix/devel/lib;/afs/ec.auckland.ac.nz/users/c/c/ccha504/unixhome/threeohsix/devel/lib;/opt/ros/indigo/lib)
->>>>>>> f13782164eafc7b386204ed4d234628a19530598
+    foreach(path /home/eliza/threeohsix/devel/lib;/opt/ros/indigo/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

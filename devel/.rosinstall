@@ -1,6 +1,2 @@
 - setup-file:
-<<<<<<< HEAD
-    local-name: /afs/ec.auckland.ac.nz/users/z/a/zall747/unixhome/threeohsix/devel/setup.sh
-=======
-    local-name: /afs/ec.auckland.ac.nz/users/c/c/ccha504/unixhome/threeohsix/devel/setup.sh
->>>>>>> f13782164eafc7b386204ed4d234628a19530598
+    local-name: /home/eliza/threeohsix/devel/setup.sh
