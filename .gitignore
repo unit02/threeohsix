@@ -8,3 +8,5 @@ bin/
 lib/
 msg_gen/
 srv_gen/
+src/robotsim/.idea
+src/robotsim/scripts/.idea
