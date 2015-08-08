@@ -5,7 +5,7 @@
   </group>
 
   <group ns="robot_1">
-    <node pkg="robotsim" name="pubnode" type="talker,py"/>
+    <node pkg="robotsim" name="pubnode" type="picker.py"/>
   </group>
 
 </launch>
