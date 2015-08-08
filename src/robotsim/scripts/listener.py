@@ -6,9 +6,17 @@
 
 import rospy
 from std_msgs.msg import String
+from nav_msgs.msg import Odometry
 
-def callback(data):
-    rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
+
+
+def mypostion(data):
+    rospy.loginfo(rospy.get_caller_id() + "robot_0 position %s", data.pose.pose.position)
+
+def otherpostion(data):
+    rospy.loginfo(rospy.get_caller_id() + "robot_1 position %s", data.pose.pose.position)
+
+
 
 def listener():
 
@@ -19,9 +27,13 @@ def listener():
     # run simultaneously.
     rospy.init_node('listener', anonymous=True)
 
-    rospy.Subscriber("chatter", String, callback)
 
-    # spin() simply keeps python from exiting until this node is stopped
+    rospy.Subscriber("robot_0/base_pose_ground_truth", Odometry, mypostion)
+
+    rospy.Subscriber("robot_1/base_pose_ground_truth", Odometry, otherpostion)
+
+
+# spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
 
 if __name__ == '__main__':
