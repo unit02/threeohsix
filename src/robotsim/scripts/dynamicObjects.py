@@ -19,24 +19,24 @@ from geometry_msgs.msg import Vector3, Twist
 
 
 class dynamicObjects(object):
-	def __init__(self,shape,topSpeed,workingSpeed,color):
-        self.shape = shape
-	self.topSpeed = topSpeed
-	self.workingSpeed = workingSpeed
-	self.color = color
+ def __init__(self,shape,topSpeed,workingSpeed,color):
+self.shape = shape
+self.topSpeed = topSpeed
+self.workingSpeed = workingSpeed
+self.color = color
 
-	def move():
-	twist = Twist()
-	twist.linear.x = 1
-	
+def move(self):
+ twist = Twist()
+ twist.linear.x = 1
 
-	def turn(radian):
+
+def turn(radian):
 	twist = Twist()
 #angular is radians/sec
-	twist.angular.x = radian/1
+twist.angular.x = radian/1
 
 
-	def wait(seconds):
+#def wait(seconds):
 
 
 
