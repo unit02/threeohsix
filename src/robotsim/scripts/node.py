@@ -18,7 +18,7 @@ from nav_msgs.msg import Odometry
 
 
 
-class dynamicObjects(object):
+class node(object):
 
 
 	def __init__(self,shape,topSpeed,workingSpeed,color):

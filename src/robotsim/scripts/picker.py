@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 import rospy
 from sensor_msgs.msg import LaserScan
-import dynamicObjects.py
-import havestingRobot.py
-import Twist
-class picker(havestingRobot):
+import node.py
+from geometry_msgs.msg import Twist
+
+class picker(node):
 
 	def __init__(self, name):
-		dynamicObjects.__init__(self, "square", 1,1, "red")
+		node.__init__(self, "square", 1,1, "red")
 
 		rospy.loginfo("Starting node %s" % name)
 		self.laser_sub = rospy.Subscriber(
@@ -24,16 +24,18 @@ class picker(havestingRobot):
 		)
 
 	def laser_callback(self,msg):
-	
+		pass
 
 
 	def pick (self):
+		pass
 			#every 1 second "pick" kiwifruit
 			  #sends signal to nearest carrier to updateBin()
 
 	def goThroughRow(self):
-
+		pass
 
 	def goToNextRow(self):
+		pass
 	#assumes the picker is 
 

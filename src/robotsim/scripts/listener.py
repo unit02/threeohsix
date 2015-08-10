@@ -70,5 +70,7 @@ def listener():
 #on from exiting until this node is stopped
     rospy.spin()
 
+ # this quick check means that the following code runs ONLY if this is the
+ # main file -- if we "import move" in another file, this code will not execute.
 if __name__ == '__main__':
     listener()
