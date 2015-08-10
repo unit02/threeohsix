@@ -126,5 +126,9 @@ fenceVertical( pose [ -45 0 0 0 ] )
 bucket( pose [ 0 0 0 0] ) 
 bucket( pose [ 6 0 0 0] ) 
 
+<<<<<<< HEAD
 person( pose [ 10 -60 0 0] ) 
+=======
+person( pose [ 10 -3 0 0] ) 
+>>>>>>> b242152f9eeae1936e18353a0f8bdd8eea361e83
 
