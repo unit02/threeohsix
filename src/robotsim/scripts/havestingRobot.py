@@ -1,17 +1,22 @@
 #!/usr/bin/env python
+import node.py
 
-class havestingRobot(dynamicObjects):
+
+class havestingRobot(node):
 
 	#def __init__(self):
 	#dynamicObjects.__init__(self, square, 1,1, "red")
 
-	def siren ():
+	def siren (self):
+		pass
 	#leave for after alpha
 
-	def drop():
+	def drop(self):
+		pass
 	#update bin closest to it +1
 
-	def light():
+	def light(self):
+		pass
 	#leave for after alpha
 
 

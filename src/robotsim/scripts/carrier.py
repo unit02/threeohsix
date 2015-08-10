@@ -1,22 +1,28 @@
 #!/usr/bin/env python
+import node.py
 
-class carrier(havestingRobot):
+class carrier(node):
 
 	def __init__(self):
-	dynamicObjects.__init__(self, square, 1,1, "red")
+		node.__init__(self, "square", 1,1, "red")
 
-	def updateBin ():
-	#every 1 second picker "pick"s kiwifruit
-	#sends signal to nearest carrier to updateBin()
 
-	def leaveBin():
-	#occurs at end of the row
+	def updateBin (self):
+        #every 1 second picker "pick"s kiwifruit
+		#sends signal to nearest carrier to updateBin()
+		pass
 
-	def retrieveNewBin():
-	#after bin is left, the carrier gets a new bin
+	def leaveBin(self):
+	# occurs at end of the row
+		pass
 
-	def followPicker():
+	def retrieveNewBin(self):
+	# after bin is left, the carrier gets a new bin
+		pass
+
+	def followPicker(self):
 	# after reciving the signal from the picker, begins to follow it. use tutlebot follower as a beginning on how to do this
+		pass
 
 
 

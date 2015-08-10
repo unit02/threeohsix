@@ -67,14 +67,14 @@ set(robotsim_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
-  set(robotsim_SOURCE_PREFIX /home/eliza/threeohsix/src/robotsim)
-  set(robotsim_DEVEL_PREFIX /home/eliza/threeohsix/devel)
+  set(robotsim_SOURCE_PREFIX /home/lavitasy/threeohsix/src/robotsim)
+  set(robotsim_DEVEL_PREFIX /home/lavitasy/threeohsix/devel)
   set(robotsim_INSTALL_PREFIX "")
   set(robotsim_PREFIX ${robotsim_DEVEL_PREFIX})
 else()
   set(robotsim_SOURCE_PREFIX "")
   set(robotsim_DEVEL_PREFIX "")
-  set(robotsim_INSTALL_PREFIX /home/eliza/threeohsix/install)
+  set(robotsim_INSTALL_PREFIX /home/lavitasy/threeohsix/install)
   set(robotsim_PREFIX ${robotsim_INSTALL_PREFIX})
 endif()
 
@@ -103,7 +103,7 @@ if(NOT " " STREQUAL " ")
         message(FATAL_ERROR "Project 'robotsim' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  Ask the maintainer 'eliza <eliza@todo.todo>' to fix it.")
       endif()
     else()
-      message(FATAL_ERROR "Project 'robotsim' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/eliza/threeohsix/src/robotsim/${idir}'.  Ask the maintainer 'eliza <eliza@todo.todo>' to fix it.")
+      message(FATAL_ERROR "Project 'robotsim' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/lavitasy/threeohsix/src/robotsim/${idir}'.  Ask the maintainer 'eliza <eliza@todo.todo>' to fix it.")
     endif()
     _list_append_unique(robotsim_INCLUDE_DIRS ${include})
   endforeach()
@@ -122,7 +122,11 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
+<<<<<<< HEAD
     foreach(path /home/eliza/threeohsix/devel/lib;/home/eliza/threeohsix/devel/lib;/opt/ros/indigo/lib)
+=======
+    foreach(path /home/lavitasy/threeohsix/devel/lib;/opt/ros/indigo/lib)
+>>>>>>> 3c79488711cc88a0572c589005317caa6c8e0043
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

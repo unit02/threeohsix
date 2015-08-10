@@ -21,8 +21,13 @@ def talker():
     while not rospy.is_shutdown():
         #hello_str = "hello world %s" % rospy.get_time()
 	twist = Twist()
+<<<<<<< HEAD
 	twist.linear.x = 3
 	twist.angular.z = 0.0;
+=======
+	twist.linear.x = 1.0
+	twist.angular.z = 0
+>>>>>>> 3c79488711cc88a0572c589005317caa6c8e0043
 	
         rospy.loginfo(twist)
         pub.publish(twist)

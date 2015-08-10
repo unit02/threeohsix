@@ -1,50 +1,37 @@
 #!/usr/bin/env python
-<<<<<<< HEAD
-# Software License Agreement (BSD License)
-#
-# Copyright (c) 2008, Willow Garage, Inc.
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-#  * Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-#  * Redistributions in binary form must reproduce the above
-#    copyright notice, this list of conditions and the following
-#    disclaimer in the documentation and/or other materials provided
-#    with the distribution.
-#  * Neither the name of Willow Garage, Inc. nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-# FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
-# COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-# BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-# LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
-# ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-# POSSIBILITY OF SUCH DAMAGE.
-#
-# Revision $Id$
-=======
 # references used: http://wiki.ros.org/ROS/Tutorials/WritingPublisherSubscriber%28python%29
->>>>>>> f13782164eafc7b386204ed4d234628a19530598
 
 ## Simple talker demo that listens to std_msgs/Strings published 
 ## to the 'chatter' topic
 
 import rospy
 from std_msgs.msg import String
+from nav_msgs.msg import Odometry
+from geometry_msgs.msg import Point
+from math import atan2, degrees, pi
+from geometry_msgs.msg import Twist
 
-def callback(data):
-    rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
+
+a = Point()
+b = Point()
+
+
+def mypostion(data):
+    rospy.loginfo(rospy.get_caller_id() + "robot_2 position stationary %s", data.pose.pose.position)
+    global a
+    a = data.pose.pose.position
+
+def otherpostion(data):
+    rospy.loginfo(rospy.get_caller_id() + "robot_3 position %s", data.pose.pose.position)
+    global b
+    b = data.pose.pose.position
+
+def rotate():
+    deltaX = a.x - b.x
+    deltaY = a.y - b.y
+    rads = atan2(-deltaX, deltaY)
+
+
 
 def listener():
 
@@ -55,14 +42,33 @@ def listener():
     # run simultaneously.
     rospy.init_node('listener', anonymous=True)
 
-    rospy.Subscriber("chatter", String, callback)
 
-    # spin() simply keeps python from exiting until this node is stopped
+    rospy.Subscriber("robot_2/base_pose_ground_truth", Odometry, mypostion)
+
+    rospy.Subscriber("robot_3/base_pose_ground_truth", Odometry, otherpostion)
+
+    pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
+
+    rate = rospy.Rate(10) # 10hz
+
+    twist = Twist()
+    twist.linear.x = 1.0
+    distanceX = abs(abs(a.x)-abs(b.x))
+
+    time.sleep(2)
+
+    for i in range(distanceX * 10):
+        pub.publish(twist)
+        rospy.sleep(0.1) # 30*0.1 = 3.0 seconds
+
+    # create a new message
+    twist = Twist()
+
+    # note: everything defaults to 0 in twist, if we don't fill it in, we stop!
+    rospy.loginfo("Stopping!")
+    pub.publish(twist)
+#on from exiting until this node is stopped
     rospy.spin()
 
 if __name__ == '__main__':
-<<<<<<< HEAD
-    listener()c
-=======
     listener()
->>>>>>> f13782164eafc7b386204ed4d234628a19530598
