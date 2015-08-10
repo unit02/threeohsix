@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3fd3fd62-020f-48f7-ae8a-1f72951376a6" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/.rosinstall" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/_setup_util.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/env.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/setup.bash" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/setup.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/setup.zsh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/share/robotsim/cmake/robotsimConfig-version.cmake" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/.catkin" afterPath="$PROJECT_DIR$/devel/.catkin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/share/robotsim/cmake/robotsimConfig.cmake" afterPath="$PROJECT_DIR$/devel/share/robotsim/cmake/robotsimConfig.cmake" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/robotsim/world/instances.inc" afterPath="$PROJECT_DIR$/src/robotsim/world/instances.inc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/robotsim/world/myblock.inc" afterPath="$PROJECT_DIR$/src/robotsim/world/myblock.inc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/robotsim/world/person.inc" afterPath="$PROJECT_DIR$/src/robotsim/world/person.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/robotsim/scripts/picker.py" afterPath="$PROJECT_DIR$/src/robotsim/scripts/picker.py" />
     </list>
     <ignored path="threeohsix.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,8 +26,8 @@
       <file leaf-file-name="picker.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/robotsim/scripts/picker.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.41734862">
-              <caret line="35" column="31" selection-start-line="0" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.44189852">
+              <caret line="18" column="20" selection-start-line="18" selection-start-column="20" selection-end-line="18" selection-end-column="20" />
               <folding>
                 <element signature="e#22#34#0" expanded="true" />
               </folding>
@@ -339,8 +328,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/robotsim/scripts/picker.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.41734862">
-          <caret line="35" column="31" selection-start-line="0" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.44189852">
+          <caret line="18" column="20" selection-start-line="18" selection-start-column="20" selection-end-line="18" selection-end-column="20" />
           <folding>
             <element signature="e#22#34#0" expanded="true" />
           </folding>
