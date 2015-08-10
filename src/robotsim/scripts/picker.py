@@ -39,6 +39,13 @@ class picker():
             rospy.loginfo("Minimum distance: %f" % min_distance)
             twist_msg = Twist()
             if (min_distance <= 3):
+                #Trying to make it recognise the turning direction
+                """if (ranges.index(min_distance) <=30):
+                	    rospy.loginfo(ranges.index(min_distance))
+                	    rospy.loginfo("Turn Left")
+                   else:
+                        rospy.loginfo(ranges.index(min_distance))
+                        rospy.loginfo("Turn Right")"""
                 rospy.loginfo("Turn")
                 rate = rospy.Rate(10)
                 now = rospy.Time.now().to_sec()
