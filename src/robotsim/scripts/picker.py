@@ -63,7 +63,3 @@ if __name__ == '__main__':
     l = picker(rospy.get_name())  # Create an instance of above class
     rospy.spin()  # Function to keep the node running until terminated via Ctrl+C
 
-
-
-    #def goToNextRow(self):
-	#assumes the picker is  """
