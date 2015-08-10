@@ -56,7 +56,7 @@ def listener():
     rate = rospy.Rate(10) # 10hz
 
     twist = Twist()
-<<<<<<< HEAD
+
     twist.linear.x = 0.5
 
     while not rospy.is_shutdown():
@@ -74,7 +74,7 @@ def listener():
     rospy.loginfo("Stopping!")
     pub.publish(twist)
 # spin() simply keeps python from exiting until this node is stopped
-=======
+
     twist.linear.x = 1.0
     distanceX = abs(abs(a.x)-abs(b.x))
 
@@ -91,7 +91,7 @@ def listener():
     rospy.loginfo("Stopping!")
     pub.publish(twist)
 #on from exiting until this node is stopped
->>>>>>> 3c79488711cc88a0572c589005317caa6c8e0043
+
     rospy.spin()
 
  # this quick check means that the following code runs ONLY if this is the

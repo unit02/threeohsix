@@ -5,7 +5,7 @@ interval_sim 100
 
 define myLaser ranger 
 ( 
-  sensor( range [ 0 20 ] fov 180.0 samples 180 ) 
+  sensor( range [ 0 10 ] fov 30.0 samples 30 ) 
   size [0.1 0.1 0.1] 
   color "black" 
   block( 
@@ -62,3 +62,5 @@ define carrier position
 # throw in a robot 
 picker( pose [ -34.5 11.25 0 0 ] name "picker1" color "pink") 
 carrier( pose [-34.5 6.5 0 0  ] name "carrier1" color "cyan")
+carrier( pose [-25.5 1.5 0 0  ] name "carrier2" color "yellow")
+carrier( pose [-34.5 1.5 0 0  ] name "carrier3" color "cyan")

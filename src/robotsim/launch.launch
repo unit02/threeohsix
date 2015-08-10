@@ -13,11 +13,7 @@
   </group>
 
   <group ns="robot_3">
-<<<<<<< HEAD
-    <node pkg="robotsim" name="pubnode" type="test.py"/>
-=======
-    <node pkg="robotsim" name="pubnode" type="listener.py"/>
->>>>>>> 3c79488711cc88a0572c589005317caa6c8e0043
+    <node pkg="robotsim" name="pubnode" output="screen" type="picker.py"/>
   </group>
 
 </launch>

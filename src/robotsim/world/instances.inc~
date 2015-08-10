@@ -117,7 +117,7 @@ post( pose [ 16.5 4.5 0 0 ] )
 post( pose [ 22.5 4.5 0 0 ] ) 
 post( pose [ 28.5 4.5 0 0 ] ) 
 
-ground( pose [ 0 0 0 0] ) 
+#ground( pose [ 0 0 0 0] ) 
 fenceHorizontal( pose [ 0 30 0 0] ) 
 fenceHorizontal( pose [ 0 -30 0 0 ] ) 
 fenceVertical( pose [ 45 0 0 0 ] ) 
@@ -125,3 +125,6 @@ fenceVertical( pose [ -45 0 0 0 ] )
 
 bucket( pose [ 0 0 0 0] ) 
 bucket( pose [ 6 0 0 0] ) 
+
+person( pose [ 10 -60 0 0] ) 
+

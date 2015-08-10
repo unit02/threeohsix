@@ -5,7 +5,6 @@
   </group>
 
   <group ns="robot_1">
-<<<<<<< HEAD
     <node pkg="robotsim" name="pubnode" type="talker.py"/>
   </group>
 
@@ -14,9 +13,7 @@
   </group>
 
   <group ns="robot_3">
-=======
->>>>>>> 3c79488711cc88a0572c589005317caa6c8e0043
-    <node pkg="robotsim" name="pubnode" type="picker.py"/>
+    <node pkg="robotsim" name="pubnode" output="screen" type="picker.py"/>
   </group>
 
 </launch>
