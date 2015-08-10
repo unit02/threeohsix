@@ -19,11 +19,33 @@ from geometry_msgs.msg import Vector3, Twist
 
 
 class dynamicObjects(object):
- def __init__(self,shape,topSpeed,workingSpeed,color):
-self.shape = shape
-self.topSpeed = topSpeed
-self.workingSpeed = workingSpeed
-self.color = color
+
+ def __init__(self,name,type,color):
+  self.name = name
+  self.type = type
+  self.color = color
+
+  if type == carrier:
+   workingSpeed = 1.5
+   topSpeed = 3.0
+  elif type == picker:
+   workingSpeed = 0.01
+   topSpeed =  0.5
+  elif type == bin:
+   carrierSpeed = 1.5
+   pickerSpeed = 0.01
+  else :
+   speed = 0.5
+
+
+ def getType(self):
+  return self.type
+
+ def getName(self):
+  return self.name
+
+  def getColor(self):
+  return self.color
 
 def move(self):
  twist = Twist()
@@ -31,7 +53,7 @@ def move(self):
 
 
 def turn(radian):
-	twist = Twist()
+ twist = Twist()
 #angular is radians/sec
 twist.angular.x = radian/1
 

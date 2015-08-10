@@ -1,5 +1,6 @@
 define tree model(	
  	color "green" 
+	size [1 1 1.8] 	
 	block( 
 	points 4 
 	point[0] [0 0] 
@@ -11,9 +12,9 @@ define tree model(
 ) 
 
 
-define fence model(
+define fenceHorizontal model(
  	color "yellow" 
- 	size [20 1 2] 	
+ 	size [91 1 2.5] 	
 	block( 
 	points 4 
 	point[0] [0 0] 
@@ -23,9 +24,9 @@ define fence model(
 	z [0 1] )
 ) 
 
-define fence1 model(
+define fenceVertical model(
  	color "yellow" 
- 	size [1 10 2] 	
+ 	size [1 61 2.5] 	
 	block( 
 	points 4 
 	point[0] [0 0] 
@@ -34,3 +35,17 @@ define fence1 model(
 	point[3] [0 1]
 	z [0 1] )
 ) 
+
+define post model(	
+	color "grey" 
+ 	size [1 0.5 1.8] 
+	block( 
+	points 3 
+	point[0] [0 0] 
+	point[1] [1 0] 
+	point[2] [1 1] 
+	z [0 1] )
+	
+) 
+
+
