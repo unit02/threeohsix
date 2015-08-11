@@ -40,10 +40,6 @@ def listener():
     # anonymous=True flag means that rospy will choose a unique
     # name for our 'talker' node so that multiple talkers can
     # run simultaneously.
-    global a
-    global b
-    a.x = 0
-    b.x = 5
     rospy.init_node('listener', anonymous=True)
 
 
@@ -56,25 +52,6 @@ def listener():
     rate = rospy.Rate(10) # 10hz
 
     twist = Twist()
-
-    twist.linear.x = 0.5
-
-    while not rospy.is_shutdown():
-        if (abs(a.x - b.x) < 2 and abs(a.y - b.y) < 2):
-            break
-        #hello_str = "hello world %s" % rospy.get_time()
-        rospy.loginfo(twist)
-        pub.publish(twist)
-        rate.sleep()
-
-
-    twist = Twist()
-    twist.linear.x = 0.0
-    twist.angular.x = 90.0
-    rospy.loginfo("Stopping!")
-    pub.publish(twist)
-# spin() simply keeps python from exiting until this node is stopped
-
     twist.linear.x = 1.0
     distanceX = abs(abs(a.x)-abs(b.x))
 
@@ -91,10 +68,7 @@ def listener():
     rospy.loginfo("Stopping!")
     pub.publish(twist)
 #on from exiting until this node is stopped
-
     rospy.spin()
 
- # this quick check means that the following code runs ONLY if this is the
- # main file -- if we "import move" in another file, this code will not execute.
 if __name__ == '__main__':
     listener()

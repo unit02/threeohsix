@@ -10,6 +10,8 @@ gnome-terminal -x sh -c 'rosrun robotsim talker.py'
 source devel/setup.bash
 gnome-terminal -x sh -c 'rosrun robotsim picker.py'
 source devel/setup.bash
+gnome-terminal -x sh -c 'rosrun robotsim node.py'
+source devel/setup.bash
 gnome-terminal -x sh -c 'rosrun robotsim follower.py'
 source devel/setup.bash
 gnome-terminal -x sh -c 'rosrun stage_ros stageros src/robotsim/world/orchard.world'
