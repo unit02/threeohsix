@@ -24,5 +24,8 @@
     <node pkg="robotsim" name="pubnode" output="screen" type="follower.py"/>
   </group>
 
+  <group ns="robot_6">
+    <node pkg="robotsim" name="pubnode" output="screen" type="person.py"/>
+  </group>
 
 </launch>

@@ -154,6 +154,26 @@ define person position
    	
 )
 
+define bucket position
+( 
+  myLaser(pose [ 0.5 0 -0.4 0 ])
+  drive "diff"
+  size [1 1 1]
+  color "red"  
+  block
+  (
+    points [4]
+    point[0] [0 0]
+    point[1] [0 1]
+    point[2] [1 1]
+    point[3] [1 0]
+    z [0 1]
+  )
+)
+
+
+
+
 # throw in a robot 
 picker( pose [ -34.5 11.25 0 0 ] name "picker1" color "pink") 
 carrier( pose [-34.5 6.5 0 0  ] name "carrier1" color "cyan")
@@ -162,3 +182,4 @@ carrier( pose [-34.5 1.5 0 0  ] name "carrier3" color "cyan")
 carrier( pose [-5.5 -5.5 0 0  ] name "beingfollowed" color "purple")
 carrier( pose [-34.5 -5.5 0 0  ] name "follower" color "blue")
 person ( pose [-10 20 0 0 ] name "person")
+bucket( pose [ 0 0 0 0] name "bucket1" ) 

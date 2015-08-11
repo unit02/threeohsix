@@ -122,7 +122,6 @@ fenceHorizontal( pose [ 0 -30 0 0 ] )
 fenceVertical( pose [ 45 0 0 0 ] ) 
 fenceVertical( pose [ -45 0 0 0 ] ) 
 
-bucket( pose [ 0 0 0 0] ) 
-bucket( pose [ 6 0 0 0] ) 
+
 dog( pose [ 1 -3 0 0] ) 
 #person( pose [ 6 -3 0 0] ) 

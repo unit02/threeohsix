@@ -1,4 +1,5 @@
 include "instances.inc" 
+
 # simulation property milliseconds per update step 
 interval_sim 100 
 
@@ -57,6 +58,120 @@ define carrier position
 
 ) 
 
+define person position
+(
+  myLaser(pose [ 0.5 0 -0.4 0 ])
+  drive "diff"
+  size [1 0.55 1.7]	
+   #legs
+   block 
+   (
+      color "blue"
+      points 4
+      point[0]  [ 0.1 0 ]
+      point[1]  [ 0.5 0 ]
+      point[2]  [ 0.5 0.5 ]
+      point[3]  [ 0.1 0.5 ]
+      z [0 0.8]
+   )
+   #legs
+   block 
+   (
+      color "blue"
+      points 4
+      point[0]  [ 0.5 0 ]
+      point[1]  [ 0.9 0 ]
+      point[2]  [ 0.9 0.5 ]
+      point[3]  [ 0.5 0.5 ]
+      z [0 0.8]
+   )
+   #arms	
+   block 
+   (  
+      color "tan"
+      points 4
+      point[0]  [ 0 0 ]
+      point[1]  [ 0.1 0 ]
+      point[2]  [ 0.1 0.5 ]
+      point[3]  [ 0 0.5 ]
+      z [0.8 1.4]
+   )
+   #arms	
+   block 
+   (  
+      color "tan"
+      points 4
+      point[0]  [ 0.9 0 ]
+      point[1]  [ 1 0 ]
+      point[2]  [ 1 0.5 ]
+      point[3]  [ 0.9 0.5 ]
+      z [0.8 1.4]
+   )
+   #body	
+   block 
+   (  
+      color "purple"
+      points 4
+      point[0]  [ 0.1 0 ]
+      point[1]  [ 0.9 0 ]
+      point[2]  [ 0.9 0.5 ]
+      point[3]  [ 0.1 0.5 ]
+      z [0.8 1.4]
+   )
+   #head
+   block
+   (
+      color "tan"
+      points 4
+      point[0]  [ 0.30 0 ]
+      point[1]  [ 0.70 0 ]
+      point[2]  [ 0.70 0.5 ]
+      point[3]  [ 0.30 0.5 ]
+      z [1.4 1.7]
+   )
+   #eyes
+   block
+   (
+      color "black"
+      points 4
+      point[0]  [ 0.35 -0.05 ]
+      point[1]  [ 0.40 -0.05 ]
+      point[2]  [ 0.40 0 ]
+      point[3]  [ 0.35 0 ]
+      z [1.55 1.6]
+   )
+  #eyes
+   block
+   (
+      color "black"
+      points 4
+      point[0]  [ 0.60 -0.05 ]
+      point[1]  [ 0.65 -0.05 ]
+      point[2]  [ 0.65 0 ]
+      point[3]  [ 0.60 0 ]
+      z [1.55 1.6]
+   )
+   	
+)
+
+define bucket position
+( 
+  myLaser(pose [ 0.5 0 -0.4 0 ])
+  drive "diff"
+  size [1 1 1]
+  color "red"  
+  block
+  (
+    points [4]
+    point[0] [0 0]
+    point[1] [0 1]
+    point[2] [1 1]
+    point[3] [1 0]
+    z [0 1]
+  )
+)
+
+
 
 
 # throw in a robot 
@@ -66,3 +181,5 @@ carrier( pose [-25.5 1.5 0 0  ] name "carrier2" color "yellow")
 carrier( pose [-34.5 1.5 0 0  ] name "carrier3" color "cyan")
 carrier( pose [-5.5 -5.5 0 0  ] name "beingfollowed" color "purple")
 carrier( pose [-34.5 -5.5 0 0  ] name "follower" color "blue")
+person ( pose [-10 20 0 0 ] name "person")
+bucket( pose [ 0 0 0 0] name "bucket1" ) 
