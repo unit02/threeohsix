@@ -12,6 +12,7 @@
 
 import roslib
 import rospy
+import math
 from std_msgs.msg import String
 from geometry_msgs.msg import Vector3, Twist
 from nav_msgs.msg import Odometry
@@ -45,13 +46,20 @@ class node():
         )
 
         self.wait(5)
+
         
         # Later release will ensure it gets a position from another robot by a message
         new_position = Point(-34.5, -5.5, 0.0)
         self.move_to(new_position)
+        #self.turnLeft()
+
 
     def stage_callback(self, data):
         self.position = data.pose.pose.position
+
+    def laser_calback(self,msg):
+            ranges = msg.ranges
+            rospy.loginfo(ranges)
 
     def move_to(self, new_position):
         self.move_x_steps(10)
@@ -87,11 +95,40 @@ class node():
         rospy.loginfo("Stopping!")
         self.cmd_vel_pub.publish(twist)
 
-    def turn(self, radian):
-        #twist = Twist()
-        #angular is radians/sec
+    def turnLeft(self):
+        self.twist = Twist()
+        self.twist.linear.x = 1.0
+        self.twist.angular.z = -(math.pi/2)
+        rospy.loginfo("Turning")
+        for i in range(20):
+            self.cmd_vel_pub.publish(self.twist)
+            rospy.sleep(0.05)
+        
+        self.twist = Twist()
+        self.twist.linear.x = 1.0
+        self.twist.angular.z = 0.0
+        self.cmd_vel_pub.publish(self.twist)
+        rospy.loginfo("Straight")
         #twist.angular.x = radian/1
-        pass
+
+
+    def turnRight(self):
+        self.twist = Twist()
+        self.twist.linear.x = 1.0
+        self.twist.angular.z = (math.pi/2)
+        rospy.loginfo("Turning")
+        for i in range(20):
+            self.cmd_vel_pub.publish(self.twist)
+            rospy.sleep(0.05)
+        
+        self.twist = Twist()
+        self.twist.linear.x = 1.0
+        self.twist.angular.z = 0.0
+        self.cmd_vel_pub.publish(self.twist)
+        rospy.loginfo("Straight")
+        #twist.angular.x = radian/1
+
+
 
     def wait(self, seconds):
         runtime = int(10 * seconds)
