@@ -16,4 +16,13 @@
     <node pkg="robotsim" name="pubnode" output="screen" type="picker.py"/>
   </group>
 
+  <group ns="robot_4">
+    <node pkg="robotsim" name="pubnode" output="screen" type="talker.py"/>
+  </group>
+
+  <group ns="robot_5">
+    <node pkg="robotsim" name="pubnode" output="screen" type="follower.py"/>
+  </group>
+
+
 </launch>
