@@ -44,25 +44,25 @@ class picker():
             if (min_distance <= 3):
                 #Recognise the turning direction, given that laser beam is 60 degrees wide
                 if (ranges.index(min_distance) <=30):
-					rospy.loginfo(ranges.index(min_distance))	
-					#now = rospy.Time.now().to_sec()
-					#end_time = now + 5
-					#angle_velocity = 100
-					#while end_time != now:
-					#rospy.loginfo(end_time)
-					#rospy.loginfo(now)
-					twist_msg.linear.x = 1
-					twist_msg.angular.z = 1
-					self.cmd_vel_pub.publish(twist_msg)
+			#rospy.loginfo(ranges.index(min_distance))	
+			#now = rospy.Time.now().to_sec()
+			#end_time = now + 5
+			#angle_velocity = 100
+			#while end_time != now:
+			#rospy.loginfo(end_time)
+			#rospy.loginfo(now)
+			twist_msg.linear.x = 1
+			twist_msg.angular.z = 1
+			self.cmd_vel_pub.publish(twist_msg)
                 else:
-					#rospy.loginfo(ranges.index(min_distance))
-					#now = rospy.Time.now().to_sec()
-					#end_time = now + 5
-					#angle_velocity = 100
-					#while end_time != now:
-					twist_msg.linear.x = 1
-					twist_msg.angular.z = -1
-					self.cmd_vel_pub.publish(twist_msg)
+			#rospy.loginfo(ranges.index(min_distance))
+			#now = rospy.Time.now().to_sec()
+			#end_time = now + 5
+			#angle_velocity = 100
+			#while end_time != now:
+			twist_msg.linear.x = 1
+			twist_msg.angular.z = -1
+			self.cmd_vel_pub.publish(twist_msg)
             else:
                 #Moving straight
             	twist_msg.linear.x = 1
