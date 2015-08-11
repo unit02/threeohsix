@@ -73,3 +73,4 @@ if __name__ == '__main__':
     rospy.init_node("picker1") # Create a node of name picker1
     p = picker(rospy.get_name()) # Create an instance of above class
     rospy.spin() # Function to keep the node running until terminated via Ctrl+C
+
