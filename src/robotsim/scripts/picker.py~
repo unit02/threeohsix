@@ -31,12 +31,19 @@ class picker(node):
 
         def rotateLeft:
 
+
+
 		twist = Twist()
 		twist.linear.x = 1.0
 		twist.linear.y = 0
 		twist.angular.x = 0.5
 
-		#testing for github
+
+    for i in range(100):
+        pub.publish(twist)
+        rospy.sleep(0.1) # 30*0.1 = 3.0 seconds
+
+
 	def rotateRight:
 
 		
