@@ -1,106 +1,63 @@
 #!/usr/bin/env python
 import rospy
-<<<<<<< HEAD
-import dynamicObjects
+from sensor_msgs.msg import LaserScan
+import node.py
 from geometry_msgs.msg import Twist
+import numpy as np
+from random import choice, randint
+import node
+from sensor_msgs.msg import Range
+
 
 
 
 class picker():
 
-    #pub = rospy.Publisher('chatter', String, queue_size=10)
+    def __init__(self, name):
+        # node.__init__(self, "square", 1,1, "red")
+        rospy.loginfo("Starting node %s" % name)
+        # Create new topic to which it listens
+        self.laser_sub = rospy.Subscriber(
+            "/robot_3/base_scan",
+            LaserScan,
+            callback=self.laser_callback,
+            queue_size=10
+	)
+		
+        self.cmd_vel_pub = rospy.Publisher(
+            "cmd_vel",
+            Twist,
+            queue_size=10
+        )
 
-    #node is publishing "cmd_val" topic
-    pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
-
-    #initilasing a node named "talker"
-    rospy.init_node('pubnode', anonymous=True)
-    rate = rospy.Rate(10) # 10hz
-
-    while not rospy.is_shutdown():
-        #hello_str = "hello world %s" % rospy.get_time()
-	twist = Twist()
-	twist.linear.x = 3
-	twist.angular.z = 0.0;
-	
-        rospy.loginfo(twist)
-        pub.publish(twist)
+    def laser_callback(self,msg):
+        #Get the ranges of the laser scan and find the minimum
+        ranges = msg.ranges
+        min_distance = np.nanmin(ranges)
+        twist_msg = Twist()
+        rate = rospy.Rate(10)
+        #Avoid obstacles that were detected within 3m ahead
+        if (min_distance <= 3):
+            #Recognise the turning direction, given that laser beam is 60 degrees wide
+            if (ranges.index(min_distance) <=30):
+                twist_msg.linear.x = 1
+                twist_msg.angular.z = 1
+                self.cmd_vel_pub.publish(twist_msg)
+            else:
+                twist_msg.linear.x = 1
+                twist_msg.angular.z = -1
+                self.cmd_vel_pub.publish(twist_msg)
+        else
+            # Move Straight
+            twist_msg.linear.x = 1
+            twist_msg.angular.z = 0
+            self.cmd_vel_pub.publish(twist_msg)
         rate.sleep()
-
 
 if __name__ == '__main__':
- picker()
+	rospy.init_node("picker1")
+	p = picker(rospy.get_name())
+	rospy.spin()
+	picker()
 
 
-
-"""     #node is publishing "cmd_val" topic
-    pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
-
-    #initilasing a node named "talker"
-    rospy.init_node('picker', anonymous=True)
-    rate = rospy.Rate(10) # 10hz
-
-    while not rospy.is_shutdown():
-        #hello_str = "hello world %s" % rospy.get_time()
-        twist = Twist()
-        twist.linear.x = 1
-        twist.angular.z = 0.01;
-
-        rospy.loginfo(twist)
-        pub.publish(twist)
-        rate.sleep()
-
-
-	def laser_callback(self,msg):
-		ranges = msg. laser
-		min_distance = numpy.nanmin(ranges)
-        rospy.loginfo("Minimum distance : %f")
-
-    def pick (self):
-			#every 1 second "pick" kiwifruit
-			  #sends signal to nearest carrier to updateBin()
-
-	#def goThroughRow(self):
-=======
-from sensor_msgs.msg import LaserScan
-import node.py
-from geometry_msgs.msg import Twist
-
-class picker(node):
-
-	def __init__(self, name):
-		node.__init__(self, "square", 1,1, "red")
-
-		rospy.loginfo("Starting node %s" % name)
-		self.laser_sub = rospy.Subscriber(
-			"laser",
-			LaserScan,
-			callback=self.laser_callback,
-			queue_size=1
-		)
-
-		self.cmd_vel_pub = rospy.Publisher(
-			"laser",
-			Twist,
-			queue_size=1
-		)
-
-	def laser_callback(self,msg):
-		pass
-
-
-	def pick (self):
-		pass
-			#every 1 second "pick" kiwifruit
-			  #sends signal to nearest carrier to updateBin()
-
-	def goThroughRow(self):
-		pass
-
-	def goToNextRow(self):
-		pass
-	#assumes the picker is 
->>>>>>> 3c79488711cc88a0572c589005317caa6c8e0043
-
-    #def goToNextRow(self):
-	#assumes the picker is  """
