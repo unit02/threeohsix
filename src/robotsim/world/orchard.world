@@ -60,18 +60,18 @@ define carrier position
 
 define person position
 (
-  myLaser(pose [ 0.5 0 -0.4 0 ])
+  myLaser(pose [ 0.25 0 -0.8 0 ])
   drive "diff"
-  size [1 0.55 1.7]	
+  size [0.55 1 1.7]	
    #legs
    block 
    (
       color "blue"
       points 4
-      point[0]  [ 0.1 0 ]
-      point[1]  [ 0.5 0 ]
+      point[0]  [ 0 0.1 ]
+      point[1]  [ 0.5 0.1 ]
       point[2]  [ 0.5 0.5 ]
-      point[3]  [ 0.1 0.5 ]
+      point[3]  [ 0 0.5 ]
       z [0 0.8]
    )
    #legs
@@ -79,10 +79,10 @@ define person position
    (
       color "blue"
       points 4
-      point[0]  [ 0.5 0 ]
-      point[1]  [ 0.9 0 ]
-      point[2]  [ 0.9 0.5 ]
-      point[3]  [ 0.5 0.5 ]
+      point[0]  [ 0 0.5 ]
+      point[1]  [ 0.5 0.5 ]
+      point[2]  [ 0.5 0.9 ]
+      point[3]  [ 0 0.9 ]
       z [0 0.8]
    )
    #arms	
@@ -91,9 +91,9 @@ define person position
       color "tan"
       points 4
       point[0]  [ 0 0 ]
-      point[1]  [ 0.1 0 ]
-      point[2]  [ 0.1 0.5 ]
-      point[3]  [ 0 0.5 ]
+      point[1]  [ 0.5 0 ]
+      point[2]  [ 0.5 0.1 ]
+      point[3]  [ 0 0.1 ]
       z [0.8 1.4]
    )
    #arms	
@@ -101,10 +101,10 @@ define person position
    (  
       color "tan"
       points 4
-      point[0]  [ 0.9 0 ]
-      point[1]  [ 1 0 ]
-      point[2]  [ 1 0.5 ]
-      point[3]  [ 0.9 0.5 ]
+      point[0]  [ 0 0.9 ]
+      point[1]  [ 0.5 0.9 ]
+      point[2]  [ 0.5 1 ]
+      point[3]  [ 0 1 ]
       z [0.8 1.4]
    )
    #body	
@@ -112,10 +112,10 @@ define person position
    (  
       color "purple"
       points 4
-      point[0]  [ 0.1 0 ]
-      point[1]  [ 0.9 0 ]
-      point[2]  [ 0.9 0.5 ]
-      point[3]  [ 0.1 0.5 ]
+      point[0]  [ 0 0.1 ]
+      point[1]  [ 0.5 0.1 ]
+      point[2]  [ 0.5 0.9 ]
+      point[3]  [ 0 0.9 ]
       z [0.8 1.4]
    )
    #head
@@ -123,10 +123,10 @@ define person position
    (
       color "tan"
       points 4
-      point[0]  [ 0.30 0 ]
-      point[1]  [ 0.70 0 ]
-      point[2]  [ 0.70 0.5 ]
-      point[3]  [ 0.30 0.5 ]
+      point[0]  [ 0 0.30 ]
+      point[1]  [ 0.5 0.3 ]
+      point[2]  [ 0.5 0.7 ]
+      point[3]  [ 0 0.7 ]
       z [1.4 1.7]
    )
    #eyes
@@ -134,10 +134,10 @@ define person position
    (
       color "black"
       points 4
-      point[0]  [ 0.35 -0.05 ]
-      point[1]  [ 0.40 -0.05 ]
-      point[2]  [ 0.40 0 ]
-      point[3]  [ 0.35 0 ]
+      point[0]  [ 0.50 0.35 ]
+      point[1]  [ 0.55 0.35 ]
+      point[2]  [ 0.55 0.40 ]
+      point[3]  [ 0.50 0.4]
       z [1.55 1.6]
    )
   #eyes
@@ -145,10 +145,10 @@ define person position
    (
       color "black"
       points 4
-      point[0]  [ 0.60 -0.05 ]
-      point[1]  [ 0.65 -0.05 ]
-      point[2]  [ 0.65 0 ]
-      point[3]  [ 0.60 0 ]
+      point[0]  [ 0.50 0.60 ]
+      point[1]  [ 0.55 0.6 ]
+      point[2]  [ 0.55 0.65 ]
+      point[3]  [ 0.50 0.65 ]
       z [1.55 1.6]
    )
    	
