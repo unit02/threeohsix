@@ -18,10 +18,10 @@ class picker():
         rospy.loginfo("Starting node %s" % name)
         # Create new topic to which it listens
         self.laser_sub = rospy.Subscriber(
-        "/robot_3/base_scan",
-        LaserScan,
-        callback=self.laser_callback,
-        queue_size=10
+            "/robot_3/base_scan",
+            LaserScan,
+            callback=self.laser_callback,
+            queue_size=10
 	)
 		
         self.cmd_vel_pub = rospy.Publisher(
@@ -38,6 +38,7 @@ class picker():
         rate = rospy.Rate(10)
         #Avoid obstacles that were detected within 3m ahead
         if (min_distance <= 3):
+            #Recognise the turning direction, given that laser beam is 60 degrees wide
             if (ranges.index(min_distance) <=30):
                 twist_msg.linear.x = 1
                 twist_msg.angular.z = 1
@@ -52,40 +53,6 @@ class picker():
             twist_msg.angular.z = 0
             self.cmd_vel_pub.publish(twist_msg)
         rate.sleep()
-
-        def rotateLeft:
-
-
-
-		twist = Twist()
-		twist.linear.x = 1.0
-		twist.linear.y = 0
-		twist.angular.x = 0.5
-
-
-    for i in range(100):
-        pub.publish(twist)
-        rospy.sleep(0.1) # 30*0.1 = 3.0 seconds
-
-
-	def rotateRight:
-
-		
-		
-
-
-	def pick (self):
-		pass
-			#every 1 second "pick" kiwifruit
-			  #sends signal to nearest carrier to updateBin()
-
-	def goThroughRow(self):
-		pass
-
-	def goToNextRow(self):
-		pass
-	#assumes the picker is 
-
 
 if __name__ == '__main__':
 	rospy.init_node("picker1")
