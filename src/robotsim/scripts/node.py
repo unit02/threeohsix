@@ -50,7 +50,24 @@ class node():
         
         # Later release will ensure it gets a position from another robot by a message
         new_position = Point(-34.5, -5.5, 0.0)
-        self.move_to(new_position)
+        #self.move_to(new_position)
+
+
+        #self.turnLeft()
+        #for i in range(20):
+        #    rospy.sleep(0.05)
+        #self.turnRight()
+        #for i in range(20):
+        #    rospy.sleep(0.05)
+        #self.turnRight()
+        #for i in range(20):
+        #    rospy.sleep(0.05)
+        #self.turnRight()
+        #for i in range(20):
+        #    rospy.sleep(0.05)
+        #self.turnLeft()
+        #for i in range(20):
+        #    rospy.sleep(0.05)
         #self.turnLeft()
 
 
@@ -95,36 +112,32 @@ class node():
         rospy.loginfo("Stopping!")
         self.cmd_vel_pub.publish(twist)
 
-    def turnLeft(self):
-        self.twist = Twist()
-        self.twist.linear.x = 1.0
-        self.twist.angular.z = -(math.pi/2)
+    def turnRight(self):
+        twist = Twist()
+        twist.linear.x = 1.0
+        twist.angular.z = -(math.pi)
         rospy.loginfo("Turning")
         for i in range(20):
-            self.cmd_vel_pub.publish(self.twist)
+            self.cmd_vel_pub.publish(twist)
             rospy.sleep(0.05)
         
-        self.twist = Twist()
-        self.twist.linear.x = 1.0
-        self.twist.angular.z = 0.0
-        self.cmd_vel_pub.publish(self.twist)
+        twist = Twist()
+        self.cmd_vel_pub.publish(twist)
         rospy.loginfo("Straight")
         #twist.angular.x = radian/1
 
 
-    def turnRight(self):
-        self.twist = Twist()
-        self.twist.linear.x = 1.0
-        self.twist.angular.z = (math.pi/2)
+    def turnLeft(self):
+        twist = Twist()
+        twist.linear.x = 1.0
+        twist.angular.z = (math.pi)
         rospy.loginfo("Turning")
         for i in range(20):
-            self.cmd_vel_pub.publish(self.twist)
+            self.cmd_vel_pub.publish(twist)
             rospy.sleep(0.05)
         
-        self.twist = Twist()
-        self.twist.linear.x = 1.0
-        self.twist.angular.z = 0.0
-        self.cmd_vel_pub.publish(self.twist)
+        twist = Twist()
+        self.cmd_vel_pub.publish(twist)
         rospy.loginfo("Straight")
         #twist.angular.x = radian/1
 
