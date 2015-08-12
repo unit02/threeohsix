@@ -38,8 +38,8 @@ class node():
 
         # Subscribe to stage topic to obtain its position
         # Must change to approprite name instead "ns" + cmd_vel
-        self.myStageInfo = rospy.Subscriber(
-            "robot_2/base_pose_ground_truth",
+        self.stage_info = rospy.Subscriber(
+            "robot_4/base_pose_ground_truth",
             Odometry,
             callback=self.stage_callback,
             queue_size=10
@@ -80,24 +80,43 @@ class node():
 
     def move_to(self, new_position):
         self.move_x_steps(10)
+        rospy.loginfo("Current position %s", self.position)
+        rospy.loginfo("Moving to new position %s", new_position)
 
-        # deltaX = new_position.x - self.position.x
-        # deltaY = new_position.y - self.position.y
-        #
-        # if deltaX < 0:
-        #     # rotate 180 degrees
-        #     pass
-        # self.move_x_steps(deltaX)
-        # if deltaY < 0:
-        #     # rotate 180 degrees
-        #     pass
-        # self.move_x_steps(deltaY)
+
+        deltaX = new_position.x - self.position.x
+        deltaY = new_position.y - self.position.y
+
+        rospy.loginfo("DeltaX %s, DeltaY %s", deltaX, deltaY)
+        if deltaX < 0:
+            # rotate 180 degrees
+            pass
+        self.move_x_steps(deltaX)
+
+        # requires turning if it needs to go in y direction
+        # has rotated 180 degrees - convention of turning is opposite
+        if deltaX < 0:
+            if deltaY < 0:
+                # rotate -90 degrees (turn right)
+                pass
+            elif deltaY > 0:
+                # rotate -90 degrees (turn left)
+                pass
+        elif deltaX > 0:
+            # rotate -90 degrees (turn left)
+            if deltaY < 0:
+                # rotate 90 degrees (turn left)
+                pass
+            elif deltaY > 0:
+                # rotate -90 degrees (turn right)
+                pass
+        self.move_x_steps(deltaY)
 
 
     def move_x_steps(self, metres):
         # runtime seconds = distance/velocity
         # need to convert to seconds so *10 is applied
-        runtime = int(10 *(metres/self.twist.linear.x))
+        runtime = abs(int(10 *(metres/self.twist.linear.x)))
 
         rospy.loginfo("Started moving %s metres at speed %s /s!", metres, self.twist.linear.x)
 

@@ -9,7 +9,7 @@
   </group>
 
   <group ns="robot_2">
-    <node pkg="robotsim" name="pubnode" type="talker.py"/>
+    <node pkg="robotsim" name="pubnode" type="animal.py"/>
   </group>
 
   <group ns="robot_3">
@@ -22,6 +22,10 @@
 
   <group ns="robot_5">
     <node pkg="robotsim" name="pubnode" output="screen" type="follower.py"/>
+  </group>
+
+  <group ns="robot_6">
+    <node pkg="robotsim" name="pubnode" output="screen" type="person.py"/>
   </group>
 
 

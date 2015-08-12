@@ -4,7 +4,7 @@ define dog model
    #body
    block 
    (
-      color "yellow"
+      color "white"
       points 4
       point[0]  [ 0.25 0 ]
       point[1]  [ 0.75 0 ]
@@ -15,7 +15,7 @@ define dog model
    #legs
    block 
    (
-      color "yellow"
+      color "black"
       points 4
       point[0]  [ 0.25 0 ]
       point[1]  [ 0.35 0 ]
@@ -26,7 +26,7 @@ define dog model
    #legs
    block 
    (
-      color "yellow"
+      color "black"
       points 4
       point[0]  [ 0.25 0.7 ]
       point[1]  [ 0.35 0.7 ]
@@ -37,7 +37,7 @@ define dog model
    #legs
    block 
    (
-      color "yellow"
+      color "black"
       points 4
       point[0]  [ 0.65 0.7 ]
       point[1]  [ 0.75 0.7 ]
@@ -48,7 +48,7 @@ define dog model
    #legs
    block 
    (
-      color "yellow"
+      color "black"
       points 4
       point[0]  [ 0.65 0 ]
       point[1]  [ 0.75 0 ]
@@ -59,69 +59,69 @@ define dog model
   #head
    block 
    (
-      color "yellow"
+      color "black"
       points 4
-      point[0]  [ 0.1 0.20 ]
-      point[1]  [ 0.25 0.20 ]
-      point[2]  [ 0.25 0.60 ]
-      point[3]  [ 0.1 0.60 ]
+      point[0]  [ 0.75 0.20 ]
+      point[1]  [ 0.9 0.20 ]
+      point[2]  [ 0.9 0.60 ]
+      point[3]  [ 0.75 0.60 ]
       z [0.4 0.65]
    )
   #nose
    block 
    (
-      color "yellow"
+      color "white"
       points 4
-      point[0]  [ 0 0.25 ]
-      point[1]  [ 0.1 0.25 ]
-      point[2]  [ 0.1 0.55 ]
-      point[3]  [ 0 0.55 ]
+      point[0]  [ 0.9 0.25 ]
+      point[1]  [ 1 0.25 ]
+      point[2]  [ 1 0.55 ]
+      point[3]  [ 0.9 0.55 ]
       z [0.45 0.55]
    )
 
   #ears
    block 
    (
-      color "yellow"
+      color "white"
       points 4
-      point[0]  [ 0.15 0.22 ]
-      point[1]  [ 0.20 0.22 ]
-      point[2]  [ 0.20 0.35 ]
-      point[3]  [ 0.15 0.35 ]
+      point[0]  [ 0.80 0.22 ]
+      point[1]  [ 0.85 0.22 ]
+      point[2]  [ 0.85 0.35 ]
+      point[3]  [ 0.80 0.35 ]
       z [0.65 0.7]
    )
   #ears
    block 
    (
-      color "yellow"
+      color "white"
       points 4
-      point[0]  [ 0.15 0.45 ]
-      point[1]  [ 0.20 0.45 ]
-      point[2]  [ 0.20 0.58 ]
-      point[3]  [ 0.15 0.58 ]
+      point[0]  [ 0.80 0.45 ]
+      point[1]  [ 0.85 0.45 ]
+      point[2]  [ 0.85 0.58 ]
+      point[3]  [ 0.80 0.58 ]
       z [0.65 0.7]
    )
 
    #tail
    block 
    (
-      color "yellow"
+      color "black"
       points 4
-      point[0]  [ 0.75 0.3 ]
-      point[1]  [ 1 0.3 ]
-      point[2]  [ 1 0.5 ]
-      point[3]  [ 0.75 0.5 ]
+      point[0]  [ 0 0.3 ]
+      point[1]  [ 0.25 0.3 ]
+      point[2]  [ 0.25 0.5 ]
+      point[3]  [ 0 0.5 ]
       z [0.4 0.5]
    )
    #tail
    block 
    (
-      color "yellow"
+      color "white"
       points 4
-      point[0]  [ 0.9 0.3 ]
-      point[1]  [ 1 0.3 ]
-      point[2]  [ 1 0.5 ]
-      point[3]  [ 0.9 0.5 ]
+      point[0]  [ 0 0.3 ]
+      point[1]  [ 0.1 0.3 ]
+      point[2]  [ 0.1 0.5 ]
+      point[3]  [ 0 0.5 ]
       z [0.2 0.4]
    )
 

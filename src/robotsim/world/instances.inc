@@ -1,7 +1,6 @@
 
 include "myblock.inc"
 include "dog.inc"
-include "person.inc"
 
 treetrunk( pose [ -34.5 13.5 0 0 ] ) 
 treetrunk( pose [ -28.5 13.5 0 0] ) 
@@ -123,7 +122,6 @@ fenceHorizontal( pose [ 0 -30 0 0 ] )
 fenceVertical( pose [ 45 0 0 0 ] ) 
 fenceVertical( pose [ -45 0 0 0 ] ) 
 
-bucket( pose [ 0 0 0 0] ) 
-bucket( pose [ 6 0 0 0] ) 
-dog( pose [ 1 -3 0 0] ) 
-person( pose [ 6 -3 0 0] ) 
+
+#dog( pose [ 1 -3 0 0] ) 
+#person( pose [ 6 -3 0 0] ) 
