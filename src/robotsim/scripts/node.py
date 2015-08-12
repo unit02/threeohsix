@@ -32,7 +32,7 @@ class node():
         rospy.loginfo("Starting node %s" % name)
 
         self.cmd_vel_pub = rospy.Publisher(
-            "cmd_vel",
+            "robot_4/cmd_vel",
             Twist,
             queue_size=10
         )
@@ -51,9 +51,8 @@ class node():
 
         
         # Later release will ensure it gets a position from another robot by a message
-        new_position = Point(-34.5, -5.5, 0.0)
-        #self.move_to(new_position)
-
+        new_position = Point(10.0, -10, 0.0)
+        self.move_to(new_position)
 
         self.turnLeft()
         for i in range(20):
@@ -77,38 +76,48 @@ class node():
         self.position = data.pose.pose.position
 
     def move_to(self, new_position):
-        self.move_x_steps(10)
         rospy.loginfo("Current position %s", self.position)
         rospy.loginfo("Moving to new position %s", new_position)
 
 
         deltaX = new_position.x - self.position.x
         deltaY = new_position.y - self.position.y
+        # moves in x direction of stage
 
-        rospy.loginfo("DeltaX %s, DeltaY %s", deltaX, deltaY)
+        rospy.loginfo("DeltaX %s, DeltaY %s", int(deltaX), int(deltaY))
         if deltaX < 0:
             # rotate 180 degrees
-            pass
-        self.move_x_steps(deltaX)
+            self.turnLeft()
+            self.turnLeft()
+
+        if deltaX != 0:
+            self.move_x_steps(int(deltaX))
+
+        # moves in y direction of stage
 
         # requires turning if it needs to go in y direction
         # has rotated 180 degrees - convention of turning is opposite
         if deltaX < 0:
             if deltaY < 0:
                 # rotate -90 degrees (turn right)
-                pass
+                self.turnRight()
             elif deltaY > 0:
                 # rotate -90 degrees (turn left)
-                pass
+                self.turnLeft()
         elif deltaX > 0:
             # rotate -90 degrees (turn left)
             if deltaY < 0:
                 # rotate 90 degrees (turn left)
-                pass
+                self.turnLeft()
             elif deltaY > 0:
                 # rotate -90 degrees (turn right)
-                pass
-        self.move_x_steps(deltaY)
+                self.turnRight()
+
+        if deltaY != 0:
+            self.move_x_steps(int(deltaY))
+
+        rospy.loginfo("Finished moving to the new position %s", new_position)
+
 
 
     def move_x_steps(self, metres):
