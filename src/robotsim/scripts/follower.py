@@ -7,7 +7,7 @@ from nav_msgs.msg import Odometry
 class follower():
 
     # Uses another robot's linear velocity, and publish it to its own cmd_vel
-    def followRobot(self, data):
+    def follow_robot(self, data):
         rospy.loginfo(rospy.get_caller_id() + "Robot to follow position %s ", data.pose.pose.position)
         rospy.loginfo(rospy.get_caller_id() + "Robot to follow %s ", data.twist.twist.linear.x)
         twist_msg = Twist()
@@ -27,10 +27,10 @@ class follower():
 
         # Subscribes to robot_4's stage information to follow
         # Must change to approprite name instead
-        self.followRobot = rospy.Subscriber(
+        self.follow_robot = rospy.Subscriber(
             "robot_4/base_pose_ground_truth",
             Odometry,
-            callback=self.followRobot,
+            callback=self.follow_robot,
             queue_size=10
         )
 
