@@ -27,7 +27,7 @@ define tree model(
 
 
 define fenceHorizontal model(
- 	color "yellow" 
+ 	color "DarkGoldenrod" 
  	size [91 1 2.5] 	
 	block( 
 	points 4 
@@ -51,7 +51,7 @@ define fenceVertical model(
 ) 
 
 define post model(	
-	color "tan" 
+	color "grey" 
  	size [1 0.5 1.8] 
 	block( 
 	points 3 
@@ -62,15 +62,10 @@ define post model(
 	
 )
 
-
-
-
-
-
 define ground model
 (
   size [90 60 0.01]
-  color "green"  
+  color "YellowGreen"  
   block
   (
     points [4]
@@ -82,20 +77,6 @@ define ground model
   )
 )
 
-define bucket model
-(
-  size [1 1 1]
-  color "red"  
-  block
-  (
-    points [4]
-    point[0] [0 0]
-    point[1] [0 1]
-    point[2] [1 1]
-    point[3] [1 0]
-    z [0 1]
-  )
-)
 
 
 

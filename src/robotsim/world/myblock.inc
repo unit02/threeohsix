@@ -51,7 +51,7 @@ define fenceVertical model(
 ) 
 
 define post model(	
-	color "tan" 
+	color "grey" 
  	size [1 0.5 1.8] 
 	block( 
 	points 3 
@@ -62,15 +62,10 @@ define post model(
 	
 )
 
-
-
-
-
-
 define ground model
 (
   size [90 60 0.01]
-  color "green"  
+  color "YellowGreen"  
   block
   (
     points [4]

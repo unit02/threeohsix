@@ -60,7 +60,7 @@ define carrier position
 
 define person position
 (
-  myLaser(pose [ 0.25 0 -0.8 0 ])
+  myLaser(pose [ 0.25 0 -1.6 0 ])
   drive "diff"
   size [0.55 1 1.7]	
    #legs
@@ -110,7 +110,7 @@ define person position
    #body	
    block 
    (  
-      color "purple"
+      color "aquamarine"
       points 4
       point[0]  [ 0 0.1 ]
       point[1]  [ 0.5 0.1 ]
@@ -159,7 +159,7 @@ define bucket position
   myLaser(pose [ 0.5 0 -0.4 0 ])
   drive "diff"
   size [1 1 1]
-  color "red"  
+  color "firebrick"  
   block
   (
     points [4]
@@ -306,8 +306,8 @@ define dog position
 
 # throw in a robot 
 dog( pose [-14.5 -15 0 0  ] name "dog")
-picker( pose [-34.5.0 6.5 0 0  ] name "picker" color "pink")
+picker( pose [-34.5.0 6.5 0 0  ] name "picker" color "thistle")
 bucket( pose [-36.5 6.5 0 0  ] name "follower")
 person ( pose [-38 20 0 0 ] name "person")
-carrier( pose [34.5.0 -6.5 0 0  ] name "picker" color "pink")
+carrier( pose [34.5.0 -6.5 0 0  ] name "carrier" color "cyan")
 

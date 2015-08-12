@@ -27,7 +27,7 @@ class node():
     def __init__(self, name):
         self.position = Point()
         self.twist = Twist()
-        self.twist.linear.x = 3.0
+        self.twist.linear.x = 1.0
 
         rospy.loginfo("Starting node %s" % name)
 
@@ -47,7 +47,7 @@ class node():
             queue_size=10
         )
 
-        self.wait(75)
+        self.wait(70)
 
         
         # Later release will ensure it gets a position from another robot by a message

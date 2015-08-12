@@ -47,7 +47,7 @@ class node():
             queue_size=10
         )
 
-        self.wait(75)
+        self.wait(5)
 
         
         # Later release will ensure it gets a position from another robot by a message
