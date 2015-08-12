@@ -6,21 +6,26 @@ import numpy as np
 from random import choice, randint
 import node
 from sensor_msgs.msg import Range
-
+from random import randint 
+from time import sleep
+import threading
 
 
 class person():
     def __init__(self, name):
+	
         # node.__init__(self, "square", 1, 1, "red")
 
         rospy.loginfo("Starting node %s" % name)
         # Create new topic called laser to which it listens
         self.laser_sub = rospy.Subscriber(
-            "/robot_3/base_scan",
+            "/robot_6/base_scan",
             LaserScan,
             callback=self.laser_callback,
             queue_size=10
         )
+
+
         #self.laser_pub = rospy.Publisher(
          #   "sensor_output",
           #  LaserScan, queue_size=10
@@ -31,7 +36,11 @@ class person():
             queue_size=10
         )
 
-    # called when new message arrives from laser topic
+	
+			
+			
+
+	# called when new message arrives from laser topic
     def laser_callback(self,msg):
             #Get the ranges of the laser scan and find the minimum
             ranges = msg.ranges
@@ -74,6 +83,6 @@ class person():
 # The block below will be executed when the python file is executed
 # __name__ and __main__ are built-in python variables and need to start and end with *two* underscores
 if __name__ == '__main__':
-    rospy.init_node("person1")  # Create a node of name picker1
-    p = person(rospy.get_name())  # Create an instance of above class
+    rospy.init_node("person1")  # Create a node of name laser_roomba
+    l = person(rospy.get_name())  # Create an instance of above class
     rospy.spin()  # Function to keep the node running until terminated via Ctrl+C
