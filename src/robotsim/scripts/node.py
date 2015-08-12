@@ -13,6 +13,8 @@
 import roslib
 import rospy
 import math
+import tf
+from tf.transformations import euler_from_quaternion
 from std_msgs.msg import String
 from geometry_msgs.msg import Vector3, Twist
 from nav_msgs.msg import Odometry
@@ -53,30 +55,26 @@ class node():
         #self.move_to(new_position)
 
 
-        #self.turnLeft()
-        #for i in range(20):
-        #    rospy.sleep(0.05)
-        #self.turnRight()
-        #for i in range(20):
-        #    rospy.sleep(0.05)
-        #self.turnRight()
-        #for i in range(20):
-        #    rospy.sleep(0.05)
-        #self.turnRight()
-        #for i in range(20):
-        #    rospy.sleep(0.05)
-        #self.turnLeft()
-        #for i in range(20):
-        #    rospy.sleep(0.05)
-        #self.turnLeft()
+        self.turnLeft()
+        for i in range(20):
+            rospy.sleep(0.05)
+        self.turnRight()
+        for i in range(20):
+            rospy.sleep(0.05)
+        self.turnRight()
+        for i in range(20):
+            rospy.sleep(0.05)
+        self.turnRight()
+        for i in range(20):
+            rospy.sleep(0.05)
+        self.turnLeft()
+        for i in range(20):
+            rospy.sleep(0.05)
+        self.turnLeft()
 
 
     def stage_callback(self, data):
         self.position = data.pose.pose.position
-
-    def laser_calback(self,msg):
-            ranges = msg.ranges
-            rospy.loginfo(ranges)
 
     def move_to(self, new_position):
         self.move_x_steps(10)
@@ -133,33 +131,40 @@ class node():
 
     def turnRight(self):
         twist = Twist()
-        twist.linear.x = 1.0
-        twist.angular.z = -(math.pi)
+        twist.linear.x = 0.0
+        twist.angular.z = -(math.pi / 8)
         rospy.loginfo("Turning")
-        for i in range(20):
+        for i in range(40):
             self.cmd_vel_pub.publish(twist)
-            rospy.sleep(0.05)
+            rospy.sleep(0.1)
         
         twist = Twist()
         self.cmd_vel_pub.publish(twist)
-        rospy.loginfo("Straight")
+        rospy.loginfo("Turned Right")
+        self.reorientation
         #twist.angular.x = radian/1
 
 
     def turnLeft(self):
         twist = Twist()
-        twist.linear.x = 1.0
-        twist.angular.z = (math.pi)
+        twist.linear.x = 0.0
+        twist.angular.z = (math.pi / 8)
         rospy.loginfo("Turning")
-        for i in range(20):
+        for i in range(40):
             self.cmd_vel_pub.publish(twist)
-            rospy.sleep(0.05)
-        
+            rospy.sleep(0.1)
+
         twist = Twist()
         self.cmd_vel_pub.publish(twist)
-        rospy.loginfo("Straight")
+        rospy.loginfo("Turned Left")
         #twist.angular.x = radian/1
+        self.reorientation
 
+
+
+    def reorientation(self,msg):
+        (roll,pitch,yaw) = euler_from_quaternion([msg.pose.pose.orientation.x,msg.pose.pose.orientation.y,msg.pose.pose.orientation.z,msg.pose.pose.orientation.w])
+        rospy.loginfo("Testing", yaw)
 
 
     def wait(self, seconds):
