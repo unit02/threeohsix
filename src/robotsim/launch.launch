@@ -21,7 +21,7 @@
   </group>
 
   <group ns="robot_5">
-    <node pkg="robotsim" name="pubnode" output="screen" type="follower.py"/>
+    <node pkg="robotsim" name="pubnode" output="screen" type="bin.py"/>
   </group>
 
   <group ns="robot_6">

@@ -4,14 +4,14 @@ from geometry_msgs.msg import Vector3, Twist
 import rospy
 from nav_msgs.msg import Odometry
 
-class follower():
+class bin():
 
     # Uses another robot's linear velocity, and publish it to its own cmd_vel
     def follow_robot(self, data):
         rospy.loginfo(rospy.get_caller_id() + "Robot to follow position %s ", data.pose.pose.position)
         rospy.loginfo(rospy.get_caller_id() + "Robot to follow %s ", data.twist.twist.linear.x)
         twist_msg = Twist()
-        twist_msg.linear.x =  data.twist.twist.linear.x
+        twist_msg =   data.twist.twist
         self.cmd_vel_pub.publish(twist_msg)
 
     def __init__(self, name):
@@ -37,7 +37,7 @@ class follower():
 # The block below will be executed when the python file is executed
 # __name__ and __main__ are built-in python variables and need to start and end with *two* underscores
 if __name__ == '__main__':
-    rospy.init_node("follower1")  # Create a node of name
-    l = follower(rospy.get_name())  # Create an instance of above class
+    rospy.init_node("bin1")  # Create a node of name
+    l = bin(rospy.get_name())  # Create an instance of above class
     rospy.spin()  # Function to keep the node running until terminated via Ctrl+C
 

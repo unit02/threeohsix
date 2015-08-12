@@ -54,22 +54,22 @@ class node():
         new_position = Point(10.0, -10, 0.0)
         self.move_to(new_position)
 
-        self.turnLeft()
-        for i in range(20):
-            rospy.sleep(0.05)
-        self.turnRight()
-        for i in range(20):
-            rospy.sleep(0.05)
-        self.turnRight()
-        for i in range(20):
-            rospy.sleep(0.05)
-        self.turnRight()
-        for i in range(20):
-            rospy.sleep(0.05)
-        self.turnLeft()
-        for i in range(20):
-            rospy.sleep(0.05)
-        self.turnLeft()
+        #self.turnLeft()
+        #for i in range(20):
+        #    rospy.sleep(0.05)
+        #self.turnRight()
+        #for i in range(20):
+        #    rospy.sleep(0.05)
+        #self.turnRight()
+        #for i in range(20):
+        #    rospy.sleep(0.05)
+        #self.turnRight()
+        #for i in range(20):
+        #    rospy.sleep(0.05)
+        #self.turnLeft()
+        #for i in range(20):
+        #    rospy.sleep(0.05)
+        #self.turnLeft()
 
 
     def stage_callback(self, data):
@@ -78,7 +78,6 @@ class node():
     def move_to(self, new_position):
         rospy.loginfo("Current position %s", self.position)
         rospy.loginfo("Moving to new position %s", new_position)
-
 
         deltaX = new_position.x - self.position.x
         deltaY = new_position.y - self.position.y
@@ -98,18 +97,17 @@ class node():
         # requires turning if it needs to go in y direction
         # has rotated 180 degrees - convention of turning is opposite
         if deltaX < 0:
-            if deltaY < 0:
+            if deltaY > 0:
                 # rotate -90 degrees (turn right)
                 self.turnRight()
-            elif deltaY > 0:
+            elif deltaY < 0:
                 # rotate -90 degrees (turn left)
                 self.turnLeft()
         elif deltaX > 0:
-            # rotate -90 degrees (turn left)
-            if deltaY < 0:
+            if deltaY > 0:
                 # rotate 90 degrees (turn left)
                 self.turnLeft()
-            elif deltaY > 0:
+            elif deltaY < 0:
                 # rotate -90 degrees (turn right)
                 self.turnRight()
 
