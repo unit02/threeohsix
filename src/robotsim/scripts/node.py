@@ -150,7 +150,6 @@ class node():
         twist = Twist()
         self.cmd_vel_pub.publish(twist)
         rospy.loginfo("Turned Right")
-        self.reorientation
         #twist.angular.x = radian/1
 
 
@@ -167,7 +166,6 @@ class node():
         self.cmd_vel_pub.publish(twist)
         rospy.loginfo("Turned Left")
         #twist.angular.x = radian/1
-        self.reorientation
 
 
 
