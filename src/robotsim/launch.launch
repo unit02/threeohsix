@@ -9,7 +9,7 @@
   </group>
 
   <group ns="robot_2">
-    <node pkg="robotsim" name="pubnode" type="talker.py"/>
+    <node pkg="robotsim" name="pubnode" type="animal.py"/>
   </group>
 
   <group ns="robot_3">

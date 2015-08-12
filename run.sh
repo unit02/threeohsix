@@ -16,5 +16,7 @@ gnome-terminal -x sh -c 'rosrun robotsim follower.py'
 source devel/setup.bash
 gnome-terminal -x sh -c 'rosrun robotsim person.py'
 source devel/setup.bash
+gnome-terminal -x sh -c 'rosrun robotsim animal.py'
+source devel/setup.bash
 gnome-terminal -x sh -c 'rosrun stage_ros stageros src/robotsim/world/orchard.world'
 
