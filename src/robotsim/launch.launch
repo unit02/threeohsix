@@ -1,36 +1,23 @@
 <launch>
 
   <group ns="robot_0">
-    <node pkg="robotsim" name="pubnode" type="talker.py"/>
-  </group>
-
-  <group ns="robot_1">
-    <node pkg="robotsim" name="pubnode" type="talker.py"/>
-  </group>
-
-  <group ns="robot_2">
     <node pkg="robotsim" name="pubnode" type="animal.py"/>
   </group>
 
-  <group ns="robot_3">
+  <group ns="robot_1">
     <node pkg="robotsim" name="pubnode" output="screen" type="picker.py"/>
+  </group>
+
+  <group ns="robot_2">
+    <node pkg="robotsim" name="pubnode" output="screen" type="bin.py"/>
+  </group>
+
+  <group ns="robot_3">
+    <node pkg="robotsim" name="pubnode" output="screen" type="person.py"/>
   </group>
 
   <group ns="robot_4">
     <node pkg="robotsim" name="pubnode" output="screen" type="node.py"/>
   </group>
-
-  <group ns="robot_5">
-    <node pkg="robotsim" name="pubnode" output="screen" type="bin.py"/>
-  </group>
-
-  <group ns="robot_6">
-    <node pkg="robotsim" name="pubnode" output="screen" type="person.py"/>
-  </group>
-
-  <group ns="robot_7">
-    <node pkg="robotsim" name="pubnode" output="screen" type="bin.py"/>
-  </group>
-
 
 </launch>

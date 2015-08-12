@@ -20,7 +20,7 @@ class bin():
         # publish its velocity to its namespace + cmd_vel
         # must change at a later state - doesnt work with just cmd_vel
         self.cmd_vel_pub = rospy.Publisher(
-            "robot_2/cmd_vel",
+            "robot_5/cmd_vel",
             Twist,
             queue_size=10
         )
@@ -28,7 +28,7 @@ class bin():
         # Subscribes to robot_4's stage information to follow
         # Must change to approprite name instead
         self.follow_robot = rospy.Subscriber(
-            "robot_1/base_pose_ground_truth",
+            "robot_4/base_pose_ground_truth",
             Odometry,
             callback=self.follow_robot,
             queue_size=10

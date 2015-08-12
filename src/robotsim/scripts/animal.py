@@ -19,7 +19,7 @@ class animal():
         rospy.loginfo("Starting node %s" % name)
         # Create new topic called laser to which it listens
         self.laser_sub = rospy.Subscriber(
-            "/robot_2/base_scan",
+            "/robot_0/base_scan",
             LaserScan,
             callback=self.laser_callback,
             queue_size=10
@@ -31,7 +31,7 @@ class animal():
           #  LaserScan, queue_size=10
         #)
         self.cmd_vel_pub = rospy.Publisher(
-            "/robot_2/cmd_vel",
+            "/robot_0/cmd_vel",
             Twist,
             queue_size=10
         )
