@@ -173,7 +173,8 @@ define bucket position
 
 
 define dog position
-( myLaser(pose [ 0.5 0 -0.4 0 ])
+( 
+  myLaser(pose [ 0.5 0 -0.4 0 ])
   drive "diff"
   size [1 0.8 0.7]	
    #body
@@ -306,9 +307,10 @@ define dog position
 # throw in a robot 
 picker( pose [ -34.5 11.25 0 0 ] name "picker1" color "pink") 
 carrier( pose [-34.5 6.5 0 0  ] name "carrier1" color "cyan")
-carrier( pose [-25.5 1.5 0 0  ] name "dog")
+dog( pose [-14.5 -15 0 0  ] name "dog")
 carrier( pose [-34.5 1.5 0 0  ] name "carrier3" color "cyan")
 carrier( pose [-5.5 -5.5 0 0  ] name "beingfollowed" color "purple")
 carrier( pose [-34.5 -5.5 0 0  ] name "follower" color "blue")
 person ( pose [-10 20 0 0 ] name "person")
 bucket( pose [ 0 0 0 0] name "bucket1" ) 
+

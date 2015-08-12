@@ -1,6 +1,5 @@
 
 include "myblock.inc"
-include "dog.inc"
 
 treetrunk( pose [ -34.5 13.5 0 0 ] ) 
 treetrunk( pose [ -28.5 13.5 0 0] ) 
