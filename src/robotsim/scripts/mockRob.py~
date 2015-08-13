@@ -200,7 +200,7 @@ class mockRob():
 """
 How to run the tests:
 1) roscore
-2) new terminal: caqtkin_make, source, rosrun robotsim mockRob.py
+2) new terminal: source, rosrun mockRob.py
 """	
 class test_movement(unittest.TestCase):
  
