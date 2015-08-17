@@ -11,3 +11,12 @@ srv_gen/
 src/robotsim/.idea
 src/robotsim/scripts/.idea
 .idea/
+.py~
+.pyc
+.world~
+.test~
+.inc~
+.launch~
+.txt~
+.sh~
+.gitignore~
