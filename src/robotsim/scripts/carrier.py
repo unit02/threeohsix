@@ -1,14 +1,10 @@
 #!/usr/bin/env python
-import node.py
+from havesting_robot import havesting_robot
 
-class carrier(node):
-
-	def __init__(self):
-		node.__init__(self, "square", 1,1, "red")
-
+class carrier(havesting_robot):
 
 	def updateBin (self):
-        #every 1 second picker "pick"s kiwifruit
+		#every 1 second picker "pick"s kiwifruit
 		#sends signal to nearest carrier to updateBin()
 		pass
 

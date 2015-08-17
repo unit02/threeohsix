@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-import node.py
+from node import node
 
 
-class havestingRobot(node):
+class havesting_robot(node):
 
 	#def __init__(self):
 	#dynamicObjects.__init__(self, square, 1,1, "red")
