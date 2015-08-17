@@ -5,7 +5,9 @@ import rospy
 from nav_msgs.msg import Odometry
 from node import node
 
+
 class bin(node):
+
 
     def __init__(self, name, to_follow):
         super(bin, self).__init__(name, False)

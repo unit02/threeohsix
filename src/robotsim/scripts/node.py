@@ -1,14 +1,6 @@
 #!/usr/bin/env python
-
-# Shape
 # top speed
 # working speed
-# color
-
-# methods
-# moveForward
-# turn (int degrees)
-# wait (int timeToWaitInSeconds)
 
 import rospy
 import math
@@ -17,6 +9,7 @@ from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Point, Twist
 import numpy as np
 from sensor_msgs.msg import LaserScan
+
 
 class node(object):
 
@@ -208,9 +201,10 @@ class node(object):
 # The block below will be executed when the python file is executed
 # __name__ and __main__ are built-in python variables and need to start and end with *two* underscores
 if __name__ == '__main__':
-    rospy.init_node("robot_4")  # Create a node of name laser_roomba
-    l = node(rospy.get_name(), False)  # Create an instance of above class
-    l.wait(5)
-    new_position = Point(38, 5.0, 0.0)
-    l.move_to(new_position)
-    rospy.spin()  # Function to keep the node running until terminated via Ctrl+C
+    pass
+    # rospy.init_node("robot_4")  # Create a node of name laser_roomba
+    # l = node(rospy.get_name(), False)  # Create an instance of above class
+    # l.wait(5)
+    # new_position = Point(38, 5.0, 0.0)
+    # l.move_to(new_position)
+    # rospy.spin()  # Function to keep the node running until terminated via Ctrl+C
