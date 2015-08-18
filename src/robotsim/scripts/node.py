@@ -57,24 +57,22 @@ class node(object):
             rate = rospy.Rate(10)
             #Avoid obstacles that were detected within 3m ahead
             if (min_distance <= 3):
-                #Recognise the turning direction, given that laser beam is 60 degrees wide
-                if (ranges.index(min_distance) <=30):
+                # Recognise the turning direction,
+                # given that laser beam is 60 degrees wide
+                
+                # If going to a corner
+                if (ranges[0] <= 3.0) & (ranges[59] <= 3.0):
+                    twist_msg.linear.x = 0
+                    twist_msg.angular.z = 270
+                    self.cmd_vel_pub.publish(twist_msg)
+                    
+                elif (ranges.index(min_distance) <=30):
                     #rospy.loginfo(ranges.index(min_distance))
-                    #now = rospy.Time.now().to_sec()
-                    #end_time = now + 5
-                    #angle_velocity = 100
-                    #while end_time != now:
-                    #rospy.loginfo(end_time)
-                    #rospy.loginfo(now)
                     twist_msg.linear.x = 1
                     twist_msg.angular.z = 1
                     self.cmd_vel_pub.publish(twist_msg)
                 else:
                     #rospy.loginfo(ranges.index(min_distance))
-                    #now = rospy.Time.now().to_sec()
-                    #end_time = now + 5
-                    #angle_velocity = 100
-                    #while end_time != now:
                     twist_msg.linear.x = 1
                     twist_msg.angular.z = -1
                     self.cmd_vel_pub.publish(twist_msg)
