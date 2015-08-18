@@ -32,4 +32,5 @@ if __name__ == '__main__':
     l = animal(rospy.get_name(), True)  # Create an instance of above class
     l.random_move()
 
+
     rospy.spin()  # Function to keep the node running until terminated via Ctrl+C

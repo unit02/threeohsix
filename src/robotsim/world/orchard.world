@@ -307,7 +307,7 @@ define dog position
 # throw in a robot 
 dog( pose [-14.5 -15 0 0  ] name "dog")
 picker( pose [-34.5.0 6.5 0 0  ] name "picker" color "violet")
-bucket( pose [-36.5 6.5 0 0  ] name "follower")
+bucket( pose [-11.5 -15 0 0  ] name "bin")
 person ( pose [-38 20 0 0 ] name "person")
 carrier( pose [34.5.0 -6.5 0 0  ] name "carrier" color "cyan")
 

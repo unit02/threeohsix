@@ -65,17 +65,17 @@ class node(object):
                     
                 elif (ranges.index(min_distance) <=30):
                     #rospy.loginfo(ranges.index(min_distance))
-                    twist_msg.linear.x = 1
+                    twist_msg.linear.x = 1.0
                     twist_msg.angular.z = 1
                     self.cmd_vel_pub.publish(twist_msg)
                 else:
                     #rospy.loginfo(ranges.index(min_distance))
-                    twist_msg.linear.x = 1
+                    twist_msg.linear.x = 1.0
                     twist_msg.angular.z = -1
                     self.cmd_vel_pub.publish(twist_msg)
             else:
                 #Moving straight
-                twist_msg.linear.x = 1
+                twist_msg.linear.x = 1.0
                 twist_msg.angular.z = 0
                 self.cmd_vel_pub.publish(twist_msg)
             rate.sleep()
