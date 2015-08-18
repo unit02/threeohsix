@@ -50,17 +50,14 @@ class node(object):
     def laser_callback(self,msg):
             #Get the ranges of the laser scan and find the minimum
             ranges = msg.ranges
-            #rospy.loginfo(ranges)
             min_distance = np.nanmin(ranges)
-            #rospy.loginfo("Minimum distance: %f" % min_distance)
             twist_msg = Twist()
             rate = rospy.Rate(10)
+            
             #Avoid obstacles that were detected within 3m ahead
             if (min_distance <= 3):
                 # Recognise the turning direction,
                 # given that laser beam is 60 degrees wide
-                
-                # If going to a corner
                 if (ranges[0] <= 3.0) & (ranges[59] <= 3.0):
                     twist_msg.linear.x = 0
                     twist_msg.angular.z = 270
