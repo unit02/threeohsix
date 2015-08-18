@@ -17,7 +17,7 @@
   </group>
 
   <group ns="robot_4">
-    <node pkg="robotsim" name="pubnode" output="screen" type="node.py"/>
+    <node pkg="robotsim" name="pubnode" output="screen" type="carrier.py"/>
   </group>
 
 </launch>

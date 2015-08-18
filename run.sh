@@ -6,13 +6,13 @@ catkin_make
 source devel/setup.bash
 gnome-terminal -x sh -c 'roslaunch robotsim launch.launch'
 source devel/setup.bash
-gnome-terminal -x sh -c 'rosrun robotsim talker.py'
-source devel/setup.bash
 gnome-terminal -x sh -c 'rosrun robotsim node.py'
 source devel/setup.bash
 gnome-terminal -x sh -c 'rosrun robotsim bin.py'
 source devel/setup.bash
 gnome-terminal -x sh -c 'rosrun robotsim picker.py'
+source devel/setup.bash
+gnome-terminal -x sh -c 'rosrun robotsim carrier.py'
 source devel/setup.bash
 gnome-terminal -x sh -c 'rosrun robotsim person.py'
 source devel/setup.bash

@@ -1,14 +1,13 @@
 #!/usr/bin/env python
-import node.py
+import rospy
+from geometry_msgs.msg import Point
+from havesting_robot import havesting_robot
 
-class carrier(node):
 
-	def __init__(self):
-		node.__init__(self, "square", 1,1, "red")
-
+class carrier(havesting_robot):
 
 	def updateBin (self):
-        #every 1 second picker "pick"s kiwifruit
+		#every 1 second picker "pick"s kiwifruit
 		#sends signal to nearest carrier to updateBin()
 		pass
 
@@ -24,6 +23,13 @@ class carrier(node):
 	# after reciving the signal from the picker, begins to follow it. use tutlebot follower as a beginning on how to do this
 		pass
 
+if __name__ == '__main__':
+    rospy.init_node("robot_4")  # Create a node of name laser_roomba
+    l = carrier(rospy.get_name(), False)  # Create an instance of above class
+    l.wait(5)
+    new_position = Point(38, 5.0, 0.0)
+    l.move_to(new_position)
+    rospy.spin()  # Function to keep the node running until terminated via Ctrl+C
 
 
 	
