@@ -12,7 +12,9 @@ from sensor_msgs.msg import LaserScan
 import roslib
 roslib.load_manifest('robotsim')
 from robotsim.msg import bin_call
+from enum import Enum
 
+Face = Enum("Face", "North South East West")
 
 class node(object):
 
@@ -23,6 +25,7 @@ class node(object):
         self.twist.linear.x = 1.0
         self.name = name
         self.laser_on = laser_on
+        self.rad_orient = 0.0
 
         rospy.loginfo("Starting node %s" % name)
 
@@ -60,7 +63,6 @@ class node(object):
     def _pickBin_callback(self,bin_call):
         rospy.loginfo("Recieving messages from %s", bin_call.robot_name )
 
-
     # called when new message arrives from laser topic
     def laser_callback(self,msg):
             #Get the ranges of the laser scan and find the minimum
@@ -97,45 +99,59 @@ class node(object):
 
     def stage_callback(self, data):
         self.position = data.pose.pose.position
+        quanternion = data.pose.pose.orientation
+        qList = [quanternion.x, quanternion.y, quanternion.z, quanternion.w]
+        self.rad_orient = euler_from_quaternion(qList)[2]
+
+    # assuming Face.East is initial facing direction
+    def face_value(self):
+        # rad_orient is apporixmately 0.0 (0 degrees away from initial)
+        if self.rad_orient < 0.2 and self.rad_orient > -0.2:
+            return Face.East
+        # rad_orient is apporixmately 3.14 (180 degrees away from initial)
+        elif self.rad_orient > (-math.pi - 0.2) and self.rad_orient < (-math.pi + 0.2):
+            return Face.West
+        # rad_orient is apporixmately -1.7 (-90 degrees away from initial)
+        elif self.rad_orient < 0:
+            return Face.South
+        # rad_orient is apporixmately 1.7 (90 degrees away from initial)
+        else:
+            return Face.North
 
     def move_to(self, new_position):
+        face = self.face_value()
+        rospy.loginfo("Initial face direction: %s", face)
         rospy.loginfo("Current position %s", self.position)
         rospy.loginfo("Moving to new position %s", new_position)
 
-        deltaX = new_position.x - self.position.x
-        deltaY = new_position.y - self.position.y
-        # moves in x direction of stage
+        # difference interms of x and y distances - assume first move in x then y
+        steps_one = new_position.x - self.position.x
+        steps_two = new_position.y - self.position.y
 
-        rospy.loginfo("DeltaX %s, DeltaY %s", int(deltaX), int(deltaY))
-        if deltaX < 0:
-            # rotate 180 degrees
-            self.turnLeft()
-            self.turnLeft()
+        # reverts so it moves deltaY distance first, y then x
+        if face == Face.South or face == Face.North:
+            temp = steps_two
+            steps_two = steps_one
+            steps_one = temp
 
-        if deltaX != 0:
-            self.move_x_steps(int(deltaX))
+        rospy.loginfo("Moving %s metres in %s, turning then moving %s metres", int(steps_one), face, int(steps_two))
 
-        # moves in y direction of stage
-
-        # requires turning if it needs to go in y direction
-        # has rotated 180 degrees - convention of turning is opposite
-        if deltaX < 0:
-            if deltaY > 0:
-                # rotate -90 degrees (turn right)
-                self.turnRight()
-            elif deltaY < 0:
-                # rotate -90 degrees (turn left)
+        if steps_one != 0:
+            # opposite direction to what robot is facing - rotate 180 degrees
+            if (steps_one < 0 and (face == Face.East or face == Face.North)) \
+                    or (steps_one > 0 and (face == Face.West or face == Face.South)):
                 self.turnLeft()
-        elif deltaX > 0:
-            if deltaY > 0:
-                # rotate 90 degrees (turn left)
                 self.turnLeft()
-            elif deltaY < 0:
-                # rotate -90 degrees (turn right)
-                self.turnRight()
+                face = self.face_value()
+            self.move_x_steps(int(steps_one))
 
-        if deltaY != 0:
-            self.move_x_steps(int(deltaY))
+        if steps_two != 0:
+            if (steps_two > 0 and (face == Face.East or face == Face.South)) \
+                    or (steps_two < 0 and (face == Face.West or face == Face.North)):
+                self.turnLeft()
+            else:
+                self.turnRight()
+            self.move_x_steps(int(steps_two))
 
         rospy.loginfo("Finished moving to the new position %s", new_position)
 
@@ -170,7 +186,7 @@ class node(object):
         twist = Twist()
         self.cmd_vel_pub.publish(twist)
         rospy.loginfo("Turned Right")
-        #twist.angular.x = radian/1
+        rospy.loginfo("New oreientation %s", self.rad_orient)
 
     def turnLeft(self):
         twist = Twist()
@@ -184,7 +200,7 @@ class node(object):
         twist = Twist()
         self.cmd_vel_pub.publish(twist)
         rospy.loginfo("Turned Left")
-        #twist.angular.x = radian/1
+        rospy.loginfo("New oreientation %s", self.rad_orient)
 
     def reorientation(self,msg):
         (roll,pitch,yaw) = euler_from_quaternion([msg.pose.pose.orientation.x,
@@ -205,7 +221,6 @@ class node(object):
             rospy.sleep(0.1)
 
         rospy.loginfo("Awake!")
-
 
 
 # The block below will be executed when the python file is executed
