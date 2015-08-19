@@ -9,6 +9,9 @@ from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Point, Twist
 import numpy as np
 from sensor_msgs.msg import LaserScan
+import roslib
+roslib.load_manifest('robotsim')
+from robotsim.msg import bin_call
 
 
 class node(object):
@@ -45,6 +48,18 @@ class node(object):
             callback=self.stage_callback,
             queue_size=10
         )
+        #Subscribes to the bin info topic to receive data on whether bins
+        #need to be picked up
+        self.pick_bin_sub = rospy.Subscriber(
+                "/bin_info",
+                bin_call,
+                callback=self._pickBin_callback,
+                queue_size=10
+            )
+
+    def _pickBin_callback(self,bin_call):
+        rospy.loginfo("Recieving messages from %s", bin_call.robot_name )
+
 
     # called when new message arrives from laser topic
     def laser_callback(self,msg):
