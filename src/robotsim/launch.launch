@@ -20,4 +20,8 @@
     <node pkg="robotsim" name="pubnode" output="screen" type="carrier.py"/>
   </group>
 
+  <group ns="robot_5">
+    <node pkg="robotsim" name="pubnode" output="screen" type="tractor.py"/>
+  </group>
+
 </launch>
