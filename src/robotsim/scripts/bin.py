@@ -59,6 +59,9 @@ class bin(node):
         rospy.loginfo("Sending message to be picked up!")
         msg = bin_call()
         msg.robot_name = self.name
+        msg.x_coordinate = data.pose.pose.position.x
+        msg.y_coordinate = data.pose.pose.position.y
+        msg.isFull = False
         self.need_to_be_picker.publish(msg)
 
 
