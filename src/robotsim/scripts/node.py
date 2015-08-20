@@ -26,6 +26,8 @@ class node(object):
         self.name = name
         self.laser_on = laser_on
         self.rad_orient = 0.0
+        self.goal = 0.0
+
 
         rospy.loginfo("Starting node %s" % name)
 
@@ -34,9 +36,9 @@ class node(object):
             Twist,
             queue_size=10
         )
-        if laser_on:
+
         # Create new topic called laser to which it listens
-            self.laser_sub = rospy.Subscriber(
+        self.laser_sub = rospy.Subscriber(
                 self.name + "/base_scan",
                 LaserScan,
                 callback=self.laser_callback,
@@ -51,20 +53,12 @@ class node(object):
             callback=self.stage_callback,
             queue_size=10
         )
-        #Subscribes to the bin info topic to receive data on whether bins
-        #need to be picked up
-        self.pick_bin_sub = rospy.Subscriber(
-                "/bin_info",
-                bin_call,
-                callback=self._pickBin_callback,
-                queue_size=10
-            )
 
-    def _pickBin_callback(self,bin_call):
-        rospy.loginfo("Recieving messages from %s", bin_call.robot_name )
+
 
     # called when new message arrives from laser topic
     def laser_callback(self,msg):
+        if self.laser_on:
             #Get the ranges of the laser scan and find the minimum
             ranges = msg.ranges
             min_distance = np.nanmin(ranges)
