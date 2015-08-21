@@ -11,7 +11,7 @@ class animal(node):
     #Chooses a random number between 1 and 6 and either turns or changes speed
     def random_move(self):
         twist_randmsg = Twist()
-        random_action=randint(0,4)
+        random_action=randint(0,3)
         threading.Timer(3.0, self.random_move).start()
 
         if random_action==0:
