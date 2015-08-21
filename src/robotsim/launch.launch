@@ -24,4 +24,12 @@
     <node pkg="robotsim" name="pubnode" output="screen" type="tractor.py"/>
   </group>
 
+  <group ns="robot_6">
+    <node pkg="robotsim" name="pubnode" output="screen" type="person.py"/>
+  </group>
+
+  <group ns="robot_7">
+    <node pkg="robotsim" name="pubnode" type="animal.py"/>
+  </group>
+
 </launch>

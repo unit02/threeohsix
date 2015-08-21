@@ -2,7 +2,7 @@
 import rospy
 from node import node
 
-class person(node):
+class tractor(node):
     pass
 
 # Is similar to person
@@ -12,6 +12,6 @@ class person(node):
 if __name__ == '__main__':
     rospy.init_node("robot_5")  # Create a node of name laser_roomba
     l = tractor(rospy.get_name(), True)  # Create an instance of above class
-    l.move_x_steps(10)
+    l.move_x_steps(100)
     l.turnRight()
     rospy.spin()  # Function to keep the node running until terminated via Ctrl+C
