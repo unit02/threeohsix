@@ -99,14 +99,15 @@ class node(object):
 
     # assuming Face.East is initial facing direction
     def face_value(self):
+        # if rad_orient is less than 0.2, or greater than -pi*2 + 0.2 then it is facing east
         # rad_orient is apporixmately 0.0 (0 degrees away from initial)
-        if self.rad_orient < 0.2 and self.rad_orient > -0.2:
+        if self.rad_orient < -0.2 or self.rad_orient > (-2 * math.pi + 0.2):
             return Face.East
-        # rad_orient is apporixmately 3.14 (180 degrees away from initial)
+        # if rad_orient is between -3.34 and -2.94 then it is facing west
         elif self.rad_orient > (-math.pi - 0.2) and self.rad_orient < (-math.pi + 0.2):
             return Face.West
         # rad_orient is apporixmately -1.7 (-90 degrees away from initial)
-        elif self.rad_orient < 0:
+        elif self.rad_orient > -math.pi:
             return Face.South
         # rad_orient is apporixmately 1.7 (90 degrees away from initial)
         else:
@@ -179,9 +180,11 @@ class node(object):
         
         twist = Twist()
         self.cmd_vel_pub.publish(twist)
-        rospy.loginfo("Turned Right")
-        rospy.loginfo("New oreientation %s", self.rad_orient)
 
+        rospy.loginfo("Turned Right")
+        rospy.loginfo("New Orientation %s", self.rad_orient)
+        self.reorientation()
+        rospy.loginfo("New Orientation %s", self.rad_orient)
     def turnLeft(self):
         twist = Twist()
         twist.linear.x = 0.0
@@ -194,15 +197,68 @@ class node(object):
         twist = Twist()
         self.cmd_vel_pub.publish(twist)
         rospy.loginfo("Turned Left")
-        rospy.loginfo("New oreientation %s", self.rad_orient)
+        rospy.loginfo("New orientation %s", self.rad_orient)
+        self.reorientation()
+        rospy.loginfo("New orientation %s", self.rad_orient)
 
-    def reorientation(self,msg):
-        (roll,pitch,yaw) = euler_from_quaternion([msg.pose.pose.orientation.x,
-                                                  msg.pose.pose.orientation.y,
-                                                  msg.pose.pose.orientation.z,msg.
-                                                 pose.pose.orientation.w])
-        rospy.loginfo("Testing", yaw)
+    def reorientation(self):
+        twist = Twist()
+        if self.rad_orient> 0:
+            remainder = (math.pi/2) % self.rad_orient
+        else:
+            remainder = 0
+        if remainder < (math.pi/float(4)):
+            rad_dist = remainder
+        else:
+            rad_dist = math.pi/2 - remainder
 
+        if (remainder > 0):
+            # when the robot is facing east, but is slightly too north
+            if (self.Face == Face.East and self.rad_orient > -math.pi):
+                twist.angular.z = -rad_dist
+                for i in range (10):
+                    self.cmd_vel_pub.publish(twist)
+                    rospy.sleep(0.1)
+            # when the robot is racing east, but is slightly too south
+            elif (self.Face == Face.East and self.rad_orient < -math.pi):
+                twist.angular.z = rad_dist
+                for i in range (10):
+                    self.cmd_vel_pub.publish(twist)
+                    rospy.sleep(0.1)
+            elif (self.Face == Face.South and self.rad_orient > -math.pi/2):
+                twist.angular.z = -rad_dist
+                for i in range (10):
+                    self.cmd_vel_pub.publish(twist)
+                    rospy.sleep(0.1)
+            elif (self.Face == Face.South and self.rad_orient < -math.pi/2):
+                twist.angular.z = rad_dist
+                for i in range (10):
+                    self.cmd_vel_pub.publish(twist)
+                    rospy.sleep(0.1)
+            elif (self.Face == Face.West and self.rad_orient > -math.pi):
+                twist.angular.z = -rad_dist
+                for i in range (10):
+                    self.cmd_vel_pub.publish(twist)
+                    rospy.sleep(0.1)
+            elif (self.Face == Face.West and self.rad_orient < -math.pi):
+                twist.angular.z = rad_dist
+                for i in range (10):
+                    self.cmd_vel_pub.publish(twist)
+                    rospy.sleep(0.1)
+            elif (self.Face == Face.North and self.rad_orient > -math.pi - (math.pi/2)):
+                twist.angular.z = -rad_dist
+                for i in range (10):
+                    self.cmd_vel_pub.publish(twist)
+                    rospy.sleep(0.1)
+            elif (self.Face == Face.West and self.rad_orient < -math.pi - (math.pi/2)):
+                twist.angular.z = rad_dist
+                for i in range (10):
+                    self.cmd_vel_pub.publish(twist)
+                    rospy.sleep(0.1)
+        else:
+            pass
+
+                    
     def wait(self, seconds):
         runtime = int(10 * seconds)
         twist = Twist()
