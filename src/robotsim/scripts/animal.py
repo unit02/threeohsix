@@ -16,28 +16,28 @@ class animal(node):
 
         if random_action==0:
             twist_randmsg.angular.z = math.pi
-            twist_randmsg.linear.x = randint(0,3) / 2
+            twist_randmsg.linear.x = randint(0,3)
             for i in range(10):
                 self.cmd_vel_pub.publish(twist_randmsg)
                 rospy.sleep(0.05)
 
         elif random_action==1:
             twist_randmsg.angular.z = -math.pi
-            twist_randmsg.linear.x = randint(0,3) / 2
+            twist_randmsg.linear.x = randint(0,3)
             for i in range(10):
                 self.cmd_vel_pub.publish(twist_randmsg)
                 rospy.sleep(0.05)
 
         elif random_action==2:
             twist_randmsg.angular.z = math.pi * 2
-            twist_randmsg.linear.x = randint(0,3) / 2
+            twist_randmsg.linear.x = randint(0,3)
             for i in range(10):
                 self.cmd_vel_pub.publish(twist_randmsg)
                 rospy.sleep(0.05)
 
         elif random_action==3:
             twist_randmsg.angular.z = -math.pi * 2
-            twist_randmsg.linear.x = randint(0,3) / 2
+            twist_randmsg.linear.x = randint(0,3)
             for i in range(10):
                 self.cmd_vel_pub.publish(twist_randmsg)
                 rospy.sleep(0.05)
