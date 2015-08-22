@@ -237,7 +237,7 @@ class node(object):
             rad_dist = abs(self.rad_orient) - math.pi/2
             rospy.loginfo("1rad_dist is %s", rad_dist)
         elif remainder == (math.pi/2) and self.rad_orient > (3*math.pi/4):
-            rad_dis = math.pi - abs(self.rad_orient)
+            rad_dist = math.pi - abs(self.rad_orient)
             rospy.loginfo("2rad_dist is %s", rad_dist)
         elif self.rad_orient < math.pi/4 and self.rad_orient > -math.pi/4:
             rad_dist = abs(self.rad_orient)
