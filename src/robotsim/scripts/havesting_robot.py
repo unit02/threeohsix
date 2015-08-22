@@ -4,23 +4,31 @@ import rospy
 import roslib
 roslib.load_manifest('robotsim')
 from robotsim.msg import bin_call
+from geometry_msgs.msg import Point
 
 
 class havesting_robot(node):
 	#Subscribes to the bin info topic to receive data on whether bins
     #need to be picked up
-    def __init__(self,name, laser_on):
+    def __init__(self,name,robot_type, laser_on):
+        self.robot_type = robot_type
         super(havesting_robot,self).__init__(name,laser_on)
-        self.pick_bin_sub = rospy.Subscriber(
+        node = self.pick_bin_sub = rospy.Subscriber(
 			"/bin_info",
 			bin_call,
 			callback=self._pickBin_callback,
-			queue_size=10
+			queue_size=1
 		)
 
     def _pickBin_callback(self,bin_call):
-			#rospy.loginfo("Recieving messages from %s xpos : %f, y pos : %f, isFull", bin_call.robot_name,bin_call.x_coordinate, bin_call.y_coordinate )
-            pass
+        self.wait(5)
+        new_position = Point(bin_call.x_coordinate + 2, bin_call.y_coordinate + 2, 0.0)
+        rospy.loginfo("moving to newwwww position")
+        self.move_to(new_position)
+        rospy.loginfo("Recieving messages from %s xpos : %f, y pos : %f, isFull", bin_call.robot_name,bin_call.x_coordinate, bin_call.y_coordinate)
+
+
+
 
 
 
