@@ -22,7 +22,7 @@ class node(object):
     def __init__(self, name, laser_on):
         self.position = Point()
         self.twist = Twist()
-        self.twist.linear.x = 1.0
+        self.twist.linear.x = 5.0
         self.name = name
         self.laser_on = laser_on
         self.rad_orient = 0.0

@@ -36,10 +36,10 @@ class bin(node):
             queue_size=10
         )
 
-    def stop_following(self):
-        pass
-        #self.following.unregister()
-        #self.isFull = True
+    def stop_following(self,var):
+        if var.unfollow == True:
+            self.following.unregister()
+            self.isFull = True
 
     def move_with_robot(self,data):
          #rospy.loginfo(rospy.get_caller_id() + "Robot to follow position %s ", data.pose.pose.position)
@@ -66,7 +66,7 @@ class bin(node):
             self.time_to_detach = rospy.Subscriber(
             to_follow + "/detach",
             bin_detach,
-            callback=self.stop_following(),
+            callback=self.stop_following,
             queue_size=10
         )
 

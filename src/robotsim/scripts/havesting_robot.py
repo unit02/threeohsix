@@ -20,12 +20,13 @@ class havesting_robot(node):
 			queue_size=1
 		)
         self.detachment = rospy.Publisher(
-            "/detach",
+            self.name + "/detach",
             bin_detach,
-            queue_size=10
+            queue_size=1
         )
 
     def detach_bin(self):
+        rospy.loginfo("Bin detaching")
         msg = bin_detach()
         msg.unfollow = True
         self.detachment.publish(msg)
