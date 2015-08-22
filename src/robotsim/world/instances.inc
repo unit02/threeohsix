@@ -2,6 +2,7 @@
 include "myblock.inc"
 
 ground( pose [ 0 0 0 0] ) 
+driveway( pose [ -30 26.5 0 0] ) 
 fenceHorizontal( pose [ 0 30 0 0] ) 
 fenceHorizontal( pose [ 0 -30 0 0 ] ) 
 fenceVertical( pose [ 45 0 0 0 ] ) 
@@ -33,5 +34,14 @@ tree( pose [ 19.5 13.5 1.8 0 ] )
 tree( pose [ 25.5 13.5 1.8 0 ] ) 
 tree( pose [ 31.5 13.5 1.8 0 ] ) 
 
-
-
+post( pose [ -31.5 13.5 0 0 ] ) 
+post( pose [ -25.5 13.5 0 0] ) 
+post( pose [ -19.5 13.5 0 0 ] ) 
+post( pose [ -13.5 13.5 0 0 ] ) 
+post( pose [ -7.5 13.5 0 0 ] ) 
+post( pose [ -1.5 13.5 0 0 ] ) 
+post( pose [ 4.5 13.5 0 0 ] ) 
+post( pose [ 10.5 13.5 0 0 ] ) 
+post( pose [ 16.5 13.5 0 0 ] ) 
+post( pose [ 22.5 13.5 0 0 ] ) 
+post( pose [ 28.5 13.5 0 0 ] ) 

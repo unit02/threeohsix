@@ -28,15 +28,23 @@ if __name__ == '__main__':
     for i in range(0, numberofrows):
         new_position = Point(x_point+length_row, y_point, 0.0)
     	p.move_to(new_position)
-	#Wait here for the new message
-	new_position = Point(x_point+length_row, y_point-4.5, 0.0)
 	p.move_to(new_position)
-        y_point=y_point-4.5
+	#Wait here for the new message
+	new_position = Point(x_point+length_row, y_point-4.7, 0.0)
+	p.move_to(new_position)
+	p.move_to(new_position)
+	#p.reorientation()
+        y_point=y_point-4.7
+	
         new_position = Point(x_point, y_point, 0.0) 
         p.move_to(new_position)
-        new_position = Point(x_point+length_row, y_point-4.5, 0.0)
 	p.move_to(new_position)
-        y_point=y_point-4.5
+	#p.reorientation()
+        new_position = Point(x_point+length_row, y_point-4.7, 0.0)
+	p.move_to(new_position)
+	p.move_to(new_position)
+	#p.reorientation()
+        y_point=y_point-4.7
 	
 
     #new_position = Point(-34.5, -8.5, 0.0)
