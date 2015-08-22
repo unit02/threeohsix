@@ -13,12 +13,6 @@ class havesting_robot(node):
     def __init__(self,name, laser_on):
         super(havesting_robot,self).__init__(name,laser_on)
 
-        self.pick_bin_sub = rospy.Subscriber(
-			"/bin_info",
-			bin_call,
-			callback=self._pickBin_callback,
-			queue_size=1
-		)
         self.detachment = rospy.Publisher(
             self.name + "/detach",
             bin_detach,
@@ -30,16 +24,6 @@ class havesting_robot(node):
         msg = bin_detach()
         msg.unfollow = True
         self.detachment.publish(msg)
-
-
-
-    def _pickBin_callback(self,bin_call):
-        pass
-        # self.wait(5)
-        # new_position = Point(bin_call.x_coordinate + 2, bin_call.y_coordinate + 2, 0.0)
-        # rospy.loginfo("moving to newwwww position")
-        # self.move_to(new_position)
-        #rospy.loginfo("Recieving messages from %s xpos : %f, y pos : %f, isFull", bin_call.robot_name,bin_call.x_coordinate, bin_call.y_coordinate)
 
 
 

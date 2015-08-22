@@ -2,27 +2,30 @@
 import rospy
 from geometry_msgs.msg import Point
 from havesting_robot import havesting_robot
+import roslib
+roslib.load_manifest('robotsim')
+from robotsim.msg import bin_call
 import sys
 
 
 class carrier(havesting_robot):
+    def __init__(self, name, laser_on ):
+        super(carrier,self).__init__(name, laser_on)
 
-	def updateBin (self):
-		#every 1 second picker "pick"s kiwifruit
-		#sends signal to nearest carrier to updateBin()
-		pass
+        self.pick_bin_sub = rospy.Subscriber(
+            "/bin_info",
+            bin_call,
+            callback=self._pickBin_callback,
+            queue_size=1
+        )
 
-	def leaveBin(self):
-	# occurs at end of the row
-		pass
+    def _pickBin_callback(self,bin_call):
+         self.wait(5)
+         new_position = Point(bin_call.x_coordinate + 2, bin_call.y_coordinate + 2, 0.0)
+         rospy.loginfo("moving to newwwww position")
+         self.move_to(new_position)
+         rospy.loginfo("Recieving messages from %s xpos : %f, y pos : %f, isFull", bin_call.robot_name,bin_call.x_coordinate, bin_call.y_coordinate)
 
-	def retrieveNewBin(self):
-	# after bin is left, the carrier gets a new bin
-		pass
-
-	def followPicker(self):
-	# after reciving the signal from the picker, begins to follow it. use tutlebot follower as a beginning on how to do this
-		pass
 
 if __name__ == '__main__':
     rospy.init_node("robot_"+sys.argv[1])  # Create a node of name laser_roomba
@@ -30,4 +33,4 @@ if __name__ == '__main__':
     rospy.spin()  # Function to keep the node running until terminated via Ctrl+C
 
 
-	
+
