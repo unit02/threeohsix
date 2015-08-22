@@ -19,9 +19,14 @@ class havesting_robot(node):
 		)
 
     def _pickBin_callback(self,bin_call):
+<<<<<<< HEAD
         pass
 			#rospy.loginfo("Recieving messages from %s xpos : %f, y pos : %f, isFull", bin_call.robot_name,bin_call.x_coordinate, bin_call.y_coordinate )
 
+=======
+			#rospy.loginfo("Recieving messages from %s xpos : %f, y pos : %f, isFull", bin_call.robot_name,bin_call.x_coordinate, bin_call.y_coordinate )
+            pass
+>>>>>>> 22dfa8ef0ba945ff0311ac10d44c8bacbbfc3dfc
 
 
 

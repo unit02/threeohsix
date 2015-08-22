@@ -69,6 +69,6 @@ class bin(node):
 # __name__ and __main__ are built-in python variables and need to start and end with *two* underscores
 if __name__ == '__main__':
     rospy.init_node("robot_2")  # Create a node of name robot_2
-    l = bin(rospy.get_name(), "robot_0")  # Create an instance of above class
+    l = bin(rospy.get_name(), "robot_1")  # Create an instance of above class
     rospy.spin()  # Function to keep the node running until terminated via Ctrl+C
 
