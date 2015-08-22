@@ -7,7 +7,7 @@ import roslib
 roslib.load_manifest('robotsim')
 from std_msgs.msg import String
 from node import node
-from robotsim.msg import bin_call,bin_detach
+from robotsim.msg import bin_call,bin_detach,attach_bin
 import std_msgs
 import sys
 
@@ -41,6 +41,12 @@ class bin(node):
             self.following.unregister()
             self.isFull = True
             self.pick_me_up(self.position)
+            self.attach_time = rospy.Subscriber(
+                "/attach",
+                attach_bin,
+                callback=self.attach_to_robot,
+                queue_size=10
+            )
 
 
 
@@ -55,6 +61,13 @@ class bin(node):
             twist_msg.linear.y = -1 * twist_msg.linear.y
 
         self.cmd_vel_pub.publish(twist_msg)
+
+    def attach_to_robot(self,msg):
+        if msg.bin_name == self.name:
+            rospy.loginfo("Attaching to %s", msg.to_attach_name)
+            self.follow_robot(msg.to_attach_name)
+
+
 
 
     # Uses another robot's linear velocity, and publish it to its own cmd_vel
@@ -74,12 +87,13 @@ class bin(node):
         )
 
 
+
     #creates message to post to the bin_info topic
     def pick_me_up(self, bin_position):
         #if self.isFull == True:
         rospy.loginfo("Sending message to be picked up!")
         msg = bin_call()
-        msg.robot_name = self.name
+        msg.bin_name = self.name
         msg.x_coordinate = bin_position.x
         msg.y_coordinate = bin_position.y
         self.need_to_be_picker.publish(msg)

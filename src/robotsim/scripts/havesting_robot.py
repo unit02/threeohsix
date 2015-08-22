@@ -3,7 +3,7 @@ from node import node
 import rospy
 import roslib
 roslib.load_manifest('robotsim')
-from robotsim.msg import bin_call, bin_detach
+from robotsim.msg import bin_call, bin_detach, attach_bin
 from geometry_msgs.msg import Point
 
 
@@ -18,6 +18,18 @@ class havesting_robot(node):
             bin_detach,
             queue_size=1
         )
+        self.attachment = rospy.Publisher(
+            "/attach_bin",
+            attach_bin,
+            queue_size=1
+        )
+
+    def bin_attach(self, bin_name):
+        rospy.loginfo("Bin attaching")
+        msg = attach_bin()
+        msg.to_attach_name = self.name
+        msg.bin_name = bin_name
+        self.attachment.publish(msg)
 
     def detach_bin(self):
         rospy.loginfo("Bin detaching")

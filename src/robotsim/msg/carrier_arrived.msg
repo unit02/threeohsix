@@ -1,2 +1,0 @@
-boolean has_arrived
-

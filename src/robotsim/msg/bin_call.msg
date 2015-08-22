@@ -1,4 +1,4 @@
-string robot_name
+string bin_name
 float32 x_coordinate
 float32 y_coordinate
 bool isFull
