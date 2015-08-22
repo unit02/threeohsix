@@ -37,7 +37,8 @@ class bin(node):
         )
 
     def stop_following(self):
-        self.follow_robot.unregister()
+        pass
+    #self.follow_robot.unregister()
 
     def move_with_robot(self,data):
          #rospy.loginfo(rospy.get_caller_id() + "Robot to follow position %s ", data.pose.pose.position)
@@ -64,7 +65,7 @@ class bin(node):
     #creates message to post to the bin_info topic
     def position_callback(self,data):
         if self.isFull == True:
-            self.stop_following()
+            #self.stop_following()
             rospy.loginfo("Sending message to be picked up!")
             msg = bin_call()
             msg.robot_name = self.name
@@ -78,6 +79,6 @@ class bin(node):
 if __name__ == '__main__':
     rospy.init_node("robot_2")  # Create a node of name robot_2
     l = bin(rospy.get_name())  # Create an instance of above class
-    l.follow_robot("robot_1")
+     #l.follow_robot("robot_1")
     rospy.spin()  # Function to keep the node running until terminated via Ctrl+C
 

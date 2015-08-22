@@ -10,8 +10,7 @@ from geometry_msgs.msg import Point
 class havesting_robot(node):
 	#Subscribes to the bin info topic to receive data on whether bins
     #need to be picked up
-    def __init__(self,name,robot_type, laser_on):
-        self.robot_type = robot_type
+    def __init__(self,name, laser_on):
         super(havesting_robot,self).__init__(name,laser_on)
         node = self.pick_bin_sub = rospy.Subscriber(
 			"/bin_info",
