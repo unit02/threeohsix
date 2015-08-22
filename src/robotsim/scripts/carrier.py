@@ -2,6 +2,7 @@
 import rospy
 from geometry_msgs.msg import Point
 from havesting_robot import havesting_robot
+import sys
 
 
 class carrier(havesting_robot):
@@ -24,7 +25,7 @@ class carrier(havesting_robot):
 		pass
 
 if __name__ == '__main__':
-    rospy.init_node("robot_4")  # Create a node of name laser_roomba
+    rospy.init_node("robot_"+sys.argv[1])  # Create a node of name laser_roomba
     l = carrier(rospy.get_name(), False)  # Create an instance of above class
     rospy.spin()  # Function to keep the node running until terminated via Ctrl+C
 

@@ -5,6 +5,7 @@ from node import node
 from random import randint 
 import threading
 import math
+import sys
 
 
 class animal(node):
@@ -48,7 +49,7 @@ class animal(node):
 # The block below will be executed when the python file is executed
 # __name__ and __main__ are built-in python variables and need to start and end with *two* underscores
 if __name__ == '__main__':
-    rospy.init_node("robot_0")  # Create a node of name laser_roomba
+    rospy.init_node("robot_"+sys.argv[1])  # Create a node of name laser_roomba
     l = animal(rospy.get_name(), True)  # Create an instance of above class
     l.random_move()
 

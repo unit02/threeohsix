@@ -9,6 +9,7 @@ from std_msgs.msg import String
 from node import node
 from robotsim.msg import bin_call
 import std_msgs
+import sys
 
 
 class bin(node):
@@ -77,8 +78,8 @@ class bin(node):
 # The block below will be executed when the python file is executed
 # __name__ and __main__ are built-in python variables and need to start and end with *two* underscores
 if __name__ == '__main__':
-    rospy.init_node("robot_2")  # Create a node of name robot_2
+    rospy.init_node("robot_"+sys.argv[1])  # Create a node of name robot_2
     l = bin(rospy.get_name())  # Create an instance of above class
-     #l.follow_robot("robot_1")
+    l.follow_robot("robot_"+str(int(sys.argv[1])-4))
     rospy.spin()  # Function to keep the node running until terminated via Ctrl+C
 
