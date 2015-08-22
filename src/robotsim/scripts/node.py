@@ -191,6 +191,7 @@ class node(object):
         rospy.loginfo("New Orientation %s", self.rad_orient)
         self.reorientation()
         rospy.loginfo("New Orientation %s", self.rad_orient)
+
     def turnLeft(self):
         rospy.loginfo("Original Orientation %s", self.rad_orient)
         twist = Twist()
@@ -215,16 +216,16 @@ class node(object):
             remainder = 0
         else:
             remainder = (math.pi/2) % abs(self.rad_orient)
-            rospy.loginfo("remainder is %s", remainder)
-        if remainder > (math.pi/2):
+            rospy.loginfo("remainder1 is %s", remainder)
+        if remainder == (math.pi/2):
             rad_dist = remainder - math.pi/2
-            rospy.loginfo("rad_dist is %s", rad_dist)
+            rospy.loginfo("1rad_dist is %s", rad_dist)
         elif self.rad_orient < math.pi/4 and self.rad_orient > -math.pi/4:
             rad_dist = abs(self.rad_orient)
-            rospy.loginfo("rad_dist is %s", rad_dist)
+            rospy.loginfo("2rad_dist is %s", rad_dist)
         else:
             rad_dist = remainder
-            rospy.loginfo("rad_dist is %s", rad_dist)
+            rospy.loginfo("3rad_dist is %s", rad_dist)
 
         if (remainder > 0):
             # when the robot is facing east, but is slightly too north
@@ -264,7 +265,7 @@ class node(object):
                     rospy.loginfo("4")
                 twist = Twist()
             # Facing west, but towards north
-            elif ((self.rad_orient > math.pi/4) and (self.rad_orient < math.pi/2)):
+            elif ((self.rad_orient > 3 * math.pi/4) and (self.rad_orient < math.pi/2)):
                 twist.angular.z = rad_dist
                 for i in range(10):
                     self.cmd_vel_pub.publish(twist)
@@ -274,7 +275,6 @@ class node(object):
                 twist = Twist()
             # Facing west, but towards south
             elif ((self.rad_orient < (-3 * math.pi/4)) and (self.rad_orient > -math.pi/2)):
-                rad_dist = math.pi/2 - remainder
                 twist.angular.z = -rad_dist
                 for i in range(10):
                     self.cmd_vel_pub.publish(twist)
@@ -284,7 +284,6 @@ class node(object):
                 twist = Twist()
             # Facing north, but towards east
             elif ((self.rad_orient < (math.pi/2)) and (self.rad_orient > math.pi/4)):
-                rad_dist = math.pi/2 - remainder
                 twist.angular.z = rad_dist
                 for i in range(10):
                     self.cmd_vel_pub.publish(twist)
