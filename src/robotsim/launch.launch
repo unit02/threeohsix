@@ -1,35 +1,59 @@
 <launch>
-
-  <group ns="robot_0">
-    <node pkg="robotsim" output="screen" type="animal.py"/>
-  </group>
-
-  <group ns="robot_1">
-    <node pkg="robotsim" output="screen" type="picker.py"/>
-  </group>
-
-  <group ns="robot_2">
-    <node pkg="robotsim" output="screen" type="bin.py"/>
-  </group>
-
-  <group ns="robot_3">
-    <node pkg="robotsim" output="screen" type="person.py"/>
-  </group>
-
-  <group ns="robot_4">
-    <node pkg="robotsim" output="screen" type="carrier.py"/>
-  </group>
-
-  <group ns="robot_5">
-    <node pkg="robotsim" output="screen" type="tractor.py"/>
-  </group>
-
-  <group ns="robot_6">
-    <node pkg="robotsim" output="screen" type="person.py"/>
-  </group>
-
-  <group ns="robot_7">
-    <node pkg="robotsim" output="screen" type="animal.py"/>
-  </group>
-
+	<group ns="robot_0">
+		<node pkg="robotsim" output="screen" type="animal.py"/>
+	</group>
+	<group ns="robot_1">
+		<node pkg="robotsim" output="screen" type="animal.py"/>
+	</group>
+	<group ns="robot_2">
+		<node pkg="robotsim" output="screen" type="animal.py"/>
+	</group>
+	<group ns="robot_3">
+		<node pkg="robotsim" output="screen" type="person.py"/>
+	</group>
+	<group ns="robot_4">
+		<node pkg="robotsim" output="screen" type="person.py"/>
+	</group>
+	<group ns="robot_5">
+		<node pkg="robotsim" output="screen" type="person.py"/>
+	</group>
+	<group ns="robot_6">
+		<node pkg="robotsim" output="screen" type="person.py"/>
+	</group>
+	<group ns="robot_7">
+		<node pkg="robotsim" output="screen" type="person.py"/>
+	</group>
+	<group ns="robot_8">
+		<node pkg="robotsim" output="screen" type="person.py"/>
+	</group>
+	<group ns="robot_9">
+		<node pkg="robotsim" output="screen" type="person.py"/>
+	</group>
+	<group ns="robot_10">
+		<node pkg="robotsim" output="screen" type="tractor.py"/>
+	</group>
+	<group ns="robot_11">
+		<node pkg="robotsim" output="screen" type="picker.py"/>
+	</group>
+	<group ns="robot_12">
+		<node pkg="robotsim" output="screen" type="picker.py"/>
+	</group>
+	<group ns="robot_13">
+		<node pkg="robotsim" output="screen" type="carrier.py"/>
+	</group>
+	<group ns="robot_14">
+		<node pkg="robotsim" output="screen" type="carrier.py"/>
+	</group>
+	<group ns="robot_15">
+		<node pkg="robotsim" output="screen" type="picker.py"/>
+	</group>
+	<group ns="robot_16">
+		<node pkg="robotsim" output="screen" type="picker.py"/>
+	</group>
+	<group ns="robot_17">
+		<node pkg="robotsim" output="screen" type="picker.py"/>
+	</group>
+	<group ns="robot_18">
+		<node pkg="robotsim" output="screen" type="picker.py"/>
+	</group>
 </launch>

@@ -51,7 +51,7 @@ class WorldConfig():
 
     def getNumberOfCarriers(self):    
 
-        self.numberOfCarriers = int(self.numberOfPickers) * 0.7
+        self.numberOfCarriers = int(self.numberOfPickers) 
         print "#ofCarriers" + str(int(self.numberOfCarriers))
         return int(self.numberOfCarriers)
 
@@ -196,19 +196,24 @@ class WorldConfig():
         location = 11
         for i in range(int(self.numberOfPickers)):
             f.write('picker( pose [-39 '+ str(location) +' 0 0  ] name "picker" color "violet")\n')
-            location = location + int(self.rowWidth)   
+            location = location - int(self.rowWidth)   
         #adding carriers
-        location = -6.5
+        location = 16.5
         for i in range(int(self.numberOfCarriers)):
             f.write('carrier( pose [34.5 '+ str(location) +' 0 0  ] name "carrier" color "cyan")\n')
-            location = location + int(self.rowWidth)   
+            location = location + 4  
         
         #adding bins
         location = 11
-        for i in range(int(self.numberOfBins)):
+        for i in range(int(self.numberOfBins)/2):
             f.write('bucket( pose [-41 '+ str(location) +' 0 0  ] name "bin")\n')
-            location = location + int(self.rowWidth)   
+            location = location - int(self.rowWidth)   
+        
 
+        location = 16.5
+        for i in range(int(self.numberOfBins)/2):
+            f.write('bucket( pose [32.5 '+ str(location) +' 0 0  ] name "bin")\n')
+            location = location + 4
         f.close()     
 
     def makeLaunch(self):
