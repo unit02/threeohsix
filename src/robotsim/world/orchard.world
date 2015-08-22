@@ -3,6 +3,7 @@ include "instances.inc"
 # simulation property milliseconds per update step 
 interval_sim 100 
 
+
 define myLaser ranger 
 ( 
   sensor( range [ 0 10 ] fov 60.0 samples 60 ) 
