@@ -27,6 +27,7 @@ if __name__ == '__main__':
     rospy.init_node("robot_4")  # Create a node of name laser_roomba
     l = carrier(rospy.get_name(), False)  # Create an instance of above class
     l.turnRight()
+    l.twist.linear.x = 3.0
     new_position = Point(38, 5.0, 0.0)
     l.move_to(new_position)
     rospy.spin()  # Function to keep the node running until terminated via Ctrl+C
