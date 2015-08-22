@@ -15,7 +15,7 @@ if __name__ == '__main__':
     rospy.init_node("robot_1")  # Create a node of name robot_1
     p = picker(rospy.get_name(), False)  # Create an instance of above class
       
-    p.wait(30)
+    #p.wait(30)
     
     # Later release will ensure it gets a position from another robot by a message
     #Create arrays of points
