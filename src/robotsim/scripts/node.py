@@ -233,15 +233,18 @@ class node(object):
         else:
             remainder = (math.pi/2) % abs(self.rad_orient)
             rospy.loginfo("remainder1 is %s", remainder)
-        if remainder == (math.pi/2):
-            rad_dist = remainder - math.pi/2
+        if remainder == (math.pi/2) and self.rad_orient < (3*math.pi/4):
+            rad_dist = abs(self.rad_orient) - math.pi/2
             rospy.loginfo("1rad_dist is %s", rad_dist)
+        elif remainder == (math.pi/2) and self.rad_orient > (3*math.pi/4):
+            rad_dis = math.pi - abs(self.rad_orient)
+            rospy.loginfo("2rad_dist is %s", rad_dist)
         elif self.rad_orient < math.pi/4 and self.rad_orient > -math.pi/4:
             rad_dist = abs(self.rad_orient)
-            rospy.loginfo("2rad_dist is %s", rad_dist)
+            rospy.loginfo("3rad_dist is %s", rad_dist)
         else:
             rad_dist = remainder
-            rospy.loginfo("3rad_dist is %s", rad_dist)
+            rospy.loginfo("4rad_dist is %s", rad_dist)
 
         if (remainder > 0):
             # when the robot is facing east, but is slightly too north
