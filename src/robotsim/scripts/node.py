@@ -12,9 +12,9 @@ from sensor_msgs.msg import LaserScan
 import roslib
 roslib.load_manifest('robotsim')
 from robotsim.msg import bin_call
-from enum import Enum
 
-Face = Enum("Face", "North South East West")
+class Face:
+     North, South, East, West = range(4)
 
 class node(object):
 
@@ -27,6 +27,7 @@ class node(object):
         self.laser_on = laser_on
         self.rad_orient = 0.0
         self.goal = 0.0
+        self.Face = Face.East
 
 
         rospy.loginfo("Starting node %s" % name)
@@ -53,6 +54,8 @@ class node(object):
             callback=self.stage_callback,
             queue_size=10
         )
+
+        self.wait(10)
 
 
 
@@ -98,23 +101,24 @@ class node(object):
         self.rad_orient = euler_from_quaternion(qList)[2]
 
     # assuming Face.East is initial facing direction
-    def face_value(self):
-        # if rad_orient is less than 0.2, or greater than -pi*2 + 0.2 then it is facing east
+    def face_value(self, rad_orient):
+        # if rad_orient is less than 0.2, and greater than 0 then it is facing east
         # rad_orient is apporixmately 0.0 (0 degrees away from initial)
-        if self.rad_orient < -0.2 or self.rad_orient > (-2 * math.pi + 0.2):
+        if rad_orient > -0.2 and rad_orient < 0.2:
             return Face.East
-        # if rad_orient is between -3.34 and -2.94 then it is facing west
-        elif self.rad_orient > (-math.pi - 0.2) and self.rad_orient < (-math.pi + 0.2):
+        # if rad_orient is between -3.14 and -2.94 then it is facing west
+        elif rad_orient > (-math.pi - 0.2) and rad_orient < (-math.pi + 0.2):
             return Face.West
-        # rad_orient is apporixmately -1.7 (-90 degrees away from initial)
-        elif self.rad_orient > -math.pi:
+        # rad_orient is apporixmately -1.5 (-90 degrees away from initial)
+        elif rad_orient > (-math.pi/2 - 0.2) and rad_orient < (-math.pi/2 + 0.2):
             return Face.South
-        # rad_orient is apporixmately 1.7 (90 degrees away from initial)
+        # rad_orient is apporixmately 1.5 (90 degrees away from initial)
         else:
             return Face.North
 
+
     def move_to(self, new_position):
-        face = self.face_value()
+        face = self.face_value(self.rad_orient)
         rospy.loginfo("Initial face direction: %s", face)
         rospy.loginfo("Current position %s", self.position)
         rospy.loginfo("Moving to new position %s", new_position)
@@ -137,7 +141,7 @@ class node(object):
                     or (steps_one > 0 and (face == Face.West or face == Face.South)):
                 self.turnLeft()
                 self.turnLeft()
-                face = self.face_value()
+                face = self.face_value(self.rad_orient)
             self.move_x_steps(int(steps_one))
 
         if steps_two != 0:
@@ -148,7 +152,7 @@ class node(object):
                 self.turnRight()
             self.move_x_steps(int(steps_two))
 
-        rospy.loginfo("Finished moving to the new position %s", new_position)
+        rospy.loginfo("Finished moving to the new position %s", self.position)
 
 
     def move_x_steps(self, metres):
