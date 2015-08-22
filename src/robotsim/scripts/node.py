@@ -158,20 +158,36 @@ class node(object):
     def move_x_steps(self, metres):
         # runtime seconds = distance/velocity
         # need to convert to seconds so *10 is applied
-        runtime = abs(int(10 *(metres/self.twist.linear.x)))
+        runtime = abs(100*int(metres/self.twist.linear.x))
 
-        rospy.loginfo("Started moving %s metres at speed %s /s!", metres, self.twist.linear.x)
+        rospy.loginfo("Started moving %s metres at speed %s, eta time %s!", self.twist.linear.x*runtime/100, self.twist.linear.x, runtime/100)
 
         # publish twist for runtime seconds to move x metres
         for i in range(runtime):
             self.cmd_vel_pub.publish(self.twist)
-            rospy.sleep(0.1)
+            rospy.sleep(0.01)
+
+        rospy.loginfo("At new position %s", self.position)
+
+        self.wait(1)
+        remainder_speed = metres % self.twist.linear.x
+
+        if remainder_speed != 0:
+            twist = Twist()
+            twist.linear.x = remainder_speed
+            rospy.loginfo("Moving remainder %s metres at speed %s, eta time 1!", metres % self.twist.linear.x, remainder_speed)
+
+            for i in range(100):
+                self.cmd_vel_pub.publish(twist)
+                rospy.sleep(0.01)
 
         # create a new message - everything set to 0 so it can stop
         twist = Twist()
 
         rospy.loginfo("Stopping!")
         self.cmd_vel_pub.publish(twist)
+
+        rospy.loginfo("At new position %s", self.position)
 
     def turnRight(self):
         rospy.loginfo("Original Orientation %s", self.rad_orient)
