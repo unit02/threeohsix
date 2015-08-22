@@ -37,6 +37,7 @@ class bin(node):
         )
 
     def stop_following(self):
+        pass
         #self.following.unregister()
         #self.isFull = True
 
