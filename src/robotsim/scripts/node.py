@@ -55,7 +55,7 @@ class node(object):
             queue_size=10
         )
 
-        self.wait(10)
+        self.wait(20)
 
 
 
