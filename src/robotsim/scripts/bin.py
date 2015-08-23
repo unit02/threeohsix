@@ -40,6 +40,8 @@ class bin(node):
         if var.unfollow == True:
             self.following.unregister()
             self.isFull = True
+            rospy.loginfo("bin moving out of the rows")
+            self.move_to(self.position.x + 3, self.position.y,0.0)
             self.pick_me_up(self.position)
             self.attach_time = rospy.Subscriber(
                 "/attach_bin",
