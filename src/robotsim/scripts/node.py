@@ -35,6 +35,7 @@ class node(object):
         self.rad_orient = 0.0
         self.goal = 0.0
         self.Face = Face.East
+        self.is_stopped = False
 
 
         rospy.loginfo("Starting node %s" % name)
@@ -63,7 +64,7 @@ class node(object):
 
 
         )
-
+        # wait to gather stage information
         self.wait(20)
 
 
@@ -169,14 +170,20 @@ class node(object):
     def move_x_steps(self, metres):
         # runtime seconds = distance/velocity
         # need to convert to seconds so *10 is applied
-        runtime = abs(100*int(metres/self.twist.linear.x))
+        runtime = abs(10*int(metres/self.twist.linear.x))
 
-        rospy.loginfo("Started moving %s metres at speed %s, eta time %s!", self.twist.linear.x*runtime/100, self.twist.linear.x, runtime/100)
+        rospy.loginfo("Started moving %s metres at speed %s, eta time %s!", self.twist.linear.x*runtime/10, self.twist.linear.x, runtime/10)
 
-        # publish twist for runtime seconds to move x metres
-        for i in range(runtime):
-            self.cmd_vel_pub.publish(self.twist)
-            rospy.sleep(0.01)
+        # only remainder speed - velocity too fast
+        if runtime >= 10:
+            # publish twist for runtime seconds to move x metres
+            for i in range(runtime):
+                self.cmd_vel_pub.publish(self.twist)
+                rospy.sleep(0.1)
+                # need to stop the moving as something is in the way
+                if self.is_stopped:
+                    rospy.logwarn("Stopping in move_x steps method")
+                    return
 
         rospy.loginfo("At new position %s", self.position)
 
@@ -188,9 +195,12 @@ class node(object):
             twist.linear.x = remainder_speed
             rospy.loginfo("Moving remainder %s metres at speed %s, eta time 1!", metres % self.twist.linear.x, remainder_speed)
 
-            for i in range(100):
+            for i in range(10):
                 self.cmd_vel_pub.publish(twist)
-                rospy.sleep(0.01)
+                rospy.sleep(0.1)
+                # need to stop the moving as something is in the way
+                if (self.is_stopped):
+                    return
 
         # create a new message - everything set to 0 so it can stop
         twist = Twist()
