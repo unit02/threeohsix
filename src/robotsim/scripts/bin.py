@@ -42,13 +42,11 @@ class bin(node):
             self.isFull = True
             self.pick_me_up(self.position)
             self.attach_time = rospy.Subscriber(
-                "/attach",
+                "/attach_bin",
                 attach_bin,
                 callback=self.attach_to_robot,
                 queue_size=10
             )
-
-
 
     def move_with_robot(self,data):
          #rospy.loginfo(rospy.get_caller_id() + "Robot to follow position %s ", data.pose.pose.position)
@@ -66,9 +64,6 @@ class bin(node):
         if msg.bin_name == self.name:
             rospy.loginfo("Attaching to %s", msg.to_attach_name)
             self.follow_robot(msg.to_attach_name)
-
-
-
 
     # Uses another robot's linear velocity, and publish it to its own cmd_vel
     def follow_robot(self, to_follow):

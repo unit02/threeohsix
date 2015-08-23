@@ -8,69 +8,30 @@ import sys
 from node import Face
 class picker(havesting_robot):
 
-    # def move_down_rows(self):
-     #    x_point=self.position.x
-     #    y_point=self.position.y
-     #    length_row=75
-     #    numberofrows=2
-    #
-     #    for i in range(0, numberofrows):
-     #        new_position = Point(x_point+length_row, y_point, 0.0)
-    	#     self.move_to(new_position)
-	#     #Wait here for the new message
-     #    new_position = Point(x_point+length_row, y_point-4.7, 0.0)
+    def move_down_rows(self):
+
+        #new_position = Point(x_point+length_row +3, y_point, 0.0)
+        self.move_x_steps(70)
+        rospy.loginfo("bin detaching")
+        self.detach_bin()
+        self.turnRight()
+        self.move_x_steps(6)
+        self.turnRight()
+        self.move_x_steps(70)
+     #    new_position = Point(x_point+length_row + 3, y_point-5.5, 0.0)
+     #    self.move_to(new_position)
      #    self.move_to(new_position)
     #
-     #    self.detach_bin()
-    #
 	#     #p.reorientation()
-     #    y_point=y_point-4.7
-    #
-     #    new_position = Point(x_point, y_point, 0.0)
+     #    new_position = Point(x_point , y_point-5.5, 0.0)
      #    self.move_to(new_position)
-	#     #p.reorientation()
-     #    new_position = Point(x_point, y_point-4.7, 0.0)
+     #    self.move_to(new_position)
+	# #p.reorientation()
+     #    new_position = Point(x_point+length_row, y_point-5, 0.0)
+     #    self.move_to(new_position)
      #    self.move_to(new_position)
 	# #p.reorientation()
      #    y_point=y_point-4.7
-    #
-
-
-
-    #new_position = Point(-34.5, -8.5, 0.0)
-    #p.move_to(new_position)
-    #new_position = Point(5, -8.5, 0.0)
-    #p.move_to(new_position)
-
-    def move_down_rows(self):
-            x_point=self.position.x
-            y_point=self.position.y
-            length_row=70
-            numberofrows=2
-
-            new_position = Point(x_point+length_row, y_point, 0.0)
-            p.move_to(new_position)
-            rospy.logwarn("detach bin")
-            self.detach_bin()
-            #Wait here for the new message
-            rospy.logwarn("Turning right 1st time")
-            p.turnRight()
-            rospy.logwarn("four steps forward")
-            p.move_x_steps(5)
-
-            rospy.logwarn("Turning right 2nd time")
-            p.turnRight()
-            rospy.logwarn("move to end of next row")
-
-            new_position = Point(x_point, y_point-5, 0.0)
-            p.move_to(new_position)
-
-            # y_point=y_point-4.5
-            # p.move_to(new_position)
-            # new_position = Point(x_point+length_row, y_point-5, 0.0)
-            # p.move_to(new_position)
-            # y_point=y_point-5
-
 
 
 # The block below will be executed when the python file is executed

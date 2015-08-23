@@ -29,7 +29,7 @@ class node(object):
     def __init__(self, name, laser_on):
         self.position = Point()
         self.twist = Twist()
-        self.twist.linear.x = 5.0
+        self.twist.linear.x = 1.0
         self.name = name
         self.laser_on = laser_on
         self.rad_orient = 0.0
@@ -60,6 +60,8 @@ class node(object):
             Odometry,
             callback=self.stage_callback,
             queue_size=10
+
+
         )
 
         self.wait(20)
