@@ -223,40 +223,40 @@ class WorldConfig():
         robot = 0
         for i in range(3):
             f.write('\t<group ns="robot_'+ str(robot) +'">\n') 
-            f.write('\t\t<node pkg="robotsim" output="screen" type="animal.py"/>\n')
+            f.write('\t\t<node pkg="robotsim" name="node" type="animal.py"/>\n')
             f.write('\t</group>\n')
             robot += 1
        
         # Launch 4 workers and 3 visitors
         for i in range(7):
             f.write('\t<group ns="robot_'+ str(robot) +'">\n') 
-            f.write('\t\t<node pkg="robotsim" output="screen" type="person.py"/>\n')
+            f.write('\t\t<node pkg="robotsim" name="node" type="person.py"/>\n')
             f.write('\t</group>\n')
             robot += 1
 
         f.write('\t<group ns="robot_'+ str(robot) +'">\n') 
-        f.write('\t\t<node pkg="robotsim" output="screen" type="tractor.py"/>\n')
+        f.write('\t\t<node pkg="robotsim" name="node" type="tractor.py"/>\n')
         f.write('\t</group>\n')
         robot += 1
 
         # Launch pickers
         for i in range(int(self.numberOfPickers)):
             f.write('\t<group ns="robot_'+ str(robot) +'">\n') 
-            f.write('\t\t<node pkg="robotsim" output="screen" type="picker.py"/>\n')
+            f.write('\t\t<node pkg="robotsim" name="node" type="picker.py"/>\n')
             f.write('\t</group>\n')
             robot += 1
 
         # Launch carriers
         for i in range(int(self.numberOfCarriers)):
             f.write('\t<group ns="robot_'+ str(robot) +'">\n') 
-            f.write('\t\t<node pkg="robotsim" output="screen" type="carrier.py"/>\n')
+            f.write('\t\t<node pkg="robotsim" name="node" type="carrier.py"/>\n')
             f.write('\t</group>\n')
             robot += 1
 
         # Launch bins
         for i in range(int(self.numberOfBins)):
             f.write('\t<group ns="robot_'+ str(robot) +'">\n') 
-            f.write('\t\t<node pkg="robotsim" output="screen" type="picker.py"/>\n')
+            f.write('\t\t<node pkg="robotsim" name="node" type="bin.py"/>\n')
             f.write('\t</group>\n')
             robot += 1
         f.write('</launch>\n')
