@@ -14,7 +14,14 @@ roslib.load_manifest('robotsim')
 from robotsim.msg import bin_call
 
 class Face:
-     North, South, East, West = range(4)
+    North, South, East, West = range(4)
+
+    @classmethod
+    def tostring(cls, val):
+        for name,v in vars(cls).iteritems():
+            if v==val:
+                return name
+
 
 class node(object):
 
@@ -102,15 +109,15 @@ class node(object):
 
     # assuming Face.East is initial facing direction
     def face_value(self, rad_orient):
-        # if rad_orient is less than 0.2, and greater than 0 then it is facing east
         # rad_orient is apporixmately 0.0 (0 degrees away from initial)
-        if rad_orient > -0.2 and rad_orient < 0.2:
+        if rad_orient > -0.7 and rad_orient < 0.7:
             return Face.East
-        # if rad_orient is between -3.14 and -2.94 then it is facing west
-        elif rad_orient > (-math.pi - 0.2) and rad_orient < (-math.pi + 0.2):
+        # if rad_orient is  is apporixmately 3.14 or -3.14 then it is facing west
+        elif ((rad_orient > (-math.pi - 0.7) and rad_orient < (-math.pi + 0.7)) or
+                      (rad_orient > (math.pi - 0.7) and rad_orient < (math.pi + 0.7))):
             return Face.West
         # rad_orient is apporixmately -1.5 (-90 degrees away from initial)
-        elif rad_orient > (-math.pi/2 - 0.2) and rad_orient < (-math.pi/2 + 0.2):
+        elif rad_orient > (-math.pi/2 - 0.7) and rad_orient < (-math.pi/2 + 0.7):
             return Face.South
         # rad_orient is apporixmately 1.5 (90 degrees away from initial)
         else:
@@ -118,8 +125,9 @@ class node(object):
 
 
     def move_to(self, new_position):
+        self.wait(2)
         face = self.face_value(self.rad_orient)
-        rospy.loginfo("Initial face direction: %s", face)
+        rospy.loginfo("Initial face direction: %s", Face.tostring(face))
         rospy.loginfo("Current position %s", self.position)
         rospy.loginfo("Moving to new position %s", new_position)
 
@@ -133,14 +141,16 @@ class node(object):
             steps_two = steps_one
             steps_one = temp
 
-        rospy.loginfo("Moving %s metres in %s, turning then moving %s metres", int(steps_one), face, int(steps_two))
+        rospy.loginfo("Moving %s metres in face %s, turning then moving %s metres", int(steps_one), Face.tostring(face), int(steps_two))
 
         if steps_one != 0:
             # opposite direction to what robot is facing - rotate 180 degrees
             if (steps_one < 0 and (face == Face.East or face == Face.North)) \
                     or (steps_one > 0 and (face == Face.West or face == Face.South)):
+                rospy.logwarn("Turning 180")
                 self.turnLeft()
                 self.turnLeft()
+                self.wait(2)
                 face = self.face_value(self.rad_orient)
             self.move_x_steps(int(steps_one))
 
@@ -152,8 +162,7 @@ class node(object):
                 self.turnRight()
             self.move_x_steps(int(steps_two))
 
-        rospy.loginfo("Finished moving to the new position %s", self.position)
-
+        rospy.loginfo("Finished moving to the new position %s, facing %s", self.position,  Face.tostring(face))
 
     def move_x_steps(self, metres):
         # runtime seconds = distance/velocity
@@ -190,7 +199,7 @@ class node(object):
         rospy.loginfo("At new position %s", self.position)
 
     def turnRight(self):
-        rospy.loginfo("Original Orientation %s", self.rad_orient)
+        rospy.loginfo("Original Orientation %s, face %s", self.rad_orient, Face.tostring(self.face_value(self.rad_orient)))
         twist = Twist()
         twist.linear.x = 0.0
         twist.angular.z = -(math.pi / 8)
@@ -204,12 +213,12 @@ class node(object):
         self.cmd_vel_pub.publish(twist)
 
         rospy.loginfo("Turned Right")
-        rospy.loginfo("New Orientation %s", self.rad_orient)
+        rospy.loginfo("New Orientation %s, face %s", self.rad_orient, Face.tostring(self.face_value(self.rad_orient)))
         self.reorientation()
-        rospy.loginfo("New Orientation %s", self.rad_orient)
+        rospy.loginfo("New Orientation after reorientation %s, face %s", self.rad_orient,  Face.tostring(self.face_value(self.rad_orient)))
 
     def turnLeft(self):
-        rospy.loginfo("Original Orientation %s", self.rad_orient)
+        rospy.loginfo("Original Orientation %s, face %s", self.rad_orient, Face.tostring(self.face_value(self.rad_orient)))
         twist = Twist()
         twist.linear.x = 0.0
         twist.angular.z = (math.pi / 8)
@@ -222,9 +231,9 @@ class node(object):
         twist.linear.x = 0.0
         self.cmd_vel_pub.publish(twist)
         rospy.loginfo("Turned Left")
-        rospy.loginfo("New orientation %s", self.rad_orient)
+        rospy.loginfo("New Orientation %s, face %s", self.rad_orient, Face.tostring(self.face_value(self.rad_orient)))
         self.reorientation()
-        rospy.loginfo("New orientation %s", self.rad_orient)
+        rospy.loginfo("New Orientation after reorientation %s, face %s", self.rad_orient,  Face.tostring(self.face_value(self.rad_orient)))
 
     def reorientation(self):
         twist = Twist()
@@ -232,7 +241,7 @@ class node(object):
             remainder = 0
         else:
             remainder = (math.pi/2) % abs(self.rad_orient)
-            rospy.loginfo("remainder1 is %s", remainder)
+            rospy.loginfo("remainder 1 is %s", remainder)
         if remainder == (math.pi/2) and self.rad_orient < (3*math.pi/4):
             rad_dist = abs(self.rad_orient) - math.pi/2
             rospy.loginfo("1rad_dist is %s", rad_dist)
