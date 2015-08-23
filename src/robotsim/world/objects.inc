@@ -155,7 +155,7 @@ define person_worker position
 (
   myLaser(pose [ 0.250 0.000 -1.600 0.000 ])
   drive "diff"
-  size [0.550 1.000 1.900]
+  size [0.550 1.000 1.750]
   velocity_bounds [ -10 10 0 0 -360 360 -90 90 ]	
    #legs
    block 
