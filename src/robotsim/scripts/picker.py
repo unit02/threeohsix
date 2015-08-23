@@ -14,34 +14,28 @@ class picker(havesting_robot):
         length_row=75
         numberofrows=2
 
-        for i in range(0, numberofrows):
-            new_position = Point(x_point+length_row, y_point, 0.0)
-    	    self.move_to(new_position)
-	    #Wait here for the new message
-        new_position = Point(x_point+length_row, y_point-4.7, 0.0)
-        self.move_to(new_position)
-
+        #new_position = Point(x_point+length_row +3, y_point, 0.0)
+        self.move_x_steps(78)
+        rospy.loginfo("bin detaching")
         self.detach_bin()
-
-	    #p.reorientation()
-        y_point=y_point-4.7
-
-        new_position = Point(x_point, y_point, 0.0)
-        self.move_to(new_position)
-	    #p.reorientation()
-        new_position = Point(x_point, y_point-4.7, 0.0)
-        self.move_to(new_position)
-	#p.reorientation()
-        y_point=y_point-4.7
-
-
-
-
-    #new_position = Point(-34.5, -8.5, 0.0)
-    #p.move_to(new_position)
-    #new_position = Point(5, -8.5, 0.0)
-    #p.move_to(new_position)
-
+        self.turnRight()
+        self.move_x_steps(6)
+        self.turnRight()
+        self.move_x_steps(78)
+     #    new_position = Point(x_point+length_row + 3, y_point-5.5, 0.0)
+     #    self.move_to(new_position)
+     #    self.move_to(new_position)
+    #
+	#     #p.reorientation()
+     #    new_position = Point(x_point , y_point-5.5, 0.0)
+     #    self.move_to(new_position)
+     #    self.move_to(new_position)
+	# #p.reorientation()
+     #    new_position = Point(x_point+length_row, y_point-5, 0.0)
+     #    self.move_to(new_position)
+     #    self.move_to(new_position)
+	# #p.reorientation()
+     #    y_point=y_point-4.7
 
 
 # The block below will be executed when the python file is executed

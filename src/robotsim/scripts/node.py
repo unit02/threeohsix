@@ -53,6 +53,8 @@ class node(object):
             Odometry,
             callback=self.stage_callback,
             queue_size=10
+
+
         )
 
         self.wait(20)
@@ -205,7 +207,7 @@ class node(object):
 
         rospy.loginfo("Turned Right")
         rospy.loginfo("New Orientation %s", self.rad_orient)
-        self.reorientation()
+        #self.reorientation()
         rospy.loginfo("New Orientation %s", self.rad_orient)
 
     def turnLeft(self):
@@ -223,7 +225,7 @@ class node(object):
         self.cmd_vel_pub.publish(twist)
         rospy.loginfo("Turned Left")
         rospy.loginfo("New orientation %s", self.rad_orient)
-        self.reorientation()
+        #self.reorientation()
         rospy.loginfo("New orientation %s", self.rad_orient)
 
     def reorientation(self):
