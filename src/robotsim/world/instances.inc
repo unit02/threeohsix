@@ -1,10 +1,10 @@
 include "myblock.inc" 
-ground( pose [ 0 0 0 0] ) 
-driveway( pose [ -30 26.5 0 0] ) 
-fenceHorizontal( pose [ 0 30 0 0] )  
-fenceHorizontal( pose [ 0 -30 0 0 ] ) 
-fenceVertical( pose [ 45 0 0 0 ] ) 
-fenceVertical( pose [ -45 0 0 0 ] )  
+include "ground.inc" 
+ground( pose [ 0 2.25 0 0] ) 
+fenceHorizontal( pose [ 0 34 0 0] )  
+fenceHorizontal( pose [ 0 -29.5 0 0 ] ) 
+fenceVertical( pose [ 50 2.25 0 0 ] ) 
+fenceVertical( pose [ -50 2.25 0 0 ] )  
 treetrunk( pose [ -34.5 13.5 0 0 ]) 
 treetrunk( pose [ -28.5 13.5 0 0] )
 treetrunk( pose [ -22.5 13.5 0 0 ] )
