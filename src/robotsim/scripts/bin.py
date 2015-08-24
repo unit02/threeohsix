@@ -10,6 +10,7 @@ from node import node
 from robotsim.msg import bin_call,bin_detach,attach_bin
 import std_msgs
 import sys
+from geometry_msgs.msg import Point, Twist
 
 #Models the bin/buckets in which kiwifruit are stored
 class bin(node):
@@ -33,7 +34,6 @@ class bin(node):
         if var.unfollow == True:
             self.following.unregister()
             self.isFull = True
-            self.move_to(self.position.x + 3, self.position.y,0.0)
             rospy.loginfo("Sending message to be picked up!")
             self.pick_me_up(self.position)
             self.attach_time = rospy.Subscriber(

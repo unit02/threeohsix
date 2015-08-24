@@ -11,8 +11,13 @@ class picker(havesting_robot):
     def move_down_rows(self):
 
         #new_position = Point(x_point+length_row +3, y_point, 0.0)
+<<<<<<< HEAD
         self.move_x_steps(70)
         rospy.loginfo("Bin detaching")
+=======
+        self.move_x_steps(75)
+        rospy.loginfo("bin detaching")
+>>>>>>> cd032dc337f57080fd69bc38155b188b954edc60
         self.detach_bin()
         self.turnRight()
         self.move_x_steps(6)
@@ -38,7 +43,7 @@ class picker(havesting_robot):
 # __name__ and __main__ are built-in python variables and need to start and end with *two* underscores
 if __name__ == '__main__':
     rospy.init_node("robot_"+sys.argv[1])  # Create a node of name robot_1
-    p = picker(rospy.get_name(), False)  # Create an instance of above class
+    p = picker(rospy.get_name(), True)  # Create an instance of above class
 
     p.move_down_rows()
     #p.wait(30)
