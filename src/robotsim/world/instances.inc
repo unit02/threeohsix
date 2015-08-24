@@ -1,6 +1,7 @@
 include "myblock.inc" 
 include "ground.inc" 
 ground( pose [ 0 2.25 0 0] ) 
+driveway( pose [ -34.67 30.51 0 0] ) 
 fenceHorizontal( pose [ 0 34 0 0] )  
 fenceHorizontal( pose [ 0 -29.5 0 0 ] ) 
 fenceVertical( pose [ 50 2.25 0 0 ] ) 

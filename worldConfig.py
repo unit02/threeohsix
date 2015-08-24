@@ -186,7 +186,7 @@ class WorldConfig():
         
         f.write('ground( pose [ 0 '+ str(self.vertFence * 0.5 * -1 + 34) +' 0 0] ) \n')
  
-        #f.write('driveway( pose [ -30 26.5 0 0] ) \n') 
+        f.write('driveway( pose [ -34.67 30.51 0 0] ) \n') 
         
 
         f.write('fenceHorizontal( pose [ 0 34 0 0] )  \n') 
@@ -295,23 +295,23 @@ class WorldConfig():
         f.write('interval_sim 100 \n') 
         
         #adding animals
-        f.write('dog( pose [-14.5 -15 0 0  ] name "dog")\n')           
-        f.write('dog( pose [-10.5 -10 0 0  ] name "dog2")\n')
-        f.write('cat( pose [-12.5 -17 0 0  ] name "cat")\n')
+        f.write('dog( pose [40 18 0 0  ] name "dog")\n')           
+        f.write('dog( pose [20 15 0 0  ] name "dog2")\n')
+        f.write('cat( pose [-47 -11 0 0  ] name "cat")\n')
 
         #adding workers
-        f.write('person_worker ( pose [-40 22 0 0 ] name "worker")\n')           
-        f.write('person_worker ( pose [-40 12 0 0 ] name "worker2")\n')
-        f.write('person_worker ( pose [-40 0 0 0 ] name "worker3")\n')
-        f.write('person_worker ( pose [-40 -20 0 0 ] name "worker4")\n')
+        f.write('person_worker ( pose [-20 22 0 0 ] name "worker")\n')           
+        f.write('person_worker ( pose [25 25 0 0 ] name "worker2")\n')
+        f.write('person_worker ( pose [36 18 0 0 ] name "worker3")\n')
+        f.write('person_worker ( pose [-44 -20 0 0 ] name "worker4")\n')
            
         #adding visitors
-        f.write('person_visitor ( pose [-38 4 0 0 ] name "visitor")\n')           
-        f.write('person_visitor ( pose [-38 16 0 0 ] name "visitor2")\n')
-        f.write('person_visitor ( pose [-38 -22 0 0 ] name "visitor3")\n')
+        f.write('person_visitor ( pose [-47 8 0 0 ] name "visitor")\n')           
+        f.write('person_visitor ( pose [-6 22 0 0 ] name "visitor2")\n')
+        f.write('person_visitor ( pose [44 6 0 0 ] name "visitor3")\n')
 
         #adding tractor
-        f.write('tractor( pose [-40 26.5 0 0  ] name "tractor")\n')  
+        f.write('tractor( pose [-45 31 0 0  ] name "tractor")\n')  
       
         #adding pickers
         location = (13.5 - 0.25 - (float(self.rowWidth)/2))
