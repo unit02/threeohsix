@@ -44,7 +44,7 @@ class node(object):
         self.cmd_vel_pub = rospy.Publisher(
             self.name + "/cmd_vel",
             Twist,
-            queue_size=10
+            queue_size=1
         )
 
         # Create new topic called laser to which it listens
@@ -52,7 +52,7 @@ class node(object):
                 self.name + "/base_scan",
                 LaserScan,
                 callback=self.laser_callback,
-                queue_size=10
+                queue_size=1
             )
 
         # Subscribe to stage topic to obtain its position
@@ -61,7 +61,7 @@ class node(object):
             self.name + "/base_pose_ground_truth",
             Odometry,
             callback=self.stage_callback,
-            queue_size=10
+            queue_size=1
 
 
         )
@@ -147,7 +147,7 @@ class node(object):
 
         rospy.loginfo("Moving %s metres in face %s, turning then moving %s metres", int(steps_one), Face.tostring(face), int(steps_two))
 
-        if steps_one != 0:
+        if abs(steps_one) > 0:
             # opposite direction to what robot is facing - rotate 180 degrees
             if (steps_one < 0 and (face == Face.East or face == Face.North)) \
                     or (steps_one > 0 and (face == Face.West or face == Face.South)):
@@ -158,7 +158,7 @@ class node(object):
                 face = self.face_value(self.rad_orient)
             self.move_x_steps(int(steps_one))
 
-        if steps_two != 0:
+        if abs(steps_two) > 0:
             if (steps_two > 0 and (face == Face.East or face == Face.South)) \
                     or (steps_two < 0 and (face == Face.West or face == Face.North)):
                 self.turnLeft()
@@ -189,7 +189,7 @@ class node(object):
         self.wait(1)
         remainder_speed = metres % self.twist.linear.x
 
-        if remainder_speed != 0:
+        if remainder_speed > 0.2:
             twist = Twist()
             twist.linear.x = remainder_speed
             rospy.loginfo("Moving remainder %s metres at speed %s, eta time 1!", metres % self.twist.linear.x, remainder_speed)
