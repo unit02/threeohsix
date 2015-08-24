@@ -8,67 +8,33 @@ import sys
 class picker(havesting_robot):
 
     def move_down_rows(self):
-	
-        x_point=self.position.x
-        y_point=self.position.y
-        length_row=78
-        numberofrows=2
-
-        #for i in range(0, numberofrows):
-        new_position = Point(x_point+length_row, y_point, 0.0)
-
-        rospy.logwarn("HELLO 0")
-        p.move_to(new_position)
-        #p.move_to(new_position)
-        self.detach_bin()
-        #Move so it can safetly turn
-        rospy.logwarn("HELLO 1")
-        self.move_x_steps(2)
-
-        rospy.logwarn("HELLO 2")
-
-        new_position = Point(x_point+length_row+2, y_point-6, 0.0)
-        p.move_to(new_position)
-        rospy.logwarn("HELLO 3")
-        #p.move_to(new_position)
-        #p.reorientation()
-        y_point=y_point-6
-
-        new_position = Point(x_point+length_row-5, y_point, 0.0)
-        p.move_to(new_position)
-        p.wait(5)
-        #p.move_to(new_position)
-        #p.reorientation()
-        new_position = Point(x_point, y_point, 0.0)
-        p.move_to(new_position)
-        #p.move_to(new_position)
-        #p.reorientation()
-        y_point=y_point-6
 
 
+        row_width=6
+        row_length=78
 
-        #new_position = Point(x_point+length_row +3, y_point, 0.0)
-        # self.move_x_steps(70)
-        # rospy.loginfo("Bin detaching")
-        # self.detach_bin()
-        # self.turnRight()
-        # self.move_x_steps(6)
-        # self.turnRight()
-        # self.move_x_steps(70)
-     #    new_position = Point(x_point+length_row + 3, y_point-5.5, 0.0)
-     #    self.move_to(new_position)
-     #    self.move_to(new_position)
-    #
-	#     #p.reorientation()
-     #    new_position = Point(x_point , y_point-5.5, 0.0)
-     #    self.move_to(new_position)
-     #    self.move_to(new_position)
-	# #p.reorientation()
-     #    new_position = Point(x_point+length_row, y_point-5, 0.0)
-     #    self.move_to(new_position)
-     #    self.move_to(new_position)
-	# #p.reorientation()
-     #    y_point=y_point-4.7
+
+        #For loop here with variable
+        if self.position.x < 0:
+            self.move_x_steps(row_length)
+            rospy.loginfo("Bin detaching")
+            self.detach_bin()
+            self.turnRight()
+            self.move_x_steps(row_width)
+            self.turnRight()
+            self.reorientation()
+            self.move_x_steps(8)
+
+        else:
+            self.move_x_steps(row_length)
+            rospy.loginfo("Bin detaching")
+            self.detach_bin()
+            self.turnLeft()
+            self.move_x_steps(row_width)
+            self.turnLeft()
+            self.reorientation()
+            self.move_x_steps(8)
+
 
 
 # The block below will be executed when the python file is executed
