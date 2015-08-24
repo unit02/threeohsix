@@ -7,7 +7,7 @@ import roslib
 roslib.load_manifest('robotsim')
 from std_msgs.msg import String
 from node import node
-from robotsim.msg import bin_call,bin_detach,attach_bin
+from robotsim.msg import bin_call,bin_detach,attach_bin, queue_position
 import std_msgs
 import sys
 from geometry_msgs.msg import Point, Twist
@@ -20,6 +20,8 @@ class bin(node):
         self.isFull = False
         self.following = None
         self.time_to_detach = None
+        self.lowerYname = None
+        self.lowerY = 0.0
 
         #Creates topic to publish to when it needs to be picked up by a carrier
         self.need_to_be_picker = rospy.Publisher(
@@ -27,6 +29,33 @@ class bin(node):
             bin_call,
             queue_size=10
         )
+        #Creates topic to publish to when it needs to be picked up by a carrier
+        """self.whoToPickMe = rospy.Publisher(
+            "/whichRobotToPick",
+            str,
+            queue_size=10
+        )"""
+        self.whosFirstInQ = rospy.Subscriber(
+            "/firstInQ",
+            queue_position,
+            callback=self.handle_message,
+            queue_size=19
+        )
+
+    def handle_message(self, msg):
+        rospy.loginfo("BYEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!")
+        if self.lowerYname is None:
+            self.lowerYname = msg.robot_name
+            self.lowerY = msg.x_coordinate
+            rospy.loginfo("first lowerY!" + self.lowerYname +str(msg.x_coordinate)+ str(self.lowerY))
+        else:
+            rospy.loginfo("BYEEEEEEEEEEE2222222222222")
+            if self.lowerY < msg.x_coordinate:
+                rospy.loginfo("before y coord!" + str(self.lowerY))
+                self.lowerY = msg.x_coordinate
+                self.lowerYname = msg.robot_name
+                rospy.loginfo("first lowerY!" + self.lowerYname)
+                rospy.loginfo("after y coord!" + str(self.lowerY))
 
     #Method called when it recieves a message from the robot to detach
     #Starts to publish the message asking to be picked up
@@ -85,6 +114,10 @@ class bin(node):
         msg.x_coordinate = bin_position.x
         msg.y_coordinate = bin_position.y
         self.need_to_be_picker.publish(msg)
+        rospy.loginfo("BIN HEREEEEEEEEEEEEEEEEEE" +self.name)
+        #self.wait(5)  #after publishing, give sometime to figure out which robot is closer to us
+        #rospy.loginfo("robot name "+ self.lowerYname)
+        #self.whoToPickMe.publish(self.lowerYname)
 
 
 # The block below will be executed when the python file is executed
