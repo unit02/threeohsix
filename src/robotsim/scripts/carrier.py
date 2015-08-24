@@ -46,5 +46,3 @@ if __name__ == '__main__':
     l = carrier(rospy.get_name(), False, row_width, object_width)  # Create an instance of above class
     rospy.spin()  # Function to keep the node running until terminated via Ctrl+C
 
-
-

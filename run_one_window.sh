@@ -20,6 +20,8 @@ source devel/setup.bash; rosrun robotsim carrier.py 13 &
 source devel/setup.bash; rosrun robotsim carrier.py 14 &
 source devel/setup.bash; rosrun robotsim bin.py 15 &
 source devel/setup.bash; rosrun robotsim bin.py 16 &
+source devel/setup.bash; rosrun robotsim bin.py 17 &
+source devel/setup.bash; rosrun robotsim bin.py 18 &
 rosrun stage_ros stageros src/robotsim/world/orchard.world &
 
 
