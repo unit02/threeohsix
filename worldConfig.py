@@ -313,26 +313,29 @@ class WorldConfig():
       
         #adding pickers
         location = 11
+        robot = 11
         for i in range(int(self.numberOfPickers)):
-            f.write('picker( pose [-39 '+ str(location) +' 0 0  ] name "picker" color "violet")\n')
+            f.write('picker( pose [-39 '+ str(location) +' 0 0  ] name "picker '+str(robot)+'" color "violet")\n')
             location = location - int(self.rowWidth)   
+            robot = robot + 1
         #adding carriers
         location = 16.5
         for i in range(int(self.numberOfCarriers)):
-            f.write('carrier( pose [34.5 '+ str(location) +' 0 0  ] name "carrier" color "cyan")\n')
+            f.write('carrier( pose [34.5 '+ str(location) +' 0 0  ] name "carrier '+str(robot)+'" color "cyan")\n')
             location = location + 4  
-        
+            robot = robot + 1
         #adding bins
         location = 11
         for i in range(int(self.numberOfBins)/2):
-            f.write('bucket( pose [-41 '+ str(location) +' 0 0  ] name "bin")\n')
+            f.write('bucket( pose [-41 '+ str(location) +' 0 0  ] name "bin '+str(robot)+'")\n')
             location = location - int(self.rowWidth)   
-        
+            robot = robot + 1
 
         location = 16.5
         for i in range(int(self.numberOfBins)/2):
-            f.write('bucket( pose [32.5 '+ str(location) +' 0 0  ] name "bin")\n')
+            f.write('bucket( pose [32.5 '+ str(location) +' 0 0  ] name "bin '+str(robot)+'")\n')
             location = location + 4
+            robot = robot + 1
         f.close()     
 
     def makeLaunch(self):

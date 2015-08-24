@@ -11,13 +11,28 @@ define myLaser ranger
 	point[3] [0 0.1] 
 	z [0 0.1] 
 	) 
-) 
+)
+
+define halfcircleLaser ranger
+(
+  sensor( range [ 0 10 ] fov 180.0 samples 180 )
+  size [0.100 0.100 0.100]
+  color "black"
+  block(
+	points 4
+	point[0] [0 0]
+	point[1] [0.1 0]
+	point[2] [0.1 0.1]
+	point[3] [0 0.1]
+	z [0 0.1]
+	)
+)
 
 # define picker
 define picker position 
 ( 
   #properties as name value pairs
-  myLaser(pose [ 1.250 0.000 -0.800 0.000 ]) 
+  halfcircleLaser(pose [ 1.250 0.000 -0.800 0.000 ])
   size [2.500 1.500 1.000] 
   drive "diff" 
   velocity_bounds [ -10 10 0 0 -360 360 -90 90 ]
@@ -37,7 +52,7 @@ define picker position
 define carrier position 
 ( 
   #properties as name value pairs
-  myLaser(pose [ 0.900 0.000 -0.200 0.000 ])
+  halfcircleLaser(pose [ 0.900 0.000 -0.200 0.000 ])
   size [1.800 1.500 0.500]
   velocity_bounds [ -10 10 0 0 -360 360 -90 90 ] 
   drive "diff" 
@@ -289,7 +304,7 @@ define bucket position
 
 define tractor position
 (
-  myLaser(pose [ 2.500 0.000 -2.500 0.000 ])
+  halfcircleLaser(pose [ 2.500 0.000 -1.000 0.000 ])
   #myLaser(pose [ 2.500 0.000 -1.000 0.000 ])
   drive "diff"
   size [5.000 3.000 3.000]
