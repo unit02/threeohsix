@@ -38,7 +38,10 @@ class picker(havesting_robot):
 # __name__ and __main__ are built-in python variables and need to start and end with *two* underscores
 if __name__ == '__main__':
     rospy.init_node("robot_"+sys.argv[1])  # Create a node of name robot_1
-    p = picker(rospy.get_name(), True)  # Create an instance of above class
+    row_width = 5.0
+    object_width = 1.5
+
+    p = picker(rospy.get_name(), True, row_width, object_width)  # Create an instance of above class
 
     p.move_down_rows()
     #p.wait(30)

@@ -10,8 +10,11 @@ from sensor_msgs.msg import LaserScan
 class havesting_robot(node):
 	#Subscribes to the bin info topic to receive data on whether bins
     #need to be picked up
-    def __init__(self,name, laser_on):
+    def __init__(self,name, laser_on, path_width, width):
         self.is_stopped = False
+        self.path_width = path_width
+        self.width = width
+
         super(havesting_robot,self).__init__(name,laser_on)
 
         self.detachment = rospy.Publisher(
@@ -44,9 +47,18 @@ class havesting_robot(node):
             ranges = msg.ranges
             rate = rospy.Rate(10)
             stop = False
+            min_range = ((self.path_width - self.width)/2) - 0.1
 
-            for i in range(60):
-                if (ranges[i] < 2.5):
+            for i in range(0, 80):
+                if (ranges[i] < min_range):
+                    stop = True
+
+            for i in range(80, 100):
+                if (ranges[i] < min_range + min_range/2):
+                    stop = True
+
+            for i in range(100, 180):
+                if (ranges[i] < min_range):
                     stop = True
 
             if not self.is_stopped and stop:
