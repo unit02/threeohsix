@@ -15,6 +15,8 @@ class WorldConfig():
         self.lastTrunk = 13.5 
         self.lastPargola = 0
         self.vertFence = 0
+        self.pickerNormal = 0
+        self.pickerRemainder = 0
 
         
         self.getNumberOfRows()
@@ -227,7 +229,7 @@ class WorldConfig():
         f.write('post( pose [ 10.5 ' + str(self.lastTrunk) + ' 0 0 ] )\n') 
         f.write('post( pose [ 16.5 ' + str(self.lastTrunk) + ' 0 0 ] )\n') 
         f.write('post( pose [ 22.5 ' + str(self.lastTrunk) + ' 0 0 ] )\n') 
-        f.write('post( pose [ 29.5 ' + str(self.lastTrunk) + ' 0 0 ] )\n') 
+        f.write('post( pose [ 28.5 ' + str(self.lastTrunk) + ' 0 0 ] )\n') 
 
         for i in range(int(self.numberOfRows)- 1):
             self.lastParagola = (float(self.lastTrunk) - 0.25 - (float(self.rowWidth)/2))
@@ -282,7 +284,7 @@ class WorldConfig():
             f.write('post( pose [ 10.5 ' + str(self.lastTrunk) + ' 0 0 ] )\n') 
             f.write('post( pose [ 16.5 ' + str(self.lastTrunk) + ' 0 0 ] )\n') 
             f.write('post( pose [ 22.5 ' + str(self.lastTrunk) + ' 0 0 ] )\n') 
-            f.write('post( pose [ 29.5 ' + str(self.lastTrunk) + ' 0 0 ] )\n') 
+            f.write('post( pose [ 28.5 ' + str(self.lastTrunk) + ' 0 0 ] )\n') 
         f.close()
 
     def makeWorld(self):
@@ -312,29 +314,37 @@ class WorldConfig():
         f.write('tractor( pose [-40 26.5 0 0  ] name "tractor")\n')  
       
         #adding pickers
-        location = 11
+        location = (13.5 - 0.25 - (float(self.rowWidth)/2))
+
+        self.pickerNormal = (self.numberOfRows -1) / self.numberOfPickers
+        self.pickerRemainder = (self.numberOfRows -1) % self.numberOfPickers
+
         robot = 11
         for i in range(int(self.numberOfPickers)):
-            f.write('picker( pose [-39 '+ str(location) +' 0 0  ] name "picker '+str(robot)+'" color "violet")\n')
-            location = location - int(self.rowWidth)   
-            robot = robot + 1
-        #adding carriers
-        location = 16.5
-        for i in range(int(self.numberOfCarriers)):
-            f.write('carrier( pose [34.5 '+ str(location) +' 0 0  ] name "carrier '+str(robot)+'" color "cyan")\n')
-            location = location + 4  
-            robot = robot + 1
-        #adding bins
-        location = 11
-        for i in range(int(self.numberOfBins)/2):
-            f.write('bucket( pose [-41 '+ str(location) +' 0 0  ] name "bin '+str(robot)+'")\n')
-            location = location - int(self.rowWidth)   
+            f.write('picker( pose [-35.5 '+ str(location) +' 0 0  ] name "picker '+str(robot)+'" color "violet")\n')
+            location = location - self.pickerNormal * (self.rowWidth + 0.5)
             robot = robot + 1
 
-        location = 16.5
+
+        #adding carriers
+        location = 42
+        for i in range(int(self.numberOfCarriers)):
+            f.write('carrier( pose [ '+str(location)+' 30 0 0  ] name "carrier '+str(robot)+'" color "cyan")\n')
+            location = location - 6 
+            robot = robot + 1
+        #adding bins
+
+        location = (13.5 - 0.25 - (float(self.rowWidth)/2))
+
         for i in range(int(self.numberOfBins)/2):
-            f.write('bucket( pose [32.5 '+ str(location) +' 0 0  ] name "bin '+str(robot)+'")\n')
-            location = location + 4
+            f.write('bucket( pose [-38 '+ str(location) +' 0 0  ] name "bin '+str(robot)+'")\n')
+            location = location - self.pickerNormal * (self.rowWidth + 0.5) 
+            robot = robot + 1
+
+        location = 39
+        for i in range(int(self.numberOfBins)/2):
+            f.write('bucket( pose  [ '+str(location)+' 30 0 0  ]name "bin '+str(robot)+'")\n')
+            location = location - 6
             robot = robot + 1
         f.close()     
 
