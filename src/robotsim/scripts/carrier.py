@@ -22,7 +22,7 @@ class carrier(havesting_robot):
     def _pickBin_callback(self,bin_call):
          self.wait(5)
          new_position = Point(bin_call.x_coordinate + 2, bin_call.y_coordinate + 2, 0.0)
-         rospy.loginfo("moving to pick up the bin")
+         rospy.loginfo("Moving to pick up the bin")
          self.move_to(new_position)
          rospy.loginfo(self.name)
          if self.name == "/robot_14":

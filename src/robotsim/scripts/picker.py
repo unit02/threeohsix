@@ -12,7 +12,7 @@ class picker(havesting_robot):
 
         #new_position = Point(x_point+length_row +3, y_point, 0.0)
         self.move_x_steps(70)
-        rospy.loginfo("bin detaching")
+        rospy.loginfo("Bin detaching")
         self.detach_bin()
         self.turnRight()
         self.move_x_steps(6)

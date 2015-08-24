@@ -217,14 +217,14 @@ class node(object):
         rospy.loginfo("Turned Right")
         rospy.loginfo("New Orientation %s, face %s", self.rad_orient, Face.tostring(self.face_value(self.rad_orient)))
         self.reorientation()
-        rospy.loginfo("New Orientation after reorientation %s, face %s", self.rad_orient,  Face.tostring(self.face_value(self.rad_orient)))
+        #rospy.loginfo("New Orientation after reorientation %s, face %s", self.rad_orient,  Face.tostring(self.face_value(self.rad_orient)))
 
     def turnLeft(self):
         rospy.loginfo("Original Orientation %s, face %s", self.rad_orient, Face.tostring(self.face_value(self.rad_orient)))
         twist = Twist()
         twist.linear.x = 0.0
         twist.angular.z = (math.pi / 8)
-        rospy.loginfo("Turning")
+        #rospy.loginfo("Turning")
         for i in range(40):
             self.cmd_vel_pub.publish(twist)
             rospy.sleep(0.1)
@@ -235,7 +235,7 @@ class node(object):
         rospy.loginfo("Turned Left")
         rospy.loginfo("New Orientation %s, face %s", self.rad_orient, Face.tostring(self.face_value(self.rad_orient)))
         self.reorientation()
-        rospy.loginfo("New Orientation after reorientation %s, face %s", self.rad_orient,  Face.tostring(self.face_value(self.rad_orient)))
+        #rospy.loginfo("New Orientation after reorientation %s, face %s", self.rad_orient,  Face.tostring(self.face_value(self.rad_orient)))
 
     def reorientation(self):
         twist = Twist()
