@@ -190,7 +190,7 @@ class WorldConfig():
         f.write('person_visitor ( pose [-38 -22 0 0 ] name "visitor3")\n')
 
         #adding tractor
-        f.write('tractor( pose [-40 26.5 0.5 0  ] name "tractor")\n')  
+        f.write('tractor( pose [-40 26.5 0 0  ] name "tractor")\n')  
       
         #adding pickers
         location = 11

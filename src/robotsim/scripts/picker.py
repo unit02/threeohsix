@@ -5,10 +5,40 @@ from geometry_msgs.msg import Point
 from havesting_robot import havesting_robot
 import sys
 
-from node import Face
 class picker(havesting_robot):
 
     def move_down_rows(self):
+	
+	x_point=self.position.x 
+	y_point=self.position.y
+        length_row=78 
+        numberofrows=2 
+
+	# #for i in range(0, numberofrows):
+	# new_position = Point(x_point+length_row, y_point, 0.0)
+	# p.move_to(new_position)
+	# #p.move_to(new_position)
+	# self.detach_bin()
+	# #Move so it can safetly turn
+	# self.move_x_steps(2)
+	# new_position = Point(x_point+length_row+2, y_point-6, 0.0)
+	# p.move_to(new_position)
+	# #p.move_to(new_position)
+	# #p.reorientation()
+	# y_point=y_point-6
+	#
+	# new_position = Point(x_point+length_row-5, y_point, 0.0)
+	# p.move_to(new_position)
+	# p.wait(5)
+	# #p.move_to(new_position)
+	# #p.reorientation()
+	# new_position = Point(x_point, y_point, 0.0)
+	# p.move_to(new_position)
+	# #p.move_to(new_position)
+	# #p.reorientation()
+	# y_point=y_point-6
+
+
 
         #new_position = Point(x_point+length_row +3, y_point, 0.0)
         self.move_x_steps(70)
