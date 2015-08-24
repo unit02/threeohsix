@@ -10,6 +10,7 @@ from node import node
 from robotsim.msg import bin_call,bin_detach,attach_bin
 import std_msgs
 import sys
+from geometry_msgs.msg import Point, Twist
 
 
 class bin(node):
@@ -41,7 +42,8 @@ class bin(node):
             self.following.unregister()
             self.isFull = True
             rospy.loginfo("bin moving out of the rows")
-            self.move_to(self.position.x + 3, self.position.y,0.0)
+
+            #self.move_to(self.position.x + 3, self.position.y,0.0)
             self.pick_me_up(self.position)
             self.attach_time = rospy.Subscriber(
                 "/attach_bin",
@@ -52,7 +54,7 @@ class bin(node):
 
     def move_with_robot(self,data):
          #rospy.loginfo(rospy.get_caller_id() + "Robot to follow position %s ", data.pose.pose.position)
-        rospy.loginfo(rospy.get_caller_id() + " Robot to follow linear velocity %s ", data.twist.twist)
+        #rospy.loginfo(rospy.get_caller_id() + " Robot to follow linear velocity %s ", data.twist.twist)
         twist_msg = Twist()
         twist_msg =   data.twist.twist
         if twist_msg.linear.x < 0:

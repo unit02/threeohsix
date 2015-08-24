@@ -12,6 +12,7 @@ from sensor_msgs.msg import LaserScan
 import roslib
 roslib.load_manifest('robotsim')
 from robotsim.msg import bin_call
+import threading
 
 class Face:
     North, South, East, West = range(4)
@@ -35,8 +36,8 @@ class node(object):
         self.rad_orient = 0.0
         self.goal = 0.0
         self.Face = Face.East
-        self.is_stopped = False
-
+        self.event = threading.Event()
+        self.event.set()
 
         rospy.loginfo("Starting node %s" % name)
 
@@ -180,10 +181,8 @@ class node(object):
             for i in range(runtime):
                 self.cmd_vel_pub.publish(self.twist)
                 rospy.sleep(0.1)
-                # need to stop the moving as something is in the way
-                if self.is_stopped:
-                    rospy.logwarn("Stopping in move_x steps method")
-                    return
+                # need to pause if something is in the way - waits if event is not set
+                self.event.wait()
 
         rospy.loginfo("At new position %s", self.position)
 
@@ -199,8 +198,7 @@ class node(object):
                 self.cmd_vel_pub.publish(twist)
                 rospy.sleep(0.1)
                 # need to stop the moving as something is in the way
-                if (self.is_stopped):
-                    return
+                self.event.wait()
 
         # create a new message - everything set to 0 so it can stop
         twist = Twist()

@@ -2,8 +2,9 @@
 import rospy
 from node import node
 import sys
+from havesting_robot import havesting_robot
 
-class tractor(node):
+class tractor(havesting_robot):
     pass
 	
 
@@ -11,7 +12,7 @@ class tractor(node):
 # __name__ and __main__ are built-in python variables and need to start and end with *two* underscores
 if __name__ == '__main__':
     rospy.init_node("robot_"+sys.argv[1])  # Create a node of name laser_roomba
-    l = tractor(rospy.get_name(), False)  # Create an instance of above class
+    l = tractor(rospy.get_name(), True)  # Create an instance of above class
     a = 1
     while a==1:
 	l.wait(5)

@@ -25,6 +25,8 @@ class carrier(havesting_robot):
          rospy.loginfo("moving to pick up the bin")
          self.move_to(new_position)
          rospy.loginfo(self.name)
+
+         # changed so selected queue like
          if self.name == "/robot_14":
              self.bin_attach(bin_call.bin_name)
 
