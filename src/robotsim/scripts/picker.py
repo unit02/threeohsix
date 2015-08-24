@@ -11,13 +11,8 @@ class picker(havesting_robot):
     def move_down_rows(self):
 
         #new_position = Point(x_point+length_row +3, y_point, 0.0)
-<<<<<<< HEAD
         self.move_x_steps(70)
         rospy.loginfo("Bin detaching")
-=======
-        self.move_x_steps(75)
-        rospy.loginfo("bin detaching")
->>>>>>> cd032dc337f57080fd69bc38155b188b954edc60
         self.detach_bin()
         self.turnRight()
         self.move_x_steps(6)
