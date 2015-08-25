@@ -1,0 +1,30 @@
+#!/usr/bin/env python
+
+# Testing Outline - unittests
+PKG = 'test'
+
+import sys
+import unittest
+
+# Basic test class showing different cases
+class test_Example(unittest.TestCase):    # Your test class name in form test_name
+ 	# Basic test methods
+	def test_equals_self(self):    # Name of test method
+		self.assertEquals(1,1) #Checks if first 2 values are equal. 
+	
+	def test_if_true(self):
+		self.assertTrue('FOO'.isupper())
+		self.assertFalse('foo'.isupper())
+
+	def test_type_error(self):
+		s = "hello world"     
+		self.assertEqual(s.split(), ['hello', 'world'])  # checks if they are equal
+      # check that s.split fails when the separator is not a string
+      		with self.assertRaises(TypeError):
+         		s.split(5)
+
+if __name__ == '__main__':
+	print "I did this"
+	import rostest
+	#rostest.rosrun(package_name, test_name[your choice],class name,sysargs=None[optional-overrides sys.argv])
+	rostest.rosrun(PKG, 'test_basic_example', test_Example,sysargs=None) 
