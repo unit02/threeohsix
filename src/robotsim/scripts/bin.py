@@ -87,7 +87,7 @@ class bin(node):
         msg.bin_name = self.name
         msg.x_coordinate = bin_position.x
         msg.y_coordinate = bin_position.y
-        msg.picker_to_attach_name = self.robot_to_follow
+        msg.picker_name = self.robot_to_follow
         #TODO remove hard coding of names
         if self.name == "/robot_16":
             self.need_to_be_picker.publish(msg)

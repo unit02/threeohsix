@@ -52,6 +52,7 @@ find_package(catkin REQUIRED COMPONENTS
    attach_bin.msg
    queue_position.msg
    carrier_to_picker.msg
+
 )
 
 ## Generate services in the 'srv' folder
