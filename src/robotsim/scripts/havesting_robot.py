@@ -56,7 +56,7 @@ class havesting_robot(node):
             if not self.is_stopped and stop:
                 self.is_stopped = True
                 self.event.clear()
-                rospy.logwarn("Stopping robot, something in the way,  %s")
+                rospy.logwarn("Stopping robot, something in the way will continue when clear")
 
             # publish a 0 velocity speed
             if stop and not self.is_turning:
@@ -67,7 +67,7 @@ class havesting_robot(node):
             if self.is_stopped and not stop:
                 self.is_stopped = False
                 self.event.set()
-                rospy.loginfo("Event set, so should continue moving")
+                rospy.loginfo("Event set, road clear can continue moving")
 
             rate.sleep()
 

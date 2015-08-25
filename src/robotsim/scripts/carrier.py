@@ -55,6 +55,7 @@ if __name__ == '__main__':
     row_width = 5.0
     object_width = 1.5
 
-    l = carrier(rospy.get_name(), True, row_width, object_width)  # Create an instance of above class
+    l = carrier(rospy.get_name(), False, row_width, object_width)  # Create an instance of above class
+
     rospy.spin()  # Function to keep the node running until terminated via Ctrl+C
 

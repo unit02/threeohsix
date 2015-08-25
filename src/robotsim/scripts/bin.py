@@ -43,19 +43,21 @@ class bin(node):
                 queue_size=10
             )
 
-    #Method to make the bin follow a robot be matching the speed
+    # Method to make the bin follow a robot be matching the speed
     def move_with_robot(self,data):
-         #rospy.loginfo(rospy.get_caller_id() + "Robot to follow position %s ", data.pose.pose.position)
-        #rospy.loginfo(rospy.get_caller_id() + " Robot to follow linear velocity %s ", data.twist.twist)
         twist_msg = Twist()
         twist_msg =   data.twist.twist
         if twist_msg.linear.x < 0:
             twist_msg.linear.x = -1 * twist_msg.linear.x
         if twist_msg.linear.y < 0:
             twist_msg.linear.y = -1 * twist_msg.linear.y
+        # when facing north and south it considers the cmd_vel as y instead of x
+        if twist_msg.linear.y > twist_msg.linear.x:
+            twist_msg.linear.x = twist_msg.linear.y
+            twist_msg.linear.y = 0.0
         self.cmd_vel_pub.publish(twist_msg)
 
-    #Used to make the bin subscribe to the robot it's following's velocity and angle
+    # Used to make the bin subscribe to the robot it's following's velocity and angle
     def attach_to_robot(self,msg):
         if msg.bin_name == self.name:
             rospy.loginfo("Attaching to %s", msg.to_attach_name)
