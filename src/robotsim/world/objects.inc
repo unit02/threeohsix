@@ -1,6 +1,6 @@
 define myLaser ranger 
 ( 
-  sensor( range [ 0 10 ] fov 60.0 samples 60 ) 
+  sensor( range [ 0 10 ] fov 180.0 samples 180 ) 
   size [0.100 0.100 0.100] 
   color "black" 
   block( 

@@ -50,6 +50,7 @@ find_package(catkin REQUIRED COMPONENTS
    bin_call.msg
    bin_detach.msg
    attach_bin.msg
+   queue_position.msg
 )
 
 ## Generate services in the 'srv' folder

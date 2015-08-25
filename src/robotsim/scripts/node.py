@@ -13,6 +13,7 @@ import roslib
 roslib.load_manifest('robotsim')
 from robotsim.msg import bin_call
 import threading
+import math
 
 class Face:
     North, South, East, West = range(4)
@@ -63,8 +64,6 @@ class node(object):
             Odometry,
             callback=self.stage_callback,
             queue_size=1
-
-
         )
         # wait to gather stage information
         self.wait(20)
@@ -80,24 +79,29 @@ class node(object):
             twist_msg = Twist()
             rate = rospy.Rate(10)
             
-            #Avoid obstacles that were detected within 3m ahead
-            if (min_distance <= 4):
+            #Avoid obstacles that were detected within 4m ahead
+            if (min_distance <= 1.0):
+                # If it is nearly colliding, stop and turn
+                self.wait(2)
+                self.turnLeft()
+                
+            elif (min_distance <= 4.0):
                 # Recognise the turning direction,
                 # given that laser beam is 60 degrees wide
-                if (ranges[0] <= 4.0) & (ranges[59] <= 4.0):
+                if (ranges[0] <= 4.0) & (ranges[179] <= 4.0):
                     twist_msg.linear.x = 0
-                    twist_msg.angular.z = 270
+                    twist_msg.angular.z = math.pi*2
                     self.cmd_vel_pub.publish(twist_msg)
                     
-                elif (ranges.index(min_distance) <=30):
+                elif (ranges.index(min_distance) <=90):
                     #rospy.loginfo(ranges.index(min_distance))
                     twist_msg.linear.x = 1.0
-                    twist_msg.angular.z = 1
+                    twist_msg.angular.z = math.pi
                     self.cmd_vel_pub.publish(twist_msg)
                 else:
                     #rospy.loginfo(ranges.index(min_distance))
                     twist_msg.linear.x = 1.0
-                    twist_msg.angular.z = -1
+                    twist_msg.angular.z = -math.pi
                     self.cmd_vel_pub.publish(twist_msg)
             else:
                 #Moving straight
