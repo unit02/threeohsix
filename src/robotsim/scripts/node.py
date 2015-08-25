@@ -38,6 +38,7 @@ class node(object):
         self.Face = Face.East
         self.event = threading.Event()
         self.event.set()
+        self.is_turning = False
 
         rospy.loginfo("Starting node %s" % name)
 
@@ -209,6 +210,7 @@ class node(object):
         rospy.loginfo("At new position %s", self.position)
 
     def turnRight(self):
+        self.is_turning = True
         rospy.loginfo("Original Orientation %s, face %s", self.rad_orient, Face.tostring(self.face_value(self.rad_orient)))
         twist = Twist()
         twist.linear.x = 0.0
@@ -225,9 +227,11 @@ class node(object):
         rospy.loginfo("Turned Right")
         rospy.loginfo("New Orientation %s, face %s", self.rad_orient, Face.tostring(self.face_value(self.rad_orient)))
         self.reorientation()
+        self.is_turning = False
         #rospy.loginfo("New Orientation after reorientation %s, face %s", self.rad_orient,  Face.tostring(self.face_value(self.rad_orient)))
 
     def turnLeft(self):
+        self.is_turning = True
         rospy.loginfo("Original Orientation %s, face %s", self.rad_orient, Face.tostring(self.face_value(self.rad_orient)))
         twist = Twist()
         twist.linear.x = 0.0
@@ -243,6 +247,7 @@ class node(object):
         rospy.loginfo("Turned Left")
         rospy.loginfo("New Orientation %s, face %s", self.rad_orient, Face.tostring(self.face_value(self.rad_orient)))
         self.reorientation()
+        self.is_turning = False
         #rospy.loginfo("New Orientation after reorientation %s, face %s", self.rad_orient,  Face.tostring(self.face_value(self.rad_orient)))
 
     def reorientation(self):

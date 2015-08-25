@@ -49,15 +49,7 @@ class havesting_robot(node):
             stop = False
             min_range = ((self.path_width - self.width)/2) - 0.1
 
-            for i in range(0, 80):
-                if (ranges[i] < min_range):
-                    stop = True
-
-            for i in range(80, 100):
-                if (ranges[i] < min_range + min_range/2):
-                    stop = True
-
-            for i in range(100, 180):
+            for i in range(0, 180):
                 if (ranges[i] < min_range):
                     stop = True
 
@@ -67,7 +59,7 @@ class havesting_robot(node):
                 rospy.logwarn("Stopping robot, something in the way,  %s")
 
             # publish a 0 velocity speed
-            if stop:
+            if stop and not self.is_turning:
                 twist = Twist()
                 self.cmd_vel_pub.publish(twist)
 

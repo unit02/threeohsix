@@ -11,7 +11,7 @@ class picker(havesting_robot):
 
 
         row_width=6
-        row_length=78
+        row_length=20
 
 
         #For loop here with variable
