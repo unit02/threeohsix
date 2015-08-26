@@ -33,7 +33,7 @@ class picker(havesting_robot):
         numberofrow = worldInfo.pickerNormal
         if (worldInfo.lastPickerName == self.name):
             if (worldInfo.pickerRemainder != 0):
-                numberofrow = worldInfo.pickerRemainder
+                numberofrow = worldInfo.pickerRemainder + numberofrow
 
         for i in range(numberofrow):
             if self.position.x < 0:
@@ -43,7 +43,7 @@ class picker(havesting_robot):
                 self.turnRight()
                 self.move_x_steps(row_width)
                 self.turnRight()
-                #self.reorientation()
+                self.reorientation()
                 #self.move_x_steps(8)
                 #while not(self.has_bin):
                     #pass
@@ -56,7 +56,7 @@ class picker(havesting_robot):
             	self.turnLeft()
             	self.move_x_steps(row_width)
             	self.turnLeft()
-            	#self.reorientation()
+            	self.reorientation()
             	#self.move_x_steps(8)
             	#while not(self.has_bin):
                	   #pass

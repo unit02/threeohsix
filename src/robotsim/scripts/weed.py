@@ -41,11 +41,9 @@ class weed(node):
 		ranges = msg.ranges
 		min_distance = np.nanmin(ranges)
 		if (min_distance < 2):
-			rospy.loginfo("TOO CLOSE")
 			twist = Twist()
-			twist.linear.x = 100
+			twist.linear.x = 200
 			for i in range(5):
-				rospy.loginfo("Sinking")
                 		self.cmd_vel_pub.publish(twist)
                 		rospy.sleep(0.1)
 			twist = Twist()

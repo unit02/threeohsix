@@ -1,5 +1,6 @@
 define treetrunk model(	
  	color "brown" 
+        gui_move 0
 	size [0.5 0.5 1.8] 	
 	drive "diff" 
 	block( 
@@ -13,7 +14,7 @@ define treetrunk model(
 )
 
 define tree model(	
- 	
+ 	gui_move 0
 	size [5.5 1 1] 	
 	block( 
 	color "DarkGreen" 
@@ -27,7 +28,8 @@ define tree model(
 
 
 
-define post model(	
+define post model(
+        gui_move 0	
 	color "grey" 
  	size [0.5 0.5 2.8] 
 	block( 
@@ -42,8 +44,10 @@ define post model(
 
 define driveway model
 (
-  size [30 6 0.02]
+  gui_move 0
+  size [30 10 0.015]
   color "grey"  
+  obstacle_return 0
   block
   (
     points [4]

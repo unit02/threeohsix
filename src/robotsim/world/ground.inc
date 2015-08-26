@@ -1,4 +1,5 @@
 define fenceHorizontal model( 
+	gui_move 0 
 	color "yellow"
  	size [101 1 2.5] 
 	block( 
@@ -10,6 +11,7 @@ define fenceHorizontal model(
 	z [0 1] )
 )
 define fenceVertical model( 
+	gui_move 0 
 	color "yellow"  
 	size [1 64.5 2.5]  
 	block(  
@@ -22,6 +24,7 @@ z [0 1] )
 )
 define ground model 
 ( 
+	gui_move 0 
 	size [100 63.5 0.01] 
 	color "YellowGreen"  
 	block 
@@ -35,6 +38,7 @@ define ground model
 )
 define pergola model
 (
+	gui_move 0 
 	size [1.7 4.5 0.5]
 	color "DarkGreen"  
 	block
