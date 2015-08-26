@@ -11,6 +11,17 @@ from robotsim.msg import bin_call,bin_detach,attach_bin
 import std_msgs
 import sys
 from geometry_msgs.msg import Point, Twist
+from geometry_msgs.msg import Vector3, Twist
+import rospy
+from nav_msgs.msg import Odometry
+import roslib
+roslib.load_manifest('robotsim')
+from std_msgs.msg import String
+from node import node
+from robotsim.msg import bin_call,bin_detach,attach_bin, queue_position
+import std_msgs
+import sys
+from geometry_msgs.msg import Point, Twist
 
 #Models the bin/buckets in which kiwifruit are stored
 class bin(node):
@@ -20,12 +31,26 @@ class bin(node):
         self.isFull = False
         self.following = None
         self.time_to_detach = None
+        self.lowerYname = None
+        self.lowerY = 0.0
 
         #Creates topic to publish to when it needs to be picked up by a carrier
         self.need_to_be_picker = rospy.Publisher(
             "/bin_info",
             bin_call,
             queue_size=10
+        )
+        #Creates topic to publish to when it needs to be picked up by a carrier
+        self.whoToPickMe = rospy.Publisher(
+            "/whichRobotToPick",
+            String,
+            queue_size=10
+        )
+        self.whosFirstInQ = rospy.Subscriber(
+            "/firstInQ",
+            queue_position,
+            callback=self.handle_message,
+            queue_size=19
         )
 
         self.attach_time = rospy.Subscriber(
@@ -34,6 +59,22 @@ class bin(node):
                 callback=self.attach_to_robot,
                 queue_size=10
         )
+
+    def handle_message(self, msg):
+        #rospy.loginfo("BYEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!")
+        if self.lowerYname is None:
+            self.lowerYname = msg.robot_name
+            self.lowerY = msg.x_coordinate
+            rospy.loginfo("first lowerY!" + self.lowerYname +str(msg.x_coordinate)+ str(self.lowerY))
+        else:
+            #rospy.loginfo("BYEEEEEEEEEEE2222222222222")
+            if self.lowerY < msg.x_coordinate:
+                rospy.loginfo("before y coord!" + str(self.lowerY))
+                self.lowerY = msg.x_coordinate
+                self.lowerYname = msg.robot_name
+                rospy.loginfo("first lowerY!" + self.lowerYname)
+                rospy.loginfo("after y coord!" + str(self.lowerY))
+
 
     #Method called when it recieves a message from the robot to detach
     #Starts to publish the message asking to be picked up
@@ -85,15 +126,20 @@ class bin(node):
 
     #creates message to post to the bin_info topic
     def pick_me_up(self, bin_position):
-        #if self.isFull == True:
         msg = bin_call()
         msg.bin_name = self.name
         msg.x_coordinate = bin_position.x
         msg.y_coordinate = bin_position.y
         msg.picker_to_attach_name = self.robot_to_follow
-        #TODO remove hard coding of names
-        if self.name == "/robot_16":
-            self.need_to_be_picker.publish(msg)
+        self.need_to_be_picker.publish(msg)
+        rospy.loginfo("BIN HEREEEEEEEEEEEEEEEEEE" +self.name)
+        #self.wait(5)  #after publishing, give sometime to figure out which robot is closer to us
+        #rospy.loginfo("!!!!!!!!!!!!!!robot name "+ self.lowerYname + str(self.lowerY))
+        while self.lowerYname is None:
+            pass
+        self.wait(5)
+        rospy.loginfo("!!!!!!!!!!!!!ROBOT NAMEEEEEEE "+ self.lowerYname +"  "+ str(self.lowerY))
+        self.whoToPickMe.publish(self.lowerYname)
 
 
 # The block below will be executed when the python file is executed

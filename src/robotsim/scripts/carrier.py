@@ -7,6 +7,16 @@ roslib.load_manifest('robotsim')
 from robotsim.msg import bin_call,carrier_to_picker
 import sys
 from worldInfo import *
+from geometry_msgs.msg import Point,Vector3, Twist
+from havesting_robot import havesting_robot
+import roslib
+roslib.load_manifest('robotsim')
+import sys
+from robotsim.msg import bin_call,queue_position,bin_detach,attach_bin
+from nav_msgs.msg import Odometry
+from std_msgs.msg import String
+from node import node
+import std_msgs
 
 
 class carrier(havesting_robot):
@@ -21,10 +31,43 @@ class carrier(havesting_robot):
             callback=self._pickBin_callback,
             queue_size=1
         )
+        self.whichOne = rospy.Subscriber(
+            "/whichRobotToPick",
+            String,
+            callback=self.isItMe,
+            queue_size=1
+        )
+
+        self.firstInQ = rospy.Publisher(
+            "/firstInQ",
+            queue_position,
+            queue_size=1
+        )
+
+    def isItMe(self, msg):
+        rospy.loginfo("IS IT MEE?????????????????????????? MNSG "+(str(msg))+ " "+ (str(self.name)))
+        if self.name == msg:
+            rospy.loginfo("HIIIIIIIIIIIIIIIIIIIIIIIIIII it is me! "+str(msg))
+        else:
+            rospy.loginfo("im in ELSEWEEEEEEEEEEEEEEEEEEEEEEEEEEE! "+str(msg))
+
+
+    def publish_position(self):
+        #rospy.loginfo("HIIIIIIIIIIIIIIIIIIIIIIIIIII!")
+        #lowestY = self.name
+        msg = queue_position()
+        msg.robot_name = self.name
+        msg.x_coordinate = self.position.x
+        msg.y_coordinate = self.position.y
+        self.firstInQ.publish(msg)
+        #rospy.loginfo("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEYYYY"+str   ( msg.y_coordinate))
 
     def _pickBin_callback(self,bin_call):
          self.wait(5)
-         if self.name == "/robot_14":
+
+         rospy.loginfo(self.name)
+         self.publish_position()
+         """if self.name == "/robot_14":
              #Get the pickers name from the bin_call message
              picker_name = bin_call.picker_to_attach_name
 
@@ -73,7 +116,7 @@ class carrier(havesting_robot):
 
              rospy.loginfo("Lets go to tractor!")
              #TODO move back to tractor position
-             #TODO find what place it is left, right, top, bot - move method
+             #TODO find what place it is left, right, top, bot - move method"""
 
 
 
