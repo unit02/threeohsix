@@ -11,7 +11,7 @@ define fenceHorizontal model(
 )
 define fenceVertical model( 
 	color "yellow"  
-	size [1 107.5 2.5]  
+	size [1 64.5 2.5]  
 	block(  
 	points 4  
 	point[0] [0 0]  
@@ -22,7 +22,7 @@ z [0 1] )
 )
 define ground model 
 ( 
-	size [100 106.5 0.01] 
+	size [100 63.5 0.01] 
 	color "YellowGreen"  
 	block 
 ( 
@@ -35,7 +35,7 @@ define ground model
 )
 define pergola model
 (
-	size [1.7 5.5 0.5]
+	size [1.7 4.5 0.5]
 	color "DarkGreen"  
 	block
 (

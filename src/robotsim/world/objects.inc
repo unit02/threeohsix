@@ -28,6 +28,21 @@ define halfcircleLaser ranger
 	)
 )
 
+define myWeedLaser ranger 
+( 
+  sensor( range [ 0 10 ] fov 360.0 samples 60 ) 
+  size [0.100 0.100 0.100] 
+  color "black" 
+  block( 
+	points 4 
+	point[0] [0 0] 
+	point[1] [0.1 0] 
+	point[2] [0.1 0.1] 
+	point[3] [0 0.1] 
+	z [0 0.1] 
+	) 
+)
+
 # define picker
 define picker position 
 ( 
@@ -728,5 +743,104 @@ define cat position
       z [0.4 0.7]
    )
 )
+
+# define weed
+define weed position
+( 
+  myWeedLaser(pose [ 0.000 0.000 0.000 0.000 ])
+  size [0.50 0.50 0.50]  
+  velocity_bounds [ -100 100 -10 10 -10 10 -90 90 ]
+  color "ForestGreen"
+  #base
+  block( 
+	points 4  
+	point[0] [0 0] 
+	point[1] [1 0] 
+	point[2] [1 1] 
+	point[3] [0 1] 
+	z [0 0.05] 
+  )
+  #poky bit
+  block( 
+	points 4  
+	point[0] [0 0] 
+	point[1] [0.2 0] 
+	point[2] [0.2 0.2] 
+	point[3] [0 0.2] 
+	z [0.05 0.6] 
+  )
+  #poky bit
+  block( 
+	points 4  
+	point[0] [0.4 0] 
+	point[1] [0.6 0] 
+	point[2] [0.6 0.2] 
+	point[3] [0.4 0.2] 
+	z [0.05 1] 
+  )
+  #poky bit
+  block( 
+	points 4  
+	point[0] [0.8 0] 
+	point[1] [1 0] 
+	point[2] [1 0.2] 
+	point[3] [0.8 0.2] 
+	z [0.05 0.9] 
+  )
+  #poky bit
+  block( 
+	points 4  
+	point[0] [0 0.4] 
+	point[1] [0.2 0.4] 
+	point[2] [0.2 0.6] 
+	point[3] [0 0.6] 
+	z [0.05 0.8] 
+  )
+  #poky bit
+  block( 
+	points 4  
+	point[0] [0.4 0.4] 
+	point[1] [0.6 0.4] 
+	point[2] [0.6 0.6] 
+	point[3] [0.4 0.6] 
+	z [0.05 0.7] 
+  )
+  #poky bit
+  block( 
+	points 4  
+	point[0] [0.8 0.4] 
+	point[1] [1 0.4] 
+	point[2] [1 0.6] 
+	point[3] [0.8 0.6] 
+	z [0.05 1] 
+  )
+  #poky bit
+  block( 
+	points 4  
+	point[0] [0 0.8] 
+	point[1] [0.2 0.8] 
+	point[2] [0.2 1] 
+	point[3] [0 1] 
+	z [0.05 0.6] 
+  )
+  #poky bit
+  block( 
+	points 4  
+	point[0] [0.4 0.8] 
+	point[1] [0.6 0.8] 
+	point[2] [0.6 1] 
+	point[3] [0.4 1] 
+	z [0.05 1] 
+  )
+  #poky bit
+  block( 
+	points 4  
+	point[0] [0.8 0.8] 
+	point[1] [1 0.8] 
+	point[2] [1 1] 
+	point[3] [0.8 1] 
+	z [0.05 0.9] 
+  )
+) 
 
 

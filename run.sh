@@ -34,24 +34,16 @@ gnome-terminal -x sh -c 'rosrun robotsim picker.py 11'
 source devel/setup.bash
 gnome-terminal -x sh -c 'rosrun robotsim picker.py 12'
 source devel/setup.bash
-gnome-terminal -x sh -c 'rosrun robotsim picker.py 13'
+gnome-terminal -x sh -c 'rosrun robotsim carrier.py 13'
 source devel/setup.bash
 gnome-terminal -x sh -c 'rosrun robotsim carrier.py 14'
 source devel/setup.bash
-gnome-terminal -x sh -c 'rosrun robotsim carrier.py 15'
+gnome-terminal -x sh -c 'rosrun robotsim bin.py 15'
 source devel/setup.bash
-gnome-terminal -x sh -c 'rosrun robotsim carrier.py 16'
+gnome-terminal -x sh -c 'rosrun robotsim bin.py 16'
 source devel/setup.bash
 gnome-terminal -x sh -c 'rosrun robotsim bin.py 17'
 source devel/setup.bash
 gnome-terminal -x sh -c 'rosrun robotsim bin.py 18'
-source devel/setup.bash
-gnome-terminal -x sh -c 'rosrun robotsim bin.py 19'
-source devel/setup.bash
-gnome-terminal -x sh -c 'rosrun robotsim bin.py 20'
-source devel/setup.bash
-gnome-terminal -x sh -c 'rosrun robotsim bin.py 21'
-source devel/setup.bash
-gnome-terminal -x sh -c 'rosrun robotsim bin.py 22'
 source devel/setup.bash
 gnome-terminal -x sh -c 'rosrun stage_ros stageros src/robotsim/world/orchard.world'
