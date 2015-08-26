@@ -45,11 +45,11 @@ class carrier(havesting_robot):
         )
 
     def isItMe(self, msg):
-        rospy.loginfo("IS IT MEE?????????????????????????? MNSG "+(str(msg))+ " "+ (str(self.name)))
-        if self.name == msg:
-            rospy.loginfo("HIIIIIIIIIIIIIIIIIIIIIIIIIII it is me! "+str(msg))
+        rospy.loginfo("IS IT MEE?????????????????????????? "+(str(msg.data))+ " "+ (str(self.name)))
+        if self.name == msg.data:
+            rospy.loginfo("HIIIIIIIIIIIIIIIIIIIIIIIIIII it is me! "+str(msg.data))
         else:
-            rospy.loginfo("im in ELSEWEEEEEEEEEEEEEEEEEEEEEEEEEEE! "+str(msg))
+            rospy.loginfo("im in ELSEWEEEEEEEEEEEEEEEEEEEEEEEEEEE! "+str(msg.data))
 
 
     def publish_position(self):
