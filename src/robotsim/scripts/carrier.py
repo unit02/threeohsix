@@ -7,12 +7,23 @@ roslib.load_manifest('robotsim')
 from robotsim.msg import bin_call,carrier_to_picker
 import sys
 from worldInfo import *
+from geometry_msgs.msg import Point,Vector3, Twist
+from havesting_robot import havesting_robot
+import roslib
+roslib.load_manifest('robotsim')
+import sys
+from robotsim.msg import bin_call,queue_position,bin_detach,attach_bin
+from nav_msgs.msg import Odometry
+from std_msgs.msg import String
+from node import node
+import std_msgs
 
 
 class carrier(havesting_robot):
     def __init__(self,name, laser_on, path_width, width, bin_name):
         self.picking_bin = False
         self.to_pick_bin_pos = Point()
+        self.binCall = bin_call()
         super(carrier,self).__init__(name,laser_on, path_width, width, bin_name)
 
         self.pick_bin_sub = rospy.Subscriber(
@@ -21,59 +32,98 @@ class carrier(havesting_robot):
             callback=self._pickBin_callback,
             queue_size=1
         )
+        self.whichOne = rospy.Subscriber(
+            "/whichRobotToPick",
+            String,
+            callback=self.isItMe,
+            queue_size=1
+        )
+
+        self.firstInQ = rospy.Publisher(
+            "/firstInQ",
+            queue_position,
+            queue_size=1
+        )
+
+    def isItMe(self, msg):
+        rospy.loginfo("IS IT MEE?????????????????????????? "+(str(msg.data))+ " "+ (str(self.name)))
+        if self.name == msg.data:
+            rospy.loginfo("HIIIIIIIIIIIIIIIIIIIIIIIIIII it is me! "+str(msg.data))
+            self.goPickBin()
+        else:
+            rospy.loginfo("im in ELSEWEEEEEEEEEEEEEEEEEEEEEEEEEEE! "+str(msg.data))
+
+
+    def publish_position(self):
+        #rospy.loginfo("HIIIIIIIIIIIIIIIIIIIIIIIIIII!")
+        #lowestY = self.name
+        msg = queue_position()
+        msg.robot_name = self.name
+        msg.x_coordinate = self.position.x
+        msg.y_coordinate = self.position.y
+        self.firstInQ.publish(msg)
+        #rospy.loginfo("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEYYYY"+str   ( msg.y_coordinate))
+
+
+    def goPickBin(self):
+         
+         #Get the pickers name from the bin_call message
+         picker_name = self.binCall.picker_to_attach_name
+
+         #Create the publisher to tell the picker to move and which bin to attach
+         self.inform_picker = rospy.Publisher(
+            picker_name + "/end_of_row",
+            carrier_to_picker,
+            queue_size=1
+         )
+         row_width = worldInfo.rowWidth + 0.5
+
+         #Move to the empty bin
+         new_position = Point(self.binCall.x_coordinate + 8, self.binCall.y_coordinate-row_width, 0.0)
+         rospy.loginfo("Moving to pick up the bin")
+         self.picking_bin = True
+         self.to_pick_bin_pos = new_position
+         self.move_to(new_position)
+
+         # face the same was the picker
+         self.turnRight()
+
+         #Detach the empty bin and tell the picker to go
+         self.detach_bin(False)
+
+         # tell picker to attach to the bin following carrier
+         msg = carrier_to_picker()
+         msg.bin_name = self.bin_following
+         self.inform_picker.publish(msg)
+
+
+         #TODO: momve the picker to an appropriate location to attach the bin
+         #Attach the full bin
+         new_position = Point(self.binCall.x_coordinate + 8, self.binCall.y_coordinate, 0.0)
+         self.move_to(new_position)
+
+         # face same was the bin and attach the bin
+         self.turnRight()
+         self.bin_attach(self.binCall.bin_name)
+         self.picking_bin = False
+         self.laser_on = True
+
+         rospy.loginfo("Full bin attached to carry, time to drop off at tractor")
+         new_position = Point(self.binCall.x_coordinate + 10, self.binCall.y_coordinate, 0.0)
+         self.move_to(new_position)
+         self.turnLeft()
+         rospy.loginfo("Lets go to tractor!")
+         #TODO move back to tractor position
+         #TODO find what place it is left, right, top, bot - move method
 
     def _pickBin_callback(self,bin_call):
          self.wait(5)
-         if self.name == "/robot_14":
-             #Get the pickers name from the bin_call message
-             picker_name = bin_call.picker_to_attach_name
 
-             #Create the publisher to tell the picker to move and which bin to attach
-             self.inform_picker = rospy.Publisher(
-                picker_name + "/end_of_row",
-                carrier_to_picker,
-                queue_size=1
-             )
-             row_width = worldInfo.rowWidth + 0.5
-
-             #Move to the empty bin
-             new_position = Point(bin_call.x_coordinate + 8, bin_call.y_coordinate-row_width, 0.0)
-             rospy.loginfo("Moving to pick up the bin")
-             self.picking_bin = True
-             self.to_pick_bin_pos = new_position
-             self.move_to(new_position)
-
-             # face the same was the picker
-             self.turnRight()
-
-             #Detach the empty bin and tell the picker to go
-             self.detach_bin(False)
-
-             # tell picker to attach to the bin following carrier
-             msg = carrier_to_picker()
-             msg.bin_name = self.bin_following
-             self.inform_picker.publish(msg)
+         rospy.loginfo(self.name)
+         self.publish_position()
+         self.binCall = bin_call
 
 
-             #TODO: momve the picker to an appropriate location to attach the bin
-             #Attach the full bin
-             new_position = Point(bin_call.x_coordinate + 8, bin_call.y_coordinate, 0.0)
-             self.move_to(new_position)
-
-             # face same was the bin and attach the bin
-             self.turnRight()
-             self.bin_attach(bin_call.bin_name)
-             self.picking_bin = False
-             self.laser_on = True
-
-             rospy.loginfo("Full bin attached to carry, time to drop off at tractor")
-             new_position = Point(bin_call.x_coordinate + 10, bin_call.y_coordinate, 0.0)
-             self.move_to(new_position)
-             self.turnLeft()
-
-             rospy.loginfo("Lets go to tractor!")
-             #TODO move back to tractor position
-             #TODO find what place it is left, right, top, bot - move method
 
 
 
