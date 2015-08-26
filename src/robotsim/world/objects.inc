@@ -495,17 +495,17 @@ define dog position
 ( 
   myLaser(pose [ 0.500 0.000 -0.400 0.000 ])
   drive "diff"
-  size [1.5 0.500 0.700]
+  size [1.3 0.500 0.700]
   velocity_bounds [ -10 10 0 0 -360 360 -90 90 ]	
    #body
    block 
    (
       color "grey"
       points 4
-      point[0]  [ 0.2 0.15 ]
+      point[0]  [ 0.4 0.15 ]
       point[1]  [ 0.75 0.15 ]
       point[2]  [ 0.75 0.65 ]
-      point[3]  [ 0.2 0.65 ]
+      point[3]  [ 0.4 0.65 ]
       z [0.2 0.55]
    )
    #legs
@@ -513,10 +513,10 @@ define dog position
    (
       color "DarkGrey"
       points 4
-      point[0]  [ 0.25 0.2 ]
-      point[1]  [ 0.35 0.2 ]
-      point[2]  [ 0.35 0.3 ]
-      point[3]  [ 0.25 0.3 ]
+      point[0]  [ 0.45 0.2 ]
+      point[1]  [ 0.55 0.2 ]
+      point[2]  [ 0.55 0.3 ]
+      point[3]  [ 0.45 0.3 ]
       z [0 0.2]
    )
    #legs
@@ -524,10 +524,10 @@ define dog position
    (
       color "LightGrey"
       points 4
-      point[0]  [ 0.25 0.5 ]
-      point[1]  [ 0.35 0.5 ]
-      point[2]  [ 0.35 0.6 ]
-      point[3]  [ 0.25 0.6 ]
+      point[0]  [ 0.45 0.5 ]
+      point[1]  [ 0.55 0.5 ]
+      point[2]  [ 0.45 0.6 ]
+      point[3]  [ 0.55 0.6 ]
       z [0 0.2]
    )
    #legs
@@ -603,10 +603,10 @@ define dog position
    (
       color "Grey"
       points 4
-      point[0]  [ 0.15 0.35 ]
-      point[1]  [ 0.2 0.35 ]
-      point[2]  [ 0.2 0.45 ]
-      point[3]  [ 0.15 0.45 ]
+      point[0]  [ 0.35 0.35 ]
+      point[1]  [ 0.4 0.35 ]
+      point[2]  [ 0.4 0.45 ]
+      point[3]  [ 0.35 0.45 ]
       z [0.1 0.5]
    )
 )

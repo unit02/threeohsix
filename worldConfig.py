@@ -316,7 +316,7 @@ class WorldConfig():
         f.write('interval_sim 100 \n') 
         
         #adding animals
-        f.write('dog( pose [40 18 0 0  ] name "dog")\n')           
+        f.write('dog( pose [20 -11 0 0  ] name "dog")\n')           
         f.write('dog( pose [20 15 0 0  ] name "dog2")\n')
         f.write('cat( pose [-47 -11 0 0  ] name "cat")\n')
 
@@ -324,7 +324,7 @@ class WorldConfig():
         f.write('person_worker ( pose [-20 22 0 0 ] name "worker")\n')           
         f.write('person_worker ( pose [25 25 0 0 ] name "worker2")\n')
         f.write('person_worker ( pose [36 18 0 0 ] name "worker3")\n')
-        f.write('person_worker ( pose [-44 -20 0 0 ] name "worker4")\n')
+        f.write('person_worker ( pose [-44 -15 0 0 ] name "worker4")\n')
            
         #adding visitors
         f.write('person_visitor ( pose [-47 8 0 0 ] name "visitor")\n')           
@@ -375,6 +375,7 @@ class WorldConfig():
         locationy = 0
 
         for i in range(int(self.numberOfWeeds/2)):
+            
             locationx = randint(int(self.xLeft), int(self.xRight))
             locationy = randint(int(self.yBottom ), int(self.yBottom + 20))
 
@@ -385,7 +386,7 @@ class WorldConfig():
 
         for i in range(int(self.numberOfWeeds/2)):
             locationx = randint(int(self.xLeft), int(self.xRight))
-            locationy = randint(int(self.yTop - 20) , int(self.yTop ))
+            locationy = randint(int(self.yTop - 20) , int(self.yTop - 10))
 
             f.write('weed( pose  [ '+str(locationx)+' '+str(locationy)+' 0 0  ]name "weed '+str(robot)+'")\n')
 
