@@ -6,6 +6,7 @@ import roslib
 roslib.load_manifest('robotsim')
 from robotsim.msg import bin_call,carrier_to_picker
 import sys
+from worldInfo import *
 
 
 class carrier(havesting_robot):
@@ -26,27 +27,37 @@ class carrier(havesting_robot):
          if self.name == "/robot_14":
              #Get the pickers name from the bin_call message
              picker_name = bin_call.picker_to_attach_name
+
              #Create the publisher to tell the picker to move and which bin to attach
              self.inform_picker = rospy.Publisher(
-            picker_name + "/end_of_row",
-            carrier_to_picker,
-            queue_size=1
+                picker_name + "/end_of_row",
+                carrier_to_picker,
+                queue_size=1
              )
-            #Move to the empty picker
+             #Move to the empty picker
              new_position = Point(bin_call.x_coordinate + 2, bin_call.y_coordinate-5, 0.0)
              rospy.loginfo("Moving to pick up the bin")
              self.picking_bin = True
              self.to_pick_bin_pos = new_position
              self.move_to(new_position)
+             #ABOVEISGOODS
              #Detach the empty bin and tell the picker to go
-             self.detach_bin()
+             self.detach_bin(False)
              msg = carrier_to_picker()
-             msg.bin_name = bin_call.bin_name
+             msg.bin_name = self.bin_following
+
              self.inform_picker.publish(msg)
+
              self.picking_bin = False
+
              #TODO: momve the picker to an appropriate location to attach the bin
              #Attach the full bin
-             self.bin_attach(bin_call.bin_name)
+             new_position = Point(bin_call.x_coordinate + 2, bin_call.y_coordinate, 0.0)
+             #self.bin_attach(bin_call.bin_name)
+             #TODO move back to tractor position
+             #TODO find what place it is left, right, top, bot - move method
+             #rospy.loginfo("Full bin attached to carry, time to drop off at tractor")
+             self.move_x_steps(5)
              #TODO turn laser back on
              self.laser_on = False
 
@@ -61,13 +72,14 @@ class carrier(havesting_robot):
 
 
 if __name__ == '__main__':
+    bin_name = sys.argv[1] + worldInfo.numberOfPickers * 2
     rospy.init_node("robot_"+sys.argv[1])  # Create a node of name laser_roomba
 
     # leave as static
     row_width = 5.0
     object_width = 1.5
 
-    l = carrier(rospy.get_name(), False, row_width, object_width)  # Create an instance of above class
+    l = carrier(rospy.get_name(), False, row_width, object_width, "/robot_" + bin_name)  # Create an instance of above class
 
     rospy.spin()  # Function to keep the node running until terminated via Ctrl+C
 
