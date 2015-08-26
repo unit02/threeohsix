@@ -34,12 +34,17 @@ class carrier(havesting_robot):
                 carrier_to_picker,
                 queue_size=1
              )
-             #Move to the empty picker
-             new_position = Point(bin_call.x_coordinate + 2, bin_call.y_coordinate-5, 0.0)
+             row_width = worldInfo.rowWidth + 0.5
+
+             #Move to the empty bin
+             new_position = Point(bin_call.x_coordinate + 8, bin_call.y_coordinate-row_width, 0.0)
              rospy.loginfo("Moving to pick up the bin")
              self.picking_bin = True
              self.to_pick_bin_pos = new_position
              self.move_to(new_position)
+
+             # face the same was the picker
+             self.turnRight()
 
              #Detach the empty bin and tell the picker to go
              self.detach_bin(False)
@@ -50,20 +55,27 @@ class carrier(havesting_robot):
              self.inform_picker.publish(msg)
 
 
-
              #TODO: momve the picker to an appropriate location to attach the bin
              #Attach the full bin
-             new_position = Point(bin_call.x_coordinate + 2, bin_call.y_coordinate, 0.0)
-             self.bin_attach(bin_call.bin_name)
+             new_position = Point(bin_call.x_coordinate + 8, bin_call.y_coordinate, 0.0)
+             self.move_to(new_position)
 
+             # face same was the bin and attach the bin
+             self.turnRight()
+             self.bin_attach(bin_call.bin_name)
+             self.picking_bin = False
+             self.laser_on = True
+
+             rospy.loginfo("Full bin attached to carry, time to drop off at tractor")
+             new_position = Point(bin_call.x_coordinate + 10, bin_call.y_coordinate, 0.0)
+             self.move_to(new_position)
+             self.turnLeft()
+
+             rospy.loginfo("Lets go to tractor!")
              #TODO move back to tractor position
              #TODO find what place it is left, right, top, bot - move method
-             rospy.loginfo("Full bin attached to carry, time to drop off at tractor")
-             self.picking_bin = False
-             self.move_x_steps(5)
 
-             #TODO turn laser back on
-             self.laser_on = False
+
 
     def stage_callback(self, data):
         super(carrier,self).stage_callback(data)
