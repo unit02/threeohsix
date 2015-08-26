@@ -18,8 +18,11 @@ class WorldConfig():
         self.pickerNormal = 0
         self.pickerRemainder = 0
         self.lastPickerName = ""
-
-        
+        self.yTop = 34
+        self.yBottom = -34
+        self.xRight = 50
+        self.xLeft = -50
+ 
         self.getNumberOfRows()
         self.getNumberOfPickers()
         self.getRowWidth()
@@ -182,6 +185,9 @@ class WorldConfig():
         f.close()
 
     def makeOrchard(self):
+
+        self.yBottom = (self.vertFence * -1 + 34)
+
         f = open('/afs/ec.auckland.ac.nz/users/c/c/ccha504/unixhome/threeohsix/src/robotsim/world/instances.inc', 'w')
         f.write('include "myblock.inc" \n') 
         f.write('include "ground.inc" \n') 
@@ -473,7 +479,12 @@ class WorldConfig():
         f.write('\tself.pickerNormal = ' + str(self.pickerNormal)+ '\n')
         f.write('\tself.pickerRemainder = ' + str(self.pickerRemainder)+ '\n')
         f.write('\tself.lastPickerName = "' + str(self.lastPickerName)+ '"\n')
+        f.write('\tself.yTop = "' + str(self.yTop)+ '"\n')
+        f.write('\tself.yBottom = "' + str(self.yBottom)+ '"\n')
+        f.write('\tself.xRight = "' + str(self.xRight)+ '"\n')
+        f.write('\tself.xLeft = "' + str(self.xLeft)+ '"\n')
      
+
         f.write('worldInfo = WorldInfo()')
         f.close()
          

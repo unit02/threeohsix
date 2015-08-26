@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import rospy
-
+from worldInfo import *  
 from geometry_msgs.msg import Point
 from havesting_robot import havesting_robot
 import roslib
@@ -28,34 +28,38 @@ class picker(havesting_robot):
 
     def move_down_rows(self):
 
-        row_width=6
-        row_length=76
+        row_width= worldInfo.rowWidth + 0.5
+        row_length= 76
+        numberofrow = worldInfo.pickerNormal
+        if (worldInfo.lastPickerName == self.name):
+            if (worldInfo.pickerRemainder != 0):
+                numberofrow = worldInfo.pickerRemainder
 
-        #For loop here with variable
-        if self.position.x < 0:
-            self.move_x_steps(row_length)
-            rospy.loginfo("Bin detaching")
-            self.detach_bin()
-            self.turnRight()
-            self.move_x_steps(row_width)
-            self.turnRight()
-            self.reorientation()
-            self.move_x_steps(8)
-            while not(self.has_bin):
-                pass
+        for i in range(numberofrow):
+            if self.position.x < 0:
+                self.move_x_steps(row_length)
+                rospy.loginfo("Bin detaching")
+                self.detach_bin()
+                self.turnRight()
+                self.move_x_steps(row_width)
+                self.turnRight()
+                #self.reorientation()
+                #self.move_x_steps(8)
+                #while not(self.has_bin):
+                    #pass
 
-        else:
-            self.move_x_steps(row_length)
-            rospy.loginfo("Bin detaching")
-            self.detach_bin()
-            self.has_bin = False
-            self.turnLeft()
-            self.move_x_steps(row_width)
-            self.turnLeft()
-            self.reorientation()
-            self.move_x_steps(8)
-            while not(self.has_bin):
-                pass
+            else:
+            	self.move_x_steps(row_length)
+            	rospy.loginfo("Bin detaching")
+            	self.detach_bin()
+            	self.has_bin = False
+            	self.turnLeft()
+            	self.move_x_steps(row_width)
+            	self.turnLeft()
+            	#self.reorientation()
+            	#self.move_x_steps(8)
+            	#while not(self.has_bin):
+               	   #pass
 
 
 
