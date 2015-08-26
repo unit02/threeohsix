@@ -59,15 +59,18 @@ class bin(node):
                 callback=self.attach_to_robot,
                 queue_size=10
         )
-
+    """ callbakc method form firstInQ topic, it searches for closest robot in q to come pick me up"""
     def handle_message(self, msg):
-        #rospy.loginfo("BYEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!")
-        if self.lowerYname is None:
+     
+        #if this is the first message, assign me the first robot name
+        if self.lowerYname is None:  
             self.lowerYname = msg.robot_name
             self.lowerY = msg.x_coordinate
             rospy.loginfo("first lowerY!" + self.lowerYname +str(msg.x_coordinate)+ str(self.lowerY))
-        else:
-            #rospy.loginfo("BYEEEEEEEEEEE2222222222222")
+      
+        #if it is not my first message, compare and get the closest robot
+        else:                        
+
             if self.lowerY < msg.x_coordinate:
                 rospy.loginfo("before y coord!" + str(self.lowerY))
                 self.lowerY = msg.x_coordinate

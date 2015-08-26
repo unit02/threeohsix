@@ -58,29 +58,27 @@ class carrier(havesting_robot):
             queue_size=1
         )
 
+    """ method to see if bin is calling self, if it does, then I will go pick it up ASAP """ 
     def isItMe(self, msg):
-        rospy.loginfo("IS IT MEE?????????????????????????? "+(str(msg.data))+ " "+ (str(self.name)))
+       
         if self.name == msg.data:
-            rospy.loginfo("HIIIIIIIIIIIIIIIIIIIIIIIIIII it is me! "+str(msg.data))
-            self.state = State.Working
-            self.positionInQueue = self.position
-            self.goPickBin()
-        else:
-            rospy.loginfo("im in ELSEWEEEEEEEEEEEEEEEEEEEEEEEEEEE! "+str(msg.data))
+
+            self.state = State.Working  #change my state to working so I stop receiving bin calls
+            self.positionInQueue = self.position  #save my position for late
+            self.goPickBin()  #go pick bin up 
 
 
+    """ publish position of self to firstInQ topic so bin can listen to it and calls the closest robot """
     def publish_position(self):
-        #rospy.loginfo("HIIIIIIIIIIIIIIIIIIIIIIIIIII!")
-        #lowestY = self.name
         msg = queue_position()
         msg.robot_name = self.name
         msg.x_coordinate = self.position.x
         msg.y_coordinate = self.position.y
-        if self.state == State.Waiting:
+        if self.state == State.Waiting:   #only publish if you are in waiting queue to avpid bin calling a working robot
             self.firstInQ.publish(msg)
-        #rospy.loginfo("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEYYYY"+str   ( msg.y_coordinate))
 
 
+    """ method to go pick bin  """
     def goPickBin(self):
          
          #Get the pickers name from the bin_call message
@@ -101,7 +99,7 @@ class carrier(havesting_robot):
          self.to_pick_bin_pos = new_position
          self.move_to(new_position)
 
-         # face the same was the picker
+         # face the same way the picker
          self.turnRight()
 
          #Detach the empty bin and tell the picker to go
@@ -130,21 +128,23 @@ class carrier(havesting_robot):
          self.turnLeft()
          rospy.loginfo("Lets go to tractor!")
          self.goToTractor()
-         #TODO move back to tractor position
-         #TODO find what place it is left, right, top, bot - move method
 
+    """ method to move carrier robot with full kiwi to tractor to drop off, then back to its position in queue """
     def goToTractor(self):
          #move to bottom right corner
+         rospy.loginfo("BOTTOM RIGHHHHHHHHHHHHHHHHHHHHHHHHHHTTTTTTTTT")
          new_position = Point(float(worldInfo.xRight)-5, float(worldInfo.yBottom) +5, 0.0)
          self.move_to(new_position)
          self.turnRight()
 
          #move to bottom left corner
+         rospy.loginfo("BOTTOM LEFTTTTTTTTTT")
          new_position = Point(float(worldInfo.xLeft)+5, float(worldInfo.yBottom) +5, 0.0)
          self.move_to(new_position)
          self.turnRight()
 
          #move to top left corner, tractor place and wait for 5 seconds (unloading kiwis)
+         rospy.loginfo("TRACTORRRRRRRRRRRRRRRRRRRRRRRRRR")
          new_position = Point(float(worldInfo.xLeft)+5, float(worldInfo.yTop) -15, 0.0)
          self.move_to(new_position)
          self.wait(5)
@@ -152,19 +152,17 @@ class carrier(havesting_robot):
 
          #move back to queue, top right
          #maybe go back to original position in Q
+         rospy.loginfo("BACK TO QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ")
          new_position = Point(float(worldInfo.xRight)-5, float(worldInfo.yTop) -5, 0.0)
          self.move_to(new_position)
          self.state = State.Waiting
 
+    """ callback method called after listening to bin_info topic """
     def _pickBin_callback(self,bin_call):
          self.wait(5)
-
          rospy.loginfo(self.name)
          self.publish_position()
-         self.binCall = bin_call
-
-
-
+         self.binCall = bin_call   #get the bin call position to be used in later methods
 
 
     def stage_callback(self, data):
