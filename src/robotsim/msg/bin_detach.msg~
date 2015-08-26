@@ -1,1 +1,2 @@
-boolean unfollow
+bool unfollow
+bool is_full

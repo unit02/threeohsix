@@ -28,20 +28,24 @@ class bin(node):
             queue_size=10
         )
 
-    #Method called when it recieves a message from the robot to detach
-    #Starts to publish the message asking to be picked up
-    def stop_following(self,var):
-        if var.unfollow == True:
-            self.following.unregister()
-            self.isFull = True
-            rospy.loginfo("Sending message to be picked up!")
-            self.pick_me_up(self.position)
-            self.attach_time = rospy.Subscriber(
+        self.attach_time = rospy.Subscriber(
                 "/attach_bin",
                 attach_bin,
                 callback=self.attach_to_robot,
                 queue_size=10
-            )
+        )
+
+    #Method called when it recieves a message from the robot to detach
+    #Starts to publish the message asking to be picked up
+    def stop_following(self,var):
+        if var.unfollow:
+            self.following.unregister()
+            self.isFull = var.is_full
+            rospy.loginfo("Sending message to be picked up!")
+            # only call carrier when it is full
+            if self.isFull:
+                self.pick_me_up(self.position)
+
 
     # Method to make the bin follow a robot be matching the speed
     def move_with_robot(self,data):
@@ -56,7 +60,6 @@ class bin(node):
             twist_msg.linear.x = twist_msg.linear.y
             twist_msg.linear.y = 0.0
         self.cmd_vel_pub.publish(twist_msg)
-        #TODO: reattch the bin after twisting to stop the bin from detaching
 
     # Used to make the bin subscribe to the robot it's following's velocity and angle
     def attach_to_robot(self,msg):
