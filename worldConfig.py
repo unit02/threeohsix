@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 from random import randint
+import os
+
 class WorldConfig():
 
     MIN_ROWS = 3
@@ -24,7 +26,9 @@ class WorldConfig():
         self.yBottom = -34
         self.xRight = 50
         self.xLeft = -50
- 
+        
+        self.home = os.getenv("HOME");
+        
         self.getNumberOfRows()
         self.getNumberOfPickers()
         self.getRowWidth()
@@ -92,7 +96,7 @@ class WorldConfig():
         return int(self.numberOfBins)
     
     def setGround(self):
-        f = open('/afs/ec.auckland.ac.nz/users/c/c/ccha504/unixhome/threeohsix/src/robotsim/world/ground.inc', 'w')
+        f = open(str(self.home) +'/threeohsix/src/robotsim/world/ground.inc', 'w')
 
         f.write('define fenceHorizontal model( \n')
 
@@ -196,8 +200,7 @@ class WorldConfig():
     def makeOrchard(self):
 
         self.yBottom = (self.vertFence * -1 + 34)
-
-        f = open('/afs/ec.auckland.ac.nz/users/c/c/ccha504/unixhome/threeohsix/src/robotsim/world/instances.inc', 'w')
+        f = open(str(self.home) +'/threeohsix/src/robotsim/world/instances.inc', 'w')
         f.write('include "myblock.inc" \n') 
         f.write('include "ground.inc" \n') 
         
@@ -305,7 +308,8 @@ class WorldConfig():
         f.close()
 
     def makeWorld(self):
-        f = open('/afs/ec.auckland.ac.nz/users/c/c/ccha504/unixhome/threeohsix/src/robotsim/world/orchard.world', 'w')
+
+        f = open(str(self.home) +'/threeohsix/src/robotsim/world/orchard.world', 'w')
         f.write('include "instances.inc"\n') 
         f.write('include "objects.inc"\n') 
         f.write('# simulation property milliseconds per update step \n') 
@@ -344,7 +348,7 @@ class WorldConfig():
         self.lastPickerName = "/robot_" + str(robot-1)
 
         #adding carriers
-        location = 42
+        location = 40
         for i in range(int(self.numberOfCarriers)):
             f.write('carrier( pose [ '+str(location)+' 30 0 0  ] name "carrier '+str(robot)+'" color "cyan")\n')
             location = location - 6 
@@ -358,7 +362,7 @@ class WorldConfig():
             location = location - self.pickerNormal * (self.rowWidth + 0.5) 
             robot = robot + 1
 
-        location = 39
+        location = 37
         for i in range(int(self.numberOfBins)/2):
             f.write('bucket( pose  [ '+str(location)+' 30 0 0  ]name "bin '+str(robot)+'")\n')
             location = location - 6
@@ -392,7 +396,8 @@ class WorldConfig():
         f.close()     
 
     def makeLaunch(self):
-        f = open('/afs/ec.auckland.ac.nz/users/c/c/ccha504/unixhome/threeohsix/src/robotsim/launch.launch', 'w')
+        
+        f = open( str(self.home) +'/threeohsix/src/robotsim/launch.launch', 'w')
         f.write('<launch>\n')
         # Launch animals
         robot = 0
@@ -445,7 +450,9 @@ class WorldConfig():
         f.close()
 
     def makeBash(self):
-        f = open('/afs/ec.auckland.ac.nz/users/c/c/ccha504/unixhome/threeohsix/run.sh', 'w')
+
+  
+        f = open(str(self.home) +'/threeohsix/run.sh', 'w')
         f.write('#!/bin/bash\n')
         f.write('rm -r build\n')
         f.write('rm -r devel\n')
@@ -504,7 +511,9 @@ class WorldConfig():
 
 
     def createWorldInfo(self):
-        f = open('/afs/ec.auckland.ac.nz/users/c/c/ccha504/unixhome/threeohsix/src/robotsim/scripts/worldInfo.py', 'w')
+
+       
+        f = open(str(self.home) +'/threeohsix/src/robotsim/scripts/worldInfo.py', 'w')
         
 
         f.write('#!/usr/bin/env python\n')
