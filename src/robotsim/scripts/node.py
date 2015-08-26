@@ -257,9 +257,7 @@ class node(object):
         #rospy.loginfo("New Orientation after reorientation %s, face %s", self.rad_orient,  Face.tostring(self.face_value(self.rad_orient)))
 
     def reorientation(self):
-        rospy.loginfo("before")
         self.wait(1)
-        rospy.loginfo("after")
         twist = Twist()
         if self.rad_orient == 0:
             remainder = 0
@@ -330,7 +328,7 @@ class node(object):
                 twist.angular.z = -rad_dist
                 for i in range(10):
                     self.cmd_vel_pub.publish(twist)
-                    rospy.sleep(0.01)
+                    rospy.sleep(0.1)
                     rospy.loginfo(self.rad_orient)
                     rospy.loginfo("6")
                 twist = Twist()
