@@ -17,6 +17,7 @@ class WorldConfig():
         self.vertFence = 0
         self.pickerNormal = 0
         self.pickerRemainder = 0
+        self.lastPickerName = ""
 
         
         self.getNumberOfRows()
@@ -27,6 +28,7 @@ class WorldConfig():
         self.setGround()
         self.makeOrchard()
         self.makeWorld()
+        self.createWorldInfo()
         self.makeLaunch()
         self.makeBash()
 
@@ -324,7 +326,7 @@ class WorldConfig():
             f.write('picker( pose [-35.5 '+ str(location) +' 0 0  ] name "picker '+str(robot)+'" color "violet")\n')
             location = location - self.pickerNormal * (self.rowWidth + 0.5)
             robot = robot + 1
-
+        self.lastPickerName = "/robot_" + str(robot-1)
 
         #adding carriers
         location = 42
@@ -445,6 +447,36 @@ class WorldConfig():
         f.write('source devel/setup.bash\n')
         f.write('gnome-terminal -x sh -c \'rosrun stage_ros stageros src/robotsim/world/orchard.world\'\n')
         f.close()
+
+
+    def createWorldInfo(self):
+        f = open('/afs/ec.auckland.ac.nz/users/c/c/ccha504/unixhome/threeohsix/src/robotsim/scripts/worldInfo.py', 'w')
+        
+
+        f.write('#!/usr/bin/env python\n')
+        f.write('class WorldInfo():\n')
+
+        f.write('    MIN_ROWS = 3\n')
+        f.write('    MIN_PICKER = 2\n')
+
+        f.write('    def __init__(self):\n')
+    
+        f.write('\tself.numberOfRows = ' + str(self.numberOfRows) + '\n')
+        f.write('\tself.numberOfPickers = ' + str(self.numberOfPickers)+ '\n')
+        f.write('\tself.maxPickers = ' + str(self.maxPickers)+ '\n')
+        f.write('\tself.rowWidth = ' + str(self.rowWidth)+ '\n')
+        f.write('\tself.numberOfCarriers = ' + str(self.numberOfCarriers)+ '\n')
+        f.write('\tself.numberOfBins = ' + str(self.numberOfBins)+ '\n')
+        f.write('\tself.lastTrunk = ' + str(self.lastTrunk)+ '\n') 
+        f.write('\tself.lastPargola = ' + str(self.lastPargola)+ '\n')
+        f.write('\tself.vertFence = ' + str(self.vertFence)+ '\n')
+        f.write('\tself.pickerNormal = ' + str(self.pickerNormal)+ '\n')
+        f.write('\tself.pickerRemainder = ' + str(self.pickerRemainder)+ '\n')
+        f.write('\tself.lastPickerName = "' + str(self.lastPickerName)+ '"\n')
+     
+        f.write('worldInfo = WorldInfo()')
+        f.close()
+         
 
 world = WorldConfig()
 

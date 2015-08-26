@@ -21,6 +21,7 @@ if __name__ == '__main__':
 	l.move_x_steps(20)
 	l.turnRight()
 	l.turnRight()
+	l.turnRight()
    
     
     rospy.spin()  # Function to keep the node running until terminated via Ctrl+C
