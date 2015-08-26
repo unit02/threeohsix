@@ -39,22 +39,22 @@ class picker(havesting_robot):
 
         for i in range(numberofrow):
             if self.position.x < 0:
-                self.move_x_steps(row_length)
+                self.move_x_steps(row_length -6)
                 rospy.loginfo("Bin detaching")
                 self.detach_bin(True)
+                self.move_x_steps(6)
                 self.turnRight()
                 self.move_x_steps(row_width)
                 self.turnRight()
                 # self.reorientation()
-                # self.move_x_steps(8)
-                while not(self.has_bin):
-                    pass
-                rospy.loginfo("Empty bin has attached, happy to move now")
-                self.move_x_steps(10)
+                self.move_x_steps(6)
+
             else:
-                self.move_x_steps(row_length)
+                self.move_x_steps(row_length -6)
                 rospy.loginfo("Bin detaching")
-                self.detach_bin()
+                self.detach_bin(True)
+                self.move_x_steps(6)
+
                 self.has_bin = False
                 self.turnLeft()
                 self.move_x_steps(row_width)
@@ -63,6 +63,9 @@ class picker(havesting_robot):
             # self.move_x_steps(8)
             # while not(self.has_bin):
             # pass
+            while not(self.has_bin):
+                pass
+            rospy.loginfo("Empty bin has attached, happy to move now")
 
 
 # The block below will be executed when the python file is executed
