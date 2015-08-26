@@ -34,25 +34,25 @@ gnome-terminal -x sh -c 'rosrun robotsim picker.py 11'
 source devel/setup.bash
 gnome-terminal -x sh -c 'rosrun robotsim picker.py 12'
 source devel/setup.bash
-gnome-terminal -x sh -c 'rosrun robotsim carrier.py 13'
+gnome-terminal -x sh -c 'rosrun robotsim picker.py 13'
 source devel/setup.bash
 gnome-terminal -x sh -c 'rosrun robotsim carrier.py 14'
 source devel/setup.bash
-gnome-terminal -x sh -c 'rosrun robotsim bin.py 15'
+gnome-terminal -x sh -c 'rosrun robotsim carrier.py 15'
 source devel/setup.bash
-gnome-terminal -x sh -c 'rosrun robotsim bin.py 16'
+gnome-terminal -x sh -c 'rosrun robotsim carrier.py 16'
 source devel/setup.bash
 gnome-terminal -x sh -c 'rosrun robotsim bin.py 17'
 source devel/setup.bash
 gnome-terminal -x sh -c 'rosrun robotsim bin.py 18'
 source devel/setup.bash
-gnome-terminal -x sh -c 'rosrun robotsim weed.py 19'
+gnome-terminal -x sh -c 'rosrun robotsim bin.py 19'
 source devel/setup.bash
-gnome-terminal -x sh -c 'rosrun robotsim weed.py 20'
+gnome-terminal -x sh -c 'rosrun robotsim bin.py 20'
 source devel/setup.bash
-gnome-terminal -x sh -c 'rosrun robotsim weed.py 21'
+gnome-terminal -x sh -c 'rosrun robotsim bin.py 21'
 source devel/setup.bash
-gnome-terminal -x sh -c 'rosrun robotsim weed.py 22'
+gnome-terminal -x sh -c 'rosrun robotsim bin.py 22'
 source devel/setup.bash
 gnome-terminal -x sh -c 'rosrun robotsim weed.py 23'
 source devel/setup.bash
@@ -65,5 +65,13 @@ source devel/setup.bash
 gnome-terminal -x sh -c 'rosrun robotsim weed.py 27'
 source devel/setup.bash
 gnome-terminal -x sh -c 'rosrun robotsim weed.py 28'
+source devel/setup.bash
+gnome-terminal -x sh -c 'rosrun robotsim weed.py 29'
+source devel/setup.bash
+gnome-terminal -x sh -c 'rosrun robotsim weed.py 30'
+source devel/setup.bash
+gnome-terminal -x sh -c 'rosrun robotsim weed.py 31'
+source devel/setup.bash
+gnome-terminal -x sh -c 'rosrun robotsim weed.py 32'
 source devel/setup.bash
 gnome-terminal -x sh -c 'rosrun stage_ros stageros src/robotsim/world/orchard.world'
