@@ -31,7 +31,7 @@ class picker(havesting_robot):
     def move_down_rows(self):
 
         row_width = worldInfo.rowWidth + 0.5
-        row_length = 76
+        row_length = 70
         numberofrow = worldInfo.pickerNormal
         if (worldInfo.lastPickerName == self.name):
             if (worldInfo.pickerRemainder != 0):
@@ -39,33 +39,29 @@ class picker(havesting_robot):
 
         for i in range(numberofrow):
             if self.position.x < 0:
-                self.move_x_steps(row_length -6)
+                self.move_x_steps(row_length)
                 rospy.loginfo("Bin detaching")
                 self.detach_bin(True)
+                self.has_bin = False
                 self.move_x_steps(6)
                 self.turnRight()
                 self.move_x_steps(row_width)
                 self.turnRight()
-                
-                # self.reorientation()
                 self.move_x_steps(6)
 
             else:
-                self.move_x_steps(row_length -6)
+                self.move_x_steps(row_length)
                 rospy.loginfo("Bin detaching")
                 self.detach_bin(True)
-                self.move_x_steps(6)
-
                 self.has_bin = False
+
+                self.move_x_steps(6)
                 self.turnLeft()
                 self.move_x_steps(row_width)
                 self.turnLeft()
-            # self.reorientation()
-            # self.move_x_steps(8)
-            # while not(self.has_bin):
-            # pass
-            #while not(self.has_bin):
-                #pass
+                self.move_x_steps(6)
+            while not(self.has_bin):
+                pass
             rospy.loginfo("Empty bin has attached, happy to move now")
 
 
@@ -81,7 +77,7 @@ if __name__ == '__main__':
     p = picker(rospy.get_name(), True, row_width, object_width,
                "/robot_" + str(bin_name))  # Create an instance of above class
     rospy.loginfo("bin name %s", bin_name)
-
+    p.wait(5)
     p.move_down_rows()
     # p.wait(30)
 

@@ -49,7 +49,7 @@ class carrier(havesting_robot):
             "/whichRobotToPick",
             String,
             callback=self.isItMe,
-            queue_size=1
+            queue_size=10
         )
 
         self.firstInQ = rospy.Publisher(
@@ -61,7 +61,7 @@ class carrier(havesting_robot):
     """ method to see if bin is calling self, if it does, then I will go pick it up ASAP """ 
     def isItMe(self, msg):
        
-        if self.name == msg.data:
+        if self.name == msg.data and self.state == State.Waiting:
 
             self.state = State.Working  #change my state to working so I stop receiving bin calls
             self.positionInQueue = self.position  #save my position for late
@@ -93,11 +93,11 @@ class carrier(havesting_robot):
          row_width = worldInfo.rowWidth + 0.5
          sign_changer = 1
          #Move to the empty bin
-         if (bin_call.x_coordinate < 0):
+         if (self.binCall.x_coordinate < 0):
             sign_changer = -1
 
          #Move to the empty bin
-         new_position = Point(bin_call.x_coordinate + 8*sign_changer, bin_call.y_coordinate-row_width, 0.0)
+         new_position = Point(self.binCall.x_coordinate + 8*sign_changer, self.binCall.y_coordinate-row_width, 0.0)
          rospy.loginfo("Moving to pick up the bin")
          self.picking_bin = True
          self.to_pick_bin_pos = new_position
@@ -130,7 +130,7 @@ class carrier(havesting_robot):
          self.move_x_steps(5)
          self.turnRight()
          rospy.loginfo("Lets go to tractor!")
-         self.goToTractor()
+         #self.goToTractor()
 
     """ method to move carrier robot with full kiwi to tractor to drop off, then back to its position in queue """
     def goToTractor(self):
@@ -162,7 +162,6 @@ class carrier(havesting_robot):
 
     """ callback method called after listening to bin_info topic """
     def _pickBin_callback(self,bin_call):
-         self.wait(5)
          rospy.loginfo(self.name)
          self.publish_position()
          self.binCall = bin_call   #get the bin call position to be used in later methods
@@ -183,7 +182,7 @@ if __name__ == '__main__':
     rospy.init_node("robot_"+sys.argv[1])  # Create a node of name laser_roomba
 
     # leave as static
-    row_width = 5.0
+    row_width = worldInfo.rowWidth
     object_width = 1.5
     rospy.loginfo("bin name %s", bin_name)
     l = carrier(rospy.get_name(), False, row_width, object_width, "/robot_" + str(bin_name))  # Create an instance of above class

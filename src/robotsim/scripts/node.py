@@ -66,7 +66,7 @@ class node(object):
             queue_size=1
         )
         # wait to gather stage information
-        self.wait(20)
+        self.wait(10)
 
 
 

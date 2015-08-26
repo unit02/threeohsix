@@ -22,6 +22,7 @@ from robotsim.msg import bin_call,bin_detach,attach_bin, queue_position
 import std_msgs
 import sys
 from geometry_msgs.msg import Point, Twist
+from worldInfo import *
 
 #Models the bin/buckets in which kiwifruit are stored
 class bin(node):
