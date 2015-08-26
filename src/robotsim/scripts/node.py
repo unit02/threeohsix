@@ -226,6 +226,7 @@ class node(object):
         
         twist = Twist()
         twist.linear.x = 0.0
+        twist.angular.z = 0.0
         self.cmd_vel_pub.publish(twist)
 
         rospy.loginfo("Turned Right")
@@ -247,6 +248,7 @@ class node(object):
 
         twist = Twist()
         twist.linear.x = 0.0
+        twist.angular.z = 0.0
         self.cmd_vel_pub.publish(twist)
         rospy.loginfo("Turned Left")
         rospy.loginfo("New Orientation %s, face %s", self.rad_orient, Face.tostring(self.face_value(self.rad_orient)))
@@ -255,6 +257,9 @@ class node(object):
         #rospy.loginfo("New Orientation after reorientation %s, face %s", self.rad_orient,  Face.tostring(self.face_value(self.rad_orient)))
 
     def reorientation(self):
+        rospy.loginfo("before")
+        self.wait(1)
+        rospy.loginfo("after")
         twist = Twist()
         if self.rad_orient == 0:
             remainder = 0
@@ -312,7 +317,7 @@ class node(object):
                     rospy.loginfo("4")
                 twist = Twist()
             # Facing west, but towards north
-            elif ((self.rad_orient > 3 * math.pi/4) and (self.rad_orient < math.pi/2)):
+            elif ((self.rad_orient > 3 * math.pi/4)):
                 twist.angular.z = rad_dist
                 for i in range(10):
                     self.cmd_vel_pub.publish(twist)
@@ -321,7 +326,7 @@ class node(object):
                     rospy.loginfo("5")
                 twist = Twist()
             # Facing west, but towards south
-            elif ((self.rad_orient < (-3 * math.pi/4)) and (self.rad_orient > -math.pi/2)):
+            elif ((self.rad_orient < (-3 * math.pi/4))):
                 twist.angular.z = -rad_dist
                 for i in range(10):
                     self.cmd_vel_pub.publish(twist)

@@ -70,20 +70,32 @@
 		<node pkg="robotsim" name="node" type="picker.py"/>
 	</group>
 	<group ns="robot_23">
-		<node pkg="robotsim" name="node" type="carrier.py"/>
+		<node pkg="robotsim" name="node" type="picker.py"/>
 	</group>
 	<group ns="robot_24">
 		<node pkg="robotsim" name="node" type="carrier.py"/>
 	</group>
 	<group ns="robot_25">
-		<node pkg="robotsim" name="node" type="bin.py"/>
+		<node pkg="robotsim" name="node" type="carrier.py"/>
 	</group>
 	<group ns="robot_26">
-		<node pkg="robotsim" name="node" type="bin.py"/>
+		<node pkg="robotsim" name="node" type="carrier.py"/>
 	</group>
 	<group ns="robot_27">
 		<node pkg="robotsim" name="node" type="bin.py"/>
 	</group>
 	<group ns="robot_28">
+		<node pkg="robotsim" name="node" type="bin.py"/>
+	</group>
+	<group ns="robot_29">
+		<node pkg="robotsim" name="node" type="bin.py"/>
+	</group>
+	<group ns="robot_30">
+		<node pkg="robotsim" name="node" type="bin.py"/>
+	</group>
+	<group ns="robot_31">
+		<node pkg="robotsim" name="node" type="bin.py"/>
+	</group>
+	<group ns="robot_32">
 		<node pkg="robotsim" name="node" type="bin.py"/>
 	</group>
