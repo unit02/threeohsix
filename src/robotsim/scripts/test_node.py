@@ -8,12 +8,12 @@ from node import Face
 
 
 class mock_rob(node):
-    pass
+	pass
 	
 """
 How to run the tests:
 1) roscore
-2) new terminal: catkin_make, source it, then: rosrun robotsim mock_rob.py
+2) new terminal: catkin_make, source it, then: rosrun robotsim test_node.py
 """	
 class test_node(unittest.TestCase):
 
