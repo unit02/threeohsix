@@ -17,6 +17,17 @@ from nav_msgs.msg import Odometry
 from std_msgs.msg import String
 from node import node
 import std_msgs
+from worldInfo import *
+
+class State:
+    Waiting, Working = range(2)
+
+    @classmethod
+    def tostring(cls, val):
+        for name,v in vars(cls).iteritems():
+            if v==val:
+                return name
+
 
 
 class carrier(havesting_robot):
@@ -24,6 +35,8 @@ class carrier(havesting_robot):
         self.picking_bin = False
         self.to_pick_bin_pos = Point()
         self.binCall = bin_call()
+        self.state = State.Waiting
+        self.positionInQueue = Point()
         super(carrier,self).__init__(name,laser_on, path_width, width, bin_name)
 
         self.pick_bin_sub = rospy.Subscriber(
@@ -49,6 +62,8 @@ class carrier(havesting_robot):
         rospy.loginfo("IS IT MEE?????????????????????????? "+(str(msg.data))+ " "+ (str(self.name)))
         if self.name == msg.data:
             rospy.loginfo("HIIIIIIIIIIIIIIIIIIIIIIIIIII it is me! "+str(msg.data))
+            self.state = State.Working
+            self.positionInQueue = self.position
             self.goPickBin()
         else:
             rospy.loginfo("im in ELSEWEEEEEEEEEEEEEEEEEEEEEEEEEEE! "+str(msg.data))
@@ -61,7 +76,8 @@ class carrier(havesting_robot):
         msg.robot_name = self.name
         msg.x_coordinate = self.position.x
         msg.y_coordinate = self.position.y
-        self.firstInQ.publish(msg)
+        if self.state == State.Waiting:
+            self.firstInQ.publish(msg)
         #rospy.loginfo("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEYYYY"+str   ( msg.y_coordinate))
 
 
@@ -113,8 +129,32 @@ class carrier(havesting_robot):
          self.move_to(new_position)
          self.turnLeft()
          rospy.loginfo("Lets go to tractor!")
+         self.goToTractor()
          #TODO move back to tractor position
          #TODO find what place it is left, right, top, bot - move method
+
+    def goToTractor(self):
+         #move to bottom right corner
+         new_position = Point(float(worldInfo.xRight)-5, float(worldInfo.yBottom) +5, 0.0)
+         self.move_to(new_position)
+         self.turnRight()
+
+         #move to bottom left corner
+         new_position = Point(float(worldInfo.xLeft)+5, float(worldInfo.yBottom) +5, 0.0)
+         self.move_to(new_position)
+         self.turnRight()
+
+         #move to top left corner, tractor place and wait for 5 seconds (unloading kiwis)
+         new_position = Point(float(worldInfo.xLeft)+5, float(worldInfo.yTop) -15, 0.0)
+         self.move_to(new_position)
+         self.wait(5)
+         self.turnRight()
+
+         #move back to queue, top right
+         #maybe go back to original position in Q
+         new_position = Point(float(worldInfo.xRight)-5, float(worldInfo.yTop) -5, 0.0)
+         self.move_to(new_position)
+         self.state = State.Waiting
 
     def _pickBin_callback(self,bin_call):
          self.wait(5)
