@@ -46,6 +46,7 @@ class picker(havesting_robot):
                 self.turnRight()
                 self.move_x_steps(row_width)
                 self.turnRight()
+                
                 # self.reorientation()
                 self.move_x_steps(6)
 
@@ -63,8 +64,8 @@ class picker(havesting_robot):
             # self.move_x_steps(8)
             # while not(self.has_bin):
             # pass
-            while not(self.has_bin):
-                pass
+            #while not(self.has_bin):
+                #pass
             rospy.loginfo("Empty bin has attached, happy to move now")
 
 
