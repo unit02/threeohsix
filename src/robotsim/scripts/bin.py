@@ -148,10 +148,11 @@ class bin(node):
 # The block below will be executed when the python file is executed
 # __name__ and __main__ are built-in python variables and need to start and end with *two* underscores
 if __name__ == '__main__':
+    following_robot_name = int(sys.argv[1]) - worldInfo.numberOfPickers * 2
+
     rospy.init_node("robot_"+sys.argv[1])  # Create a node of name robot_2
     l = bin(rospy.get_name())  # Create an instance of above class
-    #TODO get the actual names?
-    l.follow_robot("robot_"+str(int(sys.argv[1])-4))
-    l.robot_to_follow = "robot_"+str(int(sys.argv[1])-4)
+    l.follow_robot("robot_"+str(following_robot_name))
+    l.robot_to_follow = "robot_"+str(following_robot_name)
     rospy.spin()  # Function to keep the node running until terminated via Ctrl+C
 

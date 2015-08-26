@@ -91,9 +91,13 @@ class carrier(havesting_robot):
             queue_size=1
          )
          row_width = worldInfo.rowWidth + 0.5
+         sign_changer = 1
+         #Move to the empty bin
+         if (bin_call.x_coordinate < 0):
+            sign_changer = -1
 
          #Move to the empty bin
-         new_position = Point(self.binCall.x_coordinate + 8, self.binCall.y_coordinate-row_width, 0.0)
+         new_position = Point(bin_call.x_coordinate + 8*sign_changer, bin_call.y_coordinate-row_width, 0.0)
          rospy.loginfo("Moving to pick up the bin")
          self.picking_bin = True
          self.to_pick_bin_pos = new_position
@@ -113,7 +117,7 @@ class carrier(havesting_robot):
 
          #TODO: momve the picker to an appropriate location to attach the bin
          #Attach the full bin
-         new_position = Point(self.binCall.x_coordinate + 8, self.binCall.y_coordinate, 0.0)
+         new_position = Point(self.binCall.x_coordinate + 8*sign_changer, self.binCall.y_coordinate, 0.0)
          self.move_to(new_position)
 
          # face same was the bin and attach the bin
@@ -123,9 +127,8 @@ class carrier(havesting_robot):
          self.laser_on = True
 
          rospy.loginfo("Full bin attached to carry, time to drop off at tractor")
-         new_position = Point(self.binCall.x_coordinate + 10, self.binCall.y_coordinate, 0.0)
-         self.move_to(new_position)
-         self.turnLeft()
+         self.move_x_steps(5)
+         self.turnRight()
          rospy.loginfo("Lets go to tractor!")
          self.goToTractor()
 
