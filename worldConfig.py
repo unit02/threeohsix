@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from random import randint
 class WorldConfig():
 
     MIN_ROWS = 3
@@ -12,6 +13,7 @@ class WorldConfig():
         self.rowWidth = 3.5
         self.numberOfCarriers = 1
         self.numberOfBins = 4
+        self.numberOfWeeds = 10
         self.lastTrunk = 13.5 
         self.lastPargola = 0
         self.vertFence = 0
@@ -93,6 +95,8 @@ class WorldConfig():
         f = open('/afs/ec.auckland.ac.nz/users/c/c/ccha504/unixhome/threeohsix/src/robotsim/world/ground.inc', 'w')
 
         f.write('define fenceHorizontal model( \n')
+
+        f.write('\tgui_move 0 \n')
  	f.write('\tcolor "yellow"\n ')
  	f.write('\tsize [101 1 2.5] \n')	
 	f.write('\tblock( \n')
@@ -107,6 +111,7 @@ class WorldConfig():
         self.vertFence = float(self.rowWidth * (self.numberOfRows -1)) + float((0.5 * self.numberOfRows)) + 41 
 
         f.write('define fenceVertical model( \n')
+        f.write('\tgui_move 0 \n')
  	f.write('\tcolor "yellow"  \n')
  	f.write('\tsize [1 '+ str(self.vertFence + 1) +' 2.5]  \n')	
 	f.write('\tblock(  \n')
@@ -119,6 +124,7 @@ class WorldConfig():
        
         f.write('define ground model \n')
         f.write('( \n')
+        f.write('\tgui_move 0 \n')
         f.write('\tsize [100 '+ str(self.vertFence) +' 0.01] \n')
         f.write('\tcolor "YellowGreen"  \n') 
         f.write('\tblock \n')
@@ -132,7 +138,10 @@ class WorldConfig():
 
 
         f.write('define pergola model\n')
+
+        
         f.write('(\n')
+        f.write('\tgui_move 0 \n')
         f.write('\tsize [1.7 '+ str(self.rowWidth - 0.5) +' 0.5]\n')
         f.write('\tcolor "DarkGreen"  \n')
         f.write('\tblock\n')
@@ -194,7 +203,7 @@ class WorldConfig():
         
         f.write('ground( pose [ 0 '+ str(self.vertFence * 0.5 * -1 + 34) +' 0 0] ) \n')
  
-        f.write('driveway( pose [ -34.67 30.51 0 0] ) \n') 
+        f.write('driveway( pose [ -34.67 28.51 0 0] ) \n') 
         
 
         f.write('fenceHorizontal( pose [ 0 34 0 0] )  \n') 
@@ -319,7 +328,7 @@ class WorldConfig():
         f.write('person_visitor ( pose [44 6 0 0 ] name "visitor3")\n')
 
         #adding tractor
-        f.write('tractor( pose [-45 31 0 0  ] name "tractor")\n')  
+        f.write('tractor( pose [-45 29 0 0  ] name "tractor")\n')  
       
         #adding pickers
         location = (13.5 - 0.25 - (float(self.rowWidth)/2))
@@ -354,6 +363,32 @@ class WorldConfig():
             f.write('bucket( pose  [ '+str(location)+' 30 0 0  ]name "bin '+str(robot)+'")\n')
             location = location - 6
             robot = robot + 1
+
+
+        #adding weeds 
+
+        locationx = 0 
+        locationy = 0
+
+        for i in range(int(self.numberOfWeeds/2)):
+            locationx = randint(int(self.xLeft), int(self.xRight))
+            locationy = randint(int(self.yBottom ), int(self.yBottom + 20))
+
+            f.write('weed( pose  [ '+str(locationx)+' '+str(locationy)+' 0 0  ]name "weed '+str(robot)+'")\n')
+
+            robot = robot + 1
+
+
+        for i in range(int(self.numberOfWeeds/2)):
+            locationx = randint(int(self.xLeft), int(self.xRight))
+            locationy = randint(int(self.yTop - 20) , int(self.yTop ))
+
+            f.write('weed( pose  [ '+str(locationx)+' '+str(locationy)+' 0 0  ]name "weed '+str(robot)+'")\n')
+
+            robot = robot + 1
+
+
+        
         f.close()     
 
     def makeLaunch(self):
@@ -399,6 +434,13 @@ class WorldConfig():
             f.write('\t\t<node pkg="robotsim" name="node" type="bin.py"/>\n')
             f.write('\t</group>\n')
             robot += 1
+
+        # Launch weeds
+        for i in range(int(self.numberOfWeeds)):
+            f.write('\t<group ns="robot_'+ str(robot) +'">\n') 
+            f.write('\t\t<node pkg="robotsim" name="node" type="weed.py"/>\n')
+            f.write('\t</group>\n')
+            robot += 1
         f.write('</launch>\n')
         f.close()
 
@@ -421,33 +463,39 @@ class WorldConfig():
             f.write('gnome-terminal -x sh -c \'rosrun robotsim animal.py '+str(robot) + '\'\n')
             robot += 1
        
-        # Launch 4 workers and 3 visitors
+        # person node
         for i in range(7):
             f.write('source devel/setup.bash\n')
             f.write('gnome-terminal -x sh -c \'rosrun robotsim person.py '+str(robot) + '\'\n')
             robot += 1
 
-        # Launch 4 workers and 3 visitors
+        # tractor node
         f.write('source devel/setup.bash\n')
         f.write('gnome-terminal -x sh -c \'rosrun robotsim tractor.py '+ str(robot)+ '\'\n')
         robot += 1
 
-        # Launch pickers
+        # picker node
         for i in range(int(self.numberOfPickers)):
             f.write('source devel/setup.bash\n')
             f.write('gnome-terminal -x sh -c \'rosrun robotsim picker.py '+ str(robot) + '\'\n')
             robot += 1
 
-        # Launch carriers
+        # carrier node 
         for i in range(int(self.numberOfCarriers)):
             f.write('source devel/setup.bash\n')
             f.write('gnome-terminal -x sh -c \'rosrun robotsim carrier.py '+ str(robot) + '\'\n')
             robot += 1
 
-        # Launch bins
+        # bin node
         for i in range(int(self.numberOfBins)):
             f.write('source devel/setup.bash\n')
             f.write('gnome-terminal -x sh -c \'rosrun robotsim bin.py '+ str(robot)+ '\'\n')
+            robot += 1
+
+        # weeds node
+        for i in range(int(self.numberOfWeeds)):
+            f.write('source devel/setup.bash\n')
+            f.write('gnome-terminal -x sh -c \'rosrun robotsim weed.py '+ str(robot)+ '\'\n')
             robot += 1
 
         f.write('source devel/setup.bash\n')
@@ -473,6 +521,7 @@ class WorldConfig():
         f.write('\tself.rowWidth = ' + str(self.rowWidth)+ '\n')
         f.write('\tself.numberOfCarriers = ' + str(self.numberOfCarriers)+ '\n')
         f.write('\tself.numberOfBins = ' + str(self.numberOfBins)+ '\n')
+        f.write('\tself.numberOfWeeds = ' + str(self.numberOfWeeds)+ '\n')
         f.write('\tself.lastTrunk = ' + str(self.lastTrunk)+ '\n') 
         f.write('\tself.lastPargola = ' + str(self.lastPargola)+ '\n')
         f.write('\tself.vertFence = ' + str(self.vertFence)+ '\n')

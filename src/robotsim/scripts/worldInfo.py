@@ -9,6 +9,7 @@ class WorldInfo():
 	self.rowWidth = 5
 	self.numberOfCarriers = 2
 	self.numberOfBins = 4
+	self.numberOfWeeds = 10
 	self.lastTrunk = -8.5
 	self.lastPargola = 0
 	self.vertFence = 63.5

@@ -32,6 +32,7 @@ define myWeedLaser ranger
 ( 
   sensor( range [ 0 10 ] fov 360.0 samples 60 ) 
   size [0.100 0.100 0.100] 
+  obstacle_return 0
   color "black" 
   block( 
 	points 4 
@@ -319,8 +320,7 @@ define bucket position
 
 define tractor position
 (
-  halfcircleLaser(pose [ 2.500 0.000 -1.000 0.000 ])
-  #myLaser(pose [ 2.500 0.000 -1.000 0.000 ])
+  myLaser(pose [ 2.5 0.000 -2 0.000 ])
   drive "diff"
   size [5.000 3.000 3.000]
   velocity_bounds [ -10 10 0 0 -360 360 -90 90 ]	
@@ -747,10 +747,11 @@ define cat position
 # define weed
 define weed position
 ( 
-  myWeedLaser(pose [ 0.000 0.000 0.000 0.000 ])
+  myWeedLaser(pose [ 0.000 0.000 -0.400 0.000 ])
   size [0.50 0.50 0.50]  
   velocity_bounds [ -100 100 -10 10 -10 10 -90 90 ]
   color "ForestGreen"
+  obstacle_return 0
   #base
   block( 
 	points 4  

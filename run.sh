@@ -46,4 +46,24 @@ gnome-terminal -x sh -c 'rosrun robotsim bin.py 17'
 source devel/setup.bash
 gnome-terminal -x sh -c 'rosrun robotsim bin.py 18'
 source devel/setup.bash
+gnome-terminal -x sh -c 'rosrun robotsim weed.py 19'
+source devel/setup.bash
+gnome-terminal -x sh -c 'rosrun robotsim weed.py 20'
+source devel/setup.bash
+gnome-terminal -x sh -c 'rosrun robotsim weed.py 21'
+source devel/setup.bash
+gnome-terminal -x sh -c 'rosrun robotsim weed.py 22'
+source devel/setup.bash
+gnome-terminal -x sh -c 'rosrun robotsim weed.py 23'
+source devel/setup.bash
+gnome-terminal -x sh -c 'rosrun robotsim weed.py 24'
+source devel/setup.bash
+gnome-terminal -x sh -c 'rosrun robotsim weed.py 25'
+source devel/setup.bash
+gnome-terminal -x sh -c 'rosrun robotsim weed.py 26'
+source devel/setup.bash
+gnome-terminal -x sh -c 'rosrun robotsim weed.py 27'
+source devel/setup.bash
+gnome-terminal -x sh -c 'rosrun robotsim weed.py 28'
+source devel/setup.bash
 gnome-terminal -x sh -c 'rosrun stage_ros stageros src/robotsim/world/orchard.world'

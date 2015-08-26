@@ -35,7 +35,7 @@ class picker(havesting_robot):
         numberofrow = worldInfo.pickerNormal
         if (worldInfo.lastPickerName == self.name):
             if (worldInfo.pickerRemainder != 0):
-                numberofrow = worldInfo.pickerRemainder
+                numberofrow = worldInfo.pickerRemainder + numberofrow
 
         for i in range(numberofrow):
             if self.position.x < 0:
