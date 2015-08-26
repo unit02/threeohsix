@@ -13,7 +13,7 @@ define fenceHorizontal model(
 define fenceVertical model( 
 	gui_move 0 
 	color "yellow"  
-	size [1 97.5 2.5]  
+	size [1 64.5 2.5]  
 	block(  
 	points 4  
 	point[0] [0 0]  
@@ -25,7 +25,7 @@ z [0 1] )
 define ground model 
 ( 
 	gui_move 0 
-	size [100 96.5 0.01] 
+	size [100 63.5 0.01] 
 	color "YellowGreen"  
 	block 
 ( 
