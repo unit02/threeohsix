@@ -33,28 +33,28 @@
 		<node pkg="robotsim" name="node" type="tractor.py"/>
 	</group>
 	<group ns="robot_11">
-		<node pkg="robotsim" name="node" type="picker.py"/>
+		<node pkg="robotsim" name="node" type="weed.py"/>
 	</group>
 	<group ns="robot_12">
-		<node pkg="robotsim" name="node" type="picker.py"/>
+		<node pkg="robotsim" name="node" type="weed.py"/>
 	</group>
 	<group ns="robot_13">
-		<node pkg="robotsim" name="node" type="carrier.py"/>
+		<node pkg="robotsim" name="node" type="weed.py"/>
 	</group>
 	<group ns="robot_14">
-		<node pkg="robotsim" name="node" type="carrier.py"/>
+		<node pkg="robotsim" name="node" type="weed.py"/>
 	</group>
 	<group ns="robot_15">
-		<node pkg="robotsim" name="node" type="bin.py"/>
+		<node pkg="robotsim" name="node" type="weed.py"/>
 	</group>
 	<group ns="robot_16">
-		<node pkg="robotsim" name="node" type="bin.py"/>
+		<node pkg="robotsim" name="node" type="weed.py"/>
 	</group>
 	<group ns="robot_17">
-		<node pkg="robotsim" name="node" type="bin.py"/>
+		<node pkg="robotsim" name="node" type="weed.py"/>
 	</group>
 	<group ns="robot_18">
-		<node pkg="robotsim" name="node" type="bin.py"/>
+		<node pkg="robotsim" name="node" type="weed.py"/>
 	</group>
 	<group ns="robot_19">
 		<node pkg="robotsim" name="node" type="weed.py"/>
@@ -62,28 +62,28 @@
 	<group ns="robot_20">
 		<node pkg="robotsim" name="node" type="weed.py"/>
 	</group>
+</launch>
 	<group ns="robot_21">
-		<node pkg="robotsim" name="node" type="weed.py"/>
+		<node pkg="robotsim" name="node" type="picker.py"/>
 	</group>
 	<group ns="robot_22">
-		<node pkg="robotsim" name="node" type="weed.py"/>
+		<node pkg="robotsim" name="node" type="picker.py"/>
 	</group>
 	<group ns="robot_23">
-		<node pkg="robotsim" name="node" type="weed.py"/>
+		<node pkg="robotsim" name="node" type="carrier.py"/>
 	</group>
 	<group ns="robot_24">
-		<node pkg="robotsim" name="node" type="weed.py"/>
+		<node pkg="robotsim" name="node" type="carrier.py"/>
 	</group>
 	<group ns="robot_25">
-		<node pkg="robotsim" name="node" type="weed.py"/>
+		<node pkg="robotsim" name="node" type="bin.py"/>
 	</group>
 	<group ns="robot_26">
-		<node pkg="robotsim" name="node" type="weed.py"/>
+		<node pkg="robotsim" name="node" type="bin.py"/>
 	</group>
 	<group ns="robot_27">
-		<node pkg="robotsim" name="node" type="weed.py"/>
+		<node pkg="robotsim" name="node" type="bin.py"/>
 	</group>
 	<group ns="robot_28">
-		<node pkg="robotsim" name="node" type="weed.py"/>
+		<node pkg="robotsim" name="node" type="bin.py"/>
 	</group>
-</launch>

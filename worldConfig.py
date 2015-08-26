@@ -333,6 +333,30 @@ class WorldConfig():
 
         #adding tractor
         f.write('tractor( pose [-45 29 0 0  ] name "tractor")\n')  
+
+
+        #adding weeds 
+        robot = 11
+        locationx = 0 
+        locationy = 0
+
+        for i in range(int(self.numberOfWeeds/2)):
+            f.write('weed( pose  [ '+str(locationx)+' '+str(locationy)+' 0 0  ]name "weed '+str(robot)+'")\n')
+            locationx = randint(int(self.xLeft), int(self.xRight))
+            locationy = randint(int(self.yBottom ), int(self.yBottom + 20))
+
+            robot = robot + 1
+
+
+        for i in range(int(self.numberOfWeeds/2)):
+            locationx = randint(int(self.xLeft), int(self.xRight))
+            locationy = randint(int(self.yTop - 20) , int(self.yTop - 10))
+
+            f.write('weed( pose  [ '+str(locationx)+' '+str(locationy)+' 0 0  ]name "weed '+str(robot)+'")\n')
+
+            robot = robot + 1
+
+
       
         #adding pickers
         location = (13.5 - 0.25 - (float(self.rowWidth)/2))
@@ -340,7 +364,7 @@ class WorldConfig():
         self.pickerNormal = (self.numberOfRows -1) / self.numberOfPickers
         self.pickerRemainder = (self.numberOfRows -1) % self.numberOfPickers
 
-        robot = 11
+        
         for i in range(int(self.numberOfPickers)):
             f.write('picker( pose [-35.5 '+ str(location) +' 0 0  ] name "picker '+str(robot)+'" color "violet")\n')
             location = location - self.pickerNormal * (self.rowWidth + 0.5)
@@ -368,29 +392,6 @@ class WorldConfig():
             location = location - 6
             robot = robot + 1
 
-
-        #adding weeds 
-
-        locationx = 0 
-        locationy = 0
-
-        for i in range(int(self.numberOfWeeds/2)):
-            
-            locationx = randint(int(self.xLeft), int(self.xRight))
-            locationy = randint(int(self.yBottom ), int(self.yBottom + 20))
-
-            f.write('weed( pose  [ '+str(locationx)+' '+str(locationy)+' 0 0  ]name "weed '+str(robot)+'")\n')
-
-            robot = robot + 1
-
-
-        for i in range(int(self.numberOfWeeds/2)):
-            locationx = randint(int(self.xLeft), int(self.xRight))
-            locationy = randint(int(self.yTop - 20) , int(self.yTop - 10))
-
-            f.write('weed( pose  [ '+str(locationx)+' '+str(locationy)+' 0 0  ]name "weed '+str(robot)+'")\n')
-
-            robot = robot + 1
 
 
         
@@ -420,6 +421,14 @@ class WorldConfig():
         f.write('\t</group>\n')
         robot += 1
 
+        # Launch weeds
+        for i in range(int(self.numberOfWeeds)):
+            f.write('\t<group ns="robot_'+ str(robot) +'">\n') 
+            f.write('\t\t<node pkg="robotsim" name="node" type="weed.py"/>\n')
+            f.write('\t</group>\n')
+            robot += 1
+        f.write('</launch>\n')
+
         # Launch pickers
         for i in range(int(self.numberOfPickers)):
             f.write('\t<group ns="robot_'+ str(robot) +'">\n') 
@@ -441,13 +450,7 @@ class WorldConfig():
             f.write('\t</group>\n')
             robot += 1
 
-        # Launch weeds
-        for i in range(int(self.numberOfWeeds)):
-            f.write('\t<group ns="robot_'+ str(robot) +'">\n') 
-            f.write('\t\t<node pkg="robotsim" name="node" type="weed.py"/>\n')
-            f.write('\t</group>\n')
-            robot += 1
-        f.write('</launch>\n')
+     
         f.close()
 
     def makeBash(self):
@@ -482,6 +485,13 @@ class WorldConfig():
         f.write('gnome-terminal -x sh -c \'rosrun robotsim tractor.py '+ str(robot)+ '\'\n')
         robot += 1
 
+
+        # weeds node
+        for i in range(int(self.numberOfWeeds)):
+            f.write('source devel/setup.bash\n')
+            f.write('gnome-terminal -x sh -c \'rosrun robotsim weed.py '+ str(robot)+ '\'\n')
+            robot += 1
+
         # picker node
         for i in range(int(self.numberOfPickers)):
             f.write('source devel/setup.bash\n')
@@ -500,12 +510,7 @@ class WorldConfig():
             f.write('gnome-terminal -x sh -c \'rosrun robotsim bin.py '+ str(robot)+ '\'\n')
             robot += 1
 
-        # weeds node
-        for i in range(int(self.numberOfWeeds)):
-            f.write('source devel/setup.bash\n')
-            f.write('gnome-terminal -x sh -c \'rosrun robotsim weed.py '+ str(robot)+ '\'\n')
-            robot += 1
-
+      
         f.write('source devel/setup.bash\n')
         f.write('gnome-terminal -x sh -c \'rosrun stage_ros stageros src/robotsim/world/orchard.world\'\n')
         f.close()
