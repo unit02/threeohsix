@@ -15,4 +15,8 @@ class WorldInfo():
 	self.pickerNormal = 2
 	self.pickerRemainder = 0
 	self.lastPickerName = "/robot_12"
+	self.yTop = "34"
+	self.yBottom = "-29.5"
+	self.xRight = "50"
+	self.xLeft = "-50"
 worldInfo = WorldInfo()

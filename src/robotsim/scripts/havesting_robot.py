@@ -34,6 +34,7 @@ class havesting_robot(node):
         msg = attach_bin()
         msg.to_attach_name = self.name
         msg.bin_name = bin_name
+        self.bin_following = bin_name
         self.attachment.publish(msg)
 
     def detach_bin(self, full):

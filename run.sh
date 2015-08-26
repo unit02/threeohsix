@@ -46,6 +46,4 @@ gnome-terminal -x sh -c 'rosrun robotsim bin.py 17'
 source devel/setup.bash
 gnome-terminal -x sh -c 'rosrun robotsim bin.py 18'
 source devel/setup.bash
-gnome-terminal -x sh -c 'rosrun robotsim weed.py 19'
-source devel/setup.bash
 gnome-terminal -x sh -c 'rosrun stage_ros stageros src/robotsim/world/orchard.world'

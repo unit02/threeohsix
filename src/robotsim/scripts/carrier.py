@@ -10,10 +10,10 @@ from worldInfo import *
 
 
 class carrier(havesting_robot):
-    def __init__(self,name, laser_on, path_width, width):
+    def __init__(self,name, laser_on, path_width, width, bin_name):
         self.picking_bin = False
         self.to_pick_bin_pos = Point()
-        super(carrier,self).__init__(name,laser_on, path_width, width)
+        super(carrier,self).__init__(name,laser_on, path_width, width, bin_name)
 
         self.pick_bin_sub = rospy.Subscriber(
             "/bin_info",
@@ -40,24 +40,28 @@ class carrier(havesting_robot):
              self.picking_bin = True
              self.to_pick_bin_pos = new_position
              self.move_to(new_position)
-             #ABOVEISGOODS
+
              #Detach the empty bin and tell the picker to go
              self.detach_bin(False)
+
+             # tell picker to attach to the bin following carrier
              msg = carrier_to_picker()
              msg.bin_name = self.bin_following
-
              self.inform_picker.publish(msg)
 
-             self.picking_bin = False
+
 
              #TODO: momve the picker to an appropriate location to attach the bin
              #Attach the full bin
              new_position = Point(bin_call.x_coordinate + 2, bin_call.y_coordinate, 0.0)
-             #self.bin_attach(bin_call.bin_name)
+             self.bin_attach(bin_call.bin_name)
+
              #TODO move back to tractor position
              #TODO find what place it is left, right, top, bot - move method
-             #rospy.loginfo("Full bin attached to carry, time to drop off at tractor")
+             rospy.loginfo("Full bin attached to carry, time to drop off at tractor")
+             self.picking_bin = False
              self.move_x_steps(5)
+
              #TODO turn laser back on
              self.laser_on = False
 
@@ -72,14 +76,14 @@ class carrier(havesting_robot):
 
 
 if __name__ == '__main__':
-    bin_name = sys.argv[1] + worldInfo.numberOfPickers * 2
+    bin_name = int(sys.argv[1]) + worldInfo.numberOfPickers * 2
     rospy.init_node("robot_"+sys.argv[1])  # Create a node of name laser_roomba
 
     # leave as static
     row_width = 5.0
     object_width = 1.5
-
-    l = carrier(rospy.get_name(), False, row_width, object_width, "/robot_" + bin_name)  # Create an instance of above class
+    rospy.loginfo("bin name %s", bin_name)
+    l = carrier(rospy.get_name(), False, row_width, object_width, "/robot_" + str(bin_name))  # Create an instance of above class
 
     rospy.spin()  # Function to keep the node running until terminated via Ctrl+C
 
