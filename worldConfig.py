@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 from random import randint
 import os
+import wx
+
 
 class WorldConfig():
 
     MIN_ROWS = 3
     MIN_PICKER = 2
+    
 
     def __init__(self):
     
@@ -29,9 +32,12 @@ class WorldConfig():
         
         self.home = os.getenv("HOME");
         
-        self.getNumberOfRows()
-        self.getNumberOfPickers()
-        self.getRowWidth()
+        
+
+    def setup(self):
+	self.getNumberOfRows(self.numberOfRows)
+        self.getNumberOfPickers(self.numberOfPickers)
+        self.getRowWidth(self.rowWidth)
         self.getNumberOfCarriers()
         self.getNumberOfBins()
         self.setGround()
@@ -41,44 +47,47 @@ class WorldConfig():
         self.makeLaunch()
         self.makeBash()
 
-    def getNumberOfRows(self):    
+    def getNumberOfRows(self, input):    
 
+	
         accepted = 0
         while (accepted == 0):
-            self.numberOfRows = int(raw_input("Please enter number of rows (min = 3 rows, max = 20 rows): "))
-            if (self.numberOfRows > 2 ) & (self.numberOfRows < 21):
+            self.numberOfRows = input
+            if (input > 2 ) & (input < 21):
                 accepted = 1
-            else: 
-                print "invalid input, please try again"
+            #else: 
+                #print "invalid input, please try again"
+		#accepted = 1
         
         print "#ofRows " + str(self.numberOfRows)
         self.maxPickers = int(self.numberOfRows) - 1
         return self.numberOfRows
 
-    def getNumberOfPickers(self):    
+    def getNumberOfPickers(self, input):    
 
-
+	
         accepted = 0
         while (accepted == 0):
-            self.numberOfPickers = int(raw_input("Please enter number of pickers (min = 2 pickers, max = less than number of rows): "))
+            self.numberOfPickers = input
             if (self.numberOfPickers > 1 ) & (self.numberOfPickers <= self.maxPickers):
                 accepted = 1
-            else: 
-                print "invalid input, please try again"
+            #else: 
+                #print "invalid input, please try again"
+		#accepted = 1
    
         print "#ofPickers " + str(self.numberOfPickers)
         return self.numberOfPickers
 
-    def getRowWidth(self):    
+    def getRowWidth(self, input):    
 
-
+	
         accepted = 0
         while (accepted == 0):
-            self.rowWidth = int(raw_input("Please enter the row width (min = 5 metres): "))
+            self.rowWidth = input
             if (self.rowWidth > 4 ):
                 accepted = 1
-            else: 
-                print "invalid input, please try again"
+            #else: 
+                #print "invalid input, please try again"
 
         
         print "row width " + str(self.rowWidth)
@@ -553,5 +562,8 @@ class WorldConfig():
         f.close()
          
 
-world = WorldConfig()
+#world = WorldConfig()
+
+
+
 
