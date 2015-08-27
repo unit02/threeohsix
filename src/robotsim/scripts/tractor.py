@@ -14,7 +14,7 @@ if __name__ == '__main__':
     rospy.init_node("robot_"+sys.argv[1])  # Create a node of name laser_roomba
     driveway_width = 6.0
     object_width = 3.0
-    l = tractor(rospy.get_name(), True, driveway_width, object_width, None)  # Create an instance of above class
+    l = tractor(rospy.get_name(), True, driveway_width, object_width, rospy.get_name())  # Create an instance of above class
     a = 1
     while a==1:
 	l.wait(5)

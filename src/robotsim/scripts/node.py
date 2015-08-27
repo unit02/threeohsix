@@ -152,7 +152,7 @@ class node(object):
 
         rospy.loginfo("Moving %s metres in face %s, turning then moving %s metres", int(steps_one), Face.tostring(face), int(steps_two))
 
-        if abs(steps_one) > 0:
+        if abs(int(steps_one)) > 0.2:
             # opposite direction to what robot is facing - rotate 180 degrees
             if (steps_one < 0 and (face == Face.East or face == Face.North)) \
                     or (steps_one > 0 and (face == Face.West or face == Face.South)):
@@ -162,8 +162,9 @@ class node(object):
                 self.wait(2)
                 face = self.face_value(self.rad_orient)
             self.move_x_steps(int(steps_one))
+        self.wait(2)
 
-        if abs(steps_two) > 0:
+        if abs(int(steps_two)) > 0.2:
             if (steps_two > 0 and (face == Face.East or face == Face.South)) \
                     or (steps_two < 0 and (face == Face.West or face == Face.North)):
                 self.turnLeft()
