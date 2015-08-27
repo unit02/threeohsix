@@ -60,7 +60,7 @@ class picker(havesting_robot):
                 self.move_x_steps(row_width)
                 self.turnLeft()
                 self.move_x_steps(6)
-            while not(self.has_bin):
+            while not self.has_bin:
                 pass
             rospy.loginfo("Empty bin has attached, happy to move now")
 

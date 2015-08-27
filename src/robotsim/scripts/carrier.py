@@ -34,7 +34,6 @@ class carrier(havesting_robot):
     def __init__(self,name, laser_on, path_width, width, bin_name):
         self.picking_bin = False
         self.to_pick_bin_pos = Point()
-        self.binCall = bin_call()
         self.state = State.Waiting
         self.positionInQueue = Point()
         self.y = 0.0
@@ -48,7 +47,7 @@ class carrier(havesting_robot):
         )
         self.whichOne = rospy.Subscriber(
             "/whichRobotToPick",
-            String,
+            bin_call,
             callback=self.isItMe,
             queue_size=10
         )
@@ -62,11 +61,10 @@ class carrier(havesting_robot):
     """ method to see if bin is calling self, if it does, then I will go pick it up ASAP """ 
     def isItMe(self, msg):
        
-        if self.name == msg.data and self.state == State.Waiting:
-
+        if self.name == msg.to_attach_name and self.state == State.Waiting:
             self.state = State.Working  #change my state to working so I stop receiving bin calls
             self.positionInQueue = self.position  #save my position for late
-            self.goPickBin()  #go pick bin up 
+            self.goPickBin(msg)  #go pick bin up
 
 
     """ publish position of self to firstInQ topic so bin can listen to it and calls the closest robot """
@@ -80,11 +78,11 @@ class carrier(havesting_robot):
 
 
     """ method to go pick bin  """
-    def goPickBin(self):
-         
+    def goPickBin(self, data):
+         bin_call = data
          #Get the pickers name from the bin_call message
-         picker_name = self.binCall.picker_to_attach_name
-
+         picker_name = bin_call.picker_name
+         rospy.logwarn("PICKER NAME %s", picker_name)
          #Create the publisher to tell the picker to move and which bin to attach
          self.inform_picker = rospy.Publisher(
             picker_name + "/end_of_row",
@@ -94,11 +92,11 @@ class carrier(havesting_robot):
          row_width = worldInfo.rowWidth + 0.5
          sign_changer = 1
          #Move to the empty bin
-         if (self.binCall.x_coordinate < 0):
+         if (bin_call.x_coordinate < 0):
             sign_changer = -1
 
          #Move to the empty bin
-         new_position = Point(self.binCall.x_coordinate + 8*sign_changer, self.binCall.y_coordinate-row_width, 0.0)
+         new_position = Point(bin_call.x_coordinate + 8*sign_changer, bin_call.y_coordinate-row_width, 0.0)
          rospy.loginfo("Moving to pick up the bin")
          self.picking_bin = True
          self.to_pick_bin_pos = new_position
@@ -111,6 +109,8 @@ class carrier(havesting_robot):
          self.detach_bin(False)
 
          # tell picker to attach to the bin following carrier
+         rospy.loginfo("Telling picker to attach to bin %s", self.bin_following)
+
          msg = carrier_to_picker()
          msg.bin_name = self.bin_following
          self.inform_picker.publish(msg)
@@ -118,12 +118,12 @@ class carrier(havesting_robot):
 
          #TODO: momve the picker to an appropriate location to attach the bin
          #Attach the full bin
-         new_position = Point(self.binCall.x_coordinate + 8*sign_changer, self.binCall.y_coordinate, 0.0)
+         new_position = Point(bin_call.x_coordinate + 8*sign_changer, bin_call.y_coordinate, 0.0)
          self.move_to(new_position)
 
          # face same was the bin and attach the bin
          self.turnRight()
-         self.bin_attach(self.binCall.bin_name)
+         self.bin_attach(bin_call.bin_name)
          self.picking_bin = False
          self.laser_on = True
 
@@ -170,8 +170,6 @@ class carrier(havesting_robot):
     def _pickBin_callback(self,bin_call):
          rospy.loginfo(self.name)
          self.publish_position()
-         self.binCall = bin_call   #get the bin call position to be used in later methods
-
 
     def stage_callback(self, data):
         super(carrier,self).stage_callback(data)

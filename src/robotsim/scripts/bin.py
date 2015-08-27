@@ -44,7 +44,7 @@ class bin(node):
         #Creates topic to publish to when it needs to be picked up by a carrier
         self.whoToPickMe = rospy.Publisher(
             "/whichRobotToPick",
-            String,
+            bin_call,
             queue_size=10
         )
         self.whosFirstInQ = rospy.Subscriber(
@@ -134,7 +134,7 @@ class bin(node):
         msg.bin_name = self.name
         msg.x_coordinate = bin_position.x
         msg.y_coordinate = bin_position.y
-        msg.picker_to_attach_name = self.robot_to_follow
+        msg.to_attach_name = self.robot_to_follow
         self.need_to_be_picker.publish(msg)
         rospy.loginfo("BIN HEREEEEEEEEEEEEEEEEEE" +self.name)
         #self.wait(5)  #after publishing, give sometime to figure out which robot is closer to us
@@ -143,7 +143,14 @@ class bin(node):
             pass
         self.wait(5)
         rospy.loginfo("!!!!!!!!!!!!!ROBOT NAMEEEEEEE "+ self.lowerYname +"  "+ str(self.lowerY))
-        self.whoToPickMe.publish(self.lowerYname)
+
+        new_msg = bin_call()
+        new_msg.bin_name = self.name
+        new_msg.x_coordinate = self.position.x
+        new_msg.y_coordinate = self.position.y
+        new_msg.picker_name = msg.to_attach_name
+        new_msg.to_attach_name = self.lowerYname
+        self.whoToPickMe.publish(new_msg)
 
 
 # The block below will be executed when the python file is executed
