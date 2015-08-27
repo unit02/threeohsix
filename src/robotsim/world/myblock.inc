@@ -1,6 +1,7 @@
 define treetrunk model(	
  	color "brown" 
-	size [1 1 1.8] 	
+        gui_move 0
+	size [0.5 0.5 1.8] 	
 	drive "diff" 
 	block( 
 	
@@ -13,8 +14,8 @@ define treetrunk model(
 )
 
 define tree model(	
- 	
-	size [5.5 1.5 1.2] 	
+ 	gui_move 0
+	size [5.5 1 1] 	
 	block( 
 	color "DarkGreen" 
 	points 4 
@@ -26,33 +27,11 @@ define tree model(
 )  
 
 
-define fenceHorizontal model(
- 	color "yellow" 
- 	size [91 1 2.5] 	
-	block( 
-	points 4 
-	point[0] [0 0] 
-	point[1] [1 0] 
-	point[2] [1 1] 
-	point[3] [0 1]
-	z [0 1] )
-) 
 
-define fenceVertical model(
- 	color "yellow" 
- 	size [1 61 2.5] 	
-	block( 
-	points 4 
-	point[0] [0 0] 
-	point[1] [1 0] 
-	point[2] [1 1] 
-	point[3] [0 1]
-	z [0 1] )
-) 
-
-define post model(	
+define post model(
+        gui_move 0	
 	color "grey" 
- 	size [1 0.5 1.8] 
+ 	size [0.5 0.5 2.8] 
 	block( 
 	points 3 
 	point[0] [0 0] 
@@ -62,10 +41,13 @@ define post model(
 	
 )
 
-define ground model
+
+define driveway model
 (
-  size [90 60 0.01]
-  color "YellowGreen"  
+  gui_move 0
+  size [30 10 0.015]
+  color "grey"  
+  obstacle_return 0
   block
   (
     points [4]
@@ -76,13 +58,3 @@ define ground model
     z [0 0.5]
   )
 )
-
-
-
-
-
-
-
-
-
-

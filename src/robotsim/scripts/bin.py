@@ -3,36 +3,190 @@
 from geometry_msgs.msg import Vector3, Twist
 import rospy
 from nav_msgs.msg import Odometry
+import roslib
+roslib.load_manifest('robotsim')
+from std_msgs.msg import String
 from node import node
+from robotsim.msg import bin_call,bin_detach,attach_bin
+import std_msgs
+import sys
+from geometry_msgs.msg import Point, Twist
+from geometry_msgs.msg import Vector3, Twist
+import rospy
+from nav_msgs.msg import Odometry
+import roslib
+roslib.load_manifest('robotsim')
+from std_msgs.msg import String
+from node import node
+from robotsim.msg import bin_call,bin_detach,attach_bin, queue_position
+import std_msgs
+import sys
+from geometry_msgs.msg import Point, Twist
+from worldInfo import *
 
 
+class State:
+    Picked, Unpicked = range(2)
+
+    @classmethod
+    def tostring(cls, val):
+        for name,v in vars(cls).iteritems():
+            if v==val:
+                return name
+
+
+#Models the bin/buckets in which kiwifruit are stored
 class bin(node):
 
-
-    def __init__(self, name, to_follow):
+    def __init__(self, name):
         super(bin, self).__init__(name, False)
+        self.isFull = False
+        self.following = None
+        self.time_to_detach = None
+        self.lowerYname = None
+        self.state = State.Unpicked
+        self.lowerY = 0.0
 
-        # Subscribes to robot_4's stage information to follow
-        # Must change to approprite name instead
-        self.follow_robot = rospy.Subscriber(
-            to_follow + "/base_pose_ground_truth",
-            Odometry,
-            callback=self.follow_robot,
+        #Creates topic to publish to when it needs to be picked up by a carrier
+        self.need_to_be_picker = rospy.Publisher(
+            "/bin_info",
+            bin_call,
             queue_size=10
         )
+        #Creates topic to publish to when it needs to be picked up by a carrier
+        self.whoToPickMe = rospy.Publisher(
+            "/whichRobotToPick",
+            bin_call,
+            queue_size=10
+        )
+        self.whosFirstInQ = rospy.Subscriber(
+            "/firstInQ",
+            queue_position,
+            callback=self.handle_message,
+            queue_size=19
+        )
+
+        self.attach_time = rospy.Subscriber(
+                "/attach_bin",
+                attach_bin,
+                callback=self.attach_to_robot,
+                queue_size=10
+        )
+    """ callbakc method form firstInQ topic, it searches for closest robot in q to come pick me up"""
+    def handle_message(self, msg):
+     
+        #if this is the first message, assign me the first robot name
+        if self.lowerYname is None:  
+            #if msg.robot_state = 
+            self.lowerYname = msg.robot_name
+            self.lowerY = msg.x_coordinate
+            
+            rospy.loginfo("first lowerY!" + self.lowerYname +str(msg.x_coordinate)+ str(self.lowerY))
+      
+        #if it is not my first message, compare and get the closest robot
+        else:                        
+
+            if self.lowerY < msg.x_coordinate:
+                rospy.loginfo("before y coord!" + str(self.lowerY))
+                self.lowerY = msg.x_coordinate
+                self.lowerYname = msg.robot_name
+                
+                rospy.loginfo("first lowerY!" + self.lowerYname)
+                rospy.loginfo("after y coord!" + str(self.lowerY))
+
+
+    #Method called when it recieves a message from the robot to detach
+    #Starts to publish the message asking to be picked up
+    def stop_following(self,var):
+        if var.unfollow:
+            self.following.unregister()
+            self.isFull = var.is_full
+            rospy.loginfo("Sending message to be picked up!")
+            # only call carrier when it is full
+            if self.isFull :
+                self.state = State.Picked ##########################
+                self.pick_me_up(self.position)
+
+
+    # Method to make the bin follow a robot be matching the speed
+    def move_with_robot(self,data):
+        twist_msg = Twist()
+        twist_msg = data.twist.twist
+        if twist_msg.linear.x < 0:
+            twist_msg.linear.x = -1 * twist_msg.linear.x
+        if twist_msg.linear.y < 0:
+            twist_msg.linear.y = -1 * twist_msg.linear.y
+        if twist_msg.linear.z < 0:
+            twist_msg.linear.z = -1 * twist_msg.linear.z
+
+        # when facing north and south it considers the cmd_vel as y instead of x
+        if twist_msg.linear.y > twist_msg.linear.x:
+            twist_msg.linear.x = twist_msg.linear.y
+            twist_msg.linear.y = 0.0
+        self.cmd_vel_pub.publish(twist_msg)
+
+    # Used to make the bin subscribe to the robot it's following's velocity and angle
+    def attach_to_robot(self,msg):
+        if msg.bin_name == self.name:
+            rospy.loginfo("Attaching to %s", msg.to_attach_name)
+            self.follow_robot(msg.to_attach_name)
 
     # Uses another robot's linear velocity, and publish it to its own cmd_vel
-    def follow_robot(self, data):
-        rospy.loginfo(rospy.get_caller_id() + "Robot to follow position %s ", data.pose.pose.position)
-        rospy.loginfo(rospy.get_caller_id() + "Robot to follow %s ", data.twist.twist.linear.x)
-        twist_msg = Twist()
-        twist_msg =   data.twist.twist
-        self.cmd_vel_pub.publish(twist_msg)
+    def follow_robot(self, to_follow):
+            self.robot_to_follow = to_follow
+            self.following = rospy.Subscriber(
+            to_follow + "/base_pose_ground_truth",
+            Odometry,
+            callback=self.move_with_robot,
+            queue_size=1
+        )
+            self.time_to_detach = rospy.Subscriber(
+            to_follow + "/detach",
+            bin_detach,
+            callback=self.stop_following,
+            queue_size=1
+        )
+
+    #creates message to post to the bin_info topic
+    def pick_me_up(self, bin_position):
+        
+        msg = bin_call()
+        msg.bin_name = self.name
+        msg.x_coordinate = bin_position.x
+        msg.y_coordinate = bin_position.y
+        msg.to_attach_name = self.robot_to_follow
+        if self.state == State.Picked:
+            self.need_to_be_picker.publish(msg)
+        rospy.loginfo("BIN HEREEEEEEEEEEEEEEEEEE" +self.name)
+        #self.wait(5)  #after publishing, give sometime to figure out which robot is closer to us
+        #rospy.loginfo("!!!!!!!!!!!!!!robot name "+ self.lowerYname + str(self.lowerY))
+        while self.lowerYname is None:
+            pass
+        self.wait(5)
+        rospy.loginfo("!!!!!!!!!!!!!ROBOT NAMEEEEEEE "+ self.lowerYname +"  "+ str(self.lowerY))
+
+        new_msg = bin_call()
+        new_msg.bin_name = self.name
+        new_msg.x_coordinate = self.position.x
+        new_msg.y_coordinate = self.position.y
+        new_msg.picker_name = msg.to_attach_name
+        new_msg.to_attach_name = self.lowerYname
+        #self.lowerYname = None
+        #self.lowerY = 0.0
+        if self.state == State.Picked:
+            self.whoToPickMe.publish(new_msg)
+
+        
+
 
 # The block below will be executed when the python file is executed
 # __name__ and __main__ are built-in python variables and need to start and end with *two* underscores
 if __name__ == '__main__':
-    rospy.init_node("robot_2")  # Create a node of name
-    l = bin(rospy.get_name(), "robot_1")  # Create an instance of above class
+    following_robot_name = int(sys.argv[1]) - worldInfo.numberOfPickers * 2
+
+    rospy.init_node("robot_"+sys.argv[1])  # Create a node of name robot_2
+    l = bin(rospy.get_name())  # Create an instance of above class
+    l.follow_robot("robot_"+str(following_robot_name))
+    l.robot_to_follow = "robot_"+str(following_robot_name)
     rospy.spin()  # Function to keep the node running until terminated via Ctrl+C
 
