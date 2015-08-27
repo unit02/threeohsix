@@ -16,7 +16,7 @@ class ConfigFrame(wx.Frame) :
 		#Getting Number of Rows
 		self.quote = wx.StaticText(panel, label="Number of Rows: ", pos=(20, 30))
 		self.quote = wx.StaticText(panel, label="(Min: 3 Rows, Max: 20 Rows)", pos=(20, 45))
-		self.rowInput = wx.TextCtrl(panel, -1, "3", size=(50, -1), pos=(220, 25) )
+		self.rowInput = wx.TextCtrl(panel, -1, "5", size=(50, -1), pos=(220, 25) )
         	self.rowInput.SetInsertionPoint(0)
 
 		#Getting number of Pickers
