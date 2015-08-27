@@ -17,6 +17,14 @@ data_from_callback = Odometry()
 def callback(data):
 	global data_from_callback
 	data_from_callback = data
+class Face:
+    North, South, East, West = range(4)
+
+    @classmethod
+    def tostring(cls, val):
+        for name,v in vars(cls).iteritems():
+            if v==val:
+                return name
 
 """ This class tests the movement methods that are implemented in all the nodes"""
 class TestRobotMoves(unittest.TestCase):
@@ -79,19 +87,25 @@ class TestRobotMoves(unittest.TestCase):
 		self.assertTrue(result)
 
 	def test_laser_switching(self):
-        	commandX = weed.weed("robot_11", False)
-        	self.assertEqual(commandX.laser_on, False)
+            commandX = weed.weed("robot_11", False)
+            self.assertEqual(commandX.laser_on, False)
+            commandX.laser_on = True
+            self.assertEqual(commandX.laser_on , True)
 
-        	commandX.laser_on = True
-        	self.assertEqual(commandX.laser_on , True)
-
-    	def test_change_velocity(self):
-        	commandX = weed.weed("robot_0", False)
+   	def test_change_velocity(self):
+		commandX = weed.weed("robot_0", False)
         	twist = Twist()
         	twist.linear.x = 1.0
         	commandX.cmd_vel_pub.publish(twist)
-		commandX.wait(5)
+        	commandX.wait(5)
         	self.assertEqual(commandX.twist.linear.x , 1.0)
+
+	def test_turn_left(self):
+		commandX = weed.weed("robot_0", False)
+		self.assertEqual(commandX.face_value(commandX.rad_orient),Face.East)
+		commandX.turnLeft()
+		self.assertEqual(commandX.face_value(commandX.rad_orient),Face.North)
+
 		
 if __name__ == '__main__':
 	import rostest
