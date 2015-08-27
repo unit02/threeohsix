@@ -36,20 +36,20 @@ class TestRobotMoves(unittest.TestCase):
 		if (data_from_callback.pose.pose.position.x > 3.5 ) & (data_from_callback.pose.pose.position.x < 4.5):
 			result = True
 		self.assertTrue(result)
-
-	"""def test_move_to_backwards(self):
+		
+	def test_move_to_backwards(self):
 		# ensure that node starts from the earliest position (3,0,0)
 		
 		# move robot backward to position (-4,0,0)
 		commandX = weed.weed("robot_11", False)
 		#self.assertEquals(int(data_from_callback.pose.pose.position.x), 4.0)
-		commandX.move_to(Point(-4.0, 0.0, 0.0))
+		commandX.move_to(Point(0.0, 0.0, 0.0))
 		result = False
-		if (data_from_callback.pose.pose.position.x > -4.5 ) & (data_from_callback.pose.pose.position.x < -3.5):
+		if (data_from_callback.pose.pose.position.x > -0.5 ) & (data_from_callback.pose.pose.position.x < 0.5):
 			result = True
 		self.assertTrue(result)
 		# testing robot is in the correct position
-		#self.assertEquals(int(data_from_callback.pose.pose.position.x), -3.0)"""
+		#self.assertEquals(int(data_from_callback.pose.pose.position.x), -3.0)
 	
 	"""Test move_x_steps_method"""
 	def test_move_x_steps(self):
@@ -61,10 +61,10 @@ class TestRobotMoves(unittest.TestCase):
 		
 		# testing robot is in the correct position
 		result = False
-		if (data_from_callback.pose.pose.position.x > 6.5 ) & (data_from_callback.pose.pose.position.x < 7.5):
+		if (data_from_callback.pose.pose.position.x > -3.5 ) & (data_from_callback.pose.pose.position.x < -2.5):
 			result = True
 		self.assertTrue(result)
-
+		
 if __name__ == '__main__':
 	import rostest
 	rostest.rosrun(PKG, 'test_robot_moves', TestRobotMoves)
