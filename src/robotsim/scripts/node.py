@@ -265,11 +265,15 @@ class node(object):
         else:
             remainder = (math.pi/2) % abs(self.rad_orient)
             rospy.loginfo("remainder 1 is %s", remainder)
-        if remainder == (math.pi/2) and self.rad_orient < (3*math.pi/4):
+        if remainder == (math.pi/2) and self.rad_orient < (3*math.pi/4) and self.rad_orient > (math.pi/2):
             rad_dist = abs(self.rad_orient) - math.pi/2
             rospy.loginfo("1rad_dist is %s", rad_dist)
         elif remainder == (math.pi/2) and self.rad_orient > (3*math.pi/4):
             rad_dist = math.pi - abs(self.rad_orient)
+        elif remainder == (math.pi/2) and self.rad_orient < (-3*math.pi/4):
+            rad_dist = math.pi - abs(self.rad_orient)
+        elif remainder == (math.pi/2) and self.rad_orient > (-3*math.pi/4) and self.rad_orient < (-math.pi/2):
+            rad_dist = abs(self.rad_orient) - (math.pi/2)
             rospy.loginfo("2rad_dist is %s", rad_dist)
         elif self.rad_orient < math.pi/4 and self.rad_orient > -math.pi/4:
             rad_dist = abs(self.rad_orient)
