@@ -37,6 +37,7 @@ class carrier(havesting_robot):
         self.binCall = bin_call()
         self.state = State.Waiting
         self.positionInQueue = Point()
+        self.y = 0.0
         super(carrier,self).__init__(name,laser_on, path_width, width, bin_name)
 
         self.pick_bin_sub = rospy.Subscriber(
@@ -130,21 +131,26 @@ class carrier(havesting_robot):
          self.move_x_steps(5)
          self.turnRight()
          rospy.loginfo("Lets go to tractor!")
-         #self.goToTractor()
+         self.goToTractor()
 
     """ method to move carrier robot with full kiwi to tractor to drop off, then back to its position in queue """
     def goToTractor(self):
          #move to bottom right corner
          rospy.loginfo("BOTTOM RIGHHHHHHHHHHHHHHHHHHHHHHHHHHTTTTTTTTT")
-         new_position = Point(float(worldInfo.xRight)-5, float(worldInfo.yBottom) +5, 0.0)
+         new_position = Point(float(worldInfo.xRight)-5, float(worldInfo.yBottom) + 5, 0.0)
          self.move_to(new_position)
+         self.wait(5)
          self.turnRight()
+         self.wait(5)
+         self.y = self.position.y
 
          #move to bottom left corner
          rospy.loginfo("BOTTOM LEFTTTTTTTTTT")
-         new_position = Point(float(worldInfo.xLeft)+5, float(worldInfo.yBottom) +5, 0.0)
+         new_position = Point(float(worldInfo.xLeft) +5, float(self.y) , 0.0)
          self.move_to(new_position)
+         self.wait(5)
          self.turnRight()
+         self.wait(5)
 
          #move to top left corner, tractor place and wait for 5 seconds (unloading kiwis)
          rospy.loginfo("TRACTORRRRRRRRRRRRRRRRRRRRRRRRRR")
@@ -152,7 +158,7 @@ class carrier(havesting_robot):
          self.move_to(new_position)
          self.wait(5)
          self.turnRight()
-
+         self.wait(5)
          #move back to queue, top right
          #maybe go back to original position in Q
          rospy.loginfo("BACK TO QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ")
