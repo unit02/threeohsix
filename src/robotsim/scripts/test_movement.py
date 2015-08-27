@@ -64,6 +64,19 @@ class TestRobotMoves(unittest.TestCase):
 		if (data_from_callback.pose.pose.position.x > -3.5 ) & (data_from_callback.pose.pose.position.x < -2.5):
 			result = True
 		self.assertTrue(result)
+		
+	def test_move_x_steps_backward(self):
+		#Starting position is (-6,0,0)
+		
+		# move robot 3 meters using the method
+		commandX = weed.weed("robot_11", False)
+		commandX.move_x_steps(-3)
+		
+		# testing robot is in the correct position
+		result = False
+		if (data_from_callback.pose.pose.position.x > -6.5 ) & (data_from_callback.pose.pose.position.x < -5.5):
+			result = True
+		self.assertTrue(result)
 
 	def test_laser_switching(self):
         	commandX = weed.weed("robot_11", False)
