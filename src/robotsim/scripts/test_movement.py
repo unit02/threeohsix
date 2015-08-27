@@ -64,6 +64,21 @@ class TestRobotMoves(unittest.TestCase):
 		if (data_from_callback.pose.pose.position.x > -3.5 ) & (data_from_callback.pose.pose.position.x < -2.5):
 			result = True
 		self.assertTrue(result)
+
+	def test_laser_switching(self):
+        	commandX = weed.weed("robot_11", False)
+        	self.assertEqual(commandX.laser_on, False)
+
+        	commandX.laser_on = True
+        	self.assertEqual(commandX.laser_on , True)
+
+    	def test_change_velocity(self):
+        	commandX = weed.weed("robot_0", False)
+        	twist = Twist()
+        	twist.linear.x = 1.0
+        	commandX.cmd_vel_pub.publish(twist)
+		commandX.wait(5)
+        	self.assertEqual(commandX.twist.linear.x , 1.0)
 		
 if __name__ == '__main__':
 	import rostest
