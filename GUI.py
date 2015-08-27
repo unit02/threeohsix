@@ -37,6 +37,9 @@ class ConfigFrame(wx.Frame) :
 		self.saveButton = wx.Button(panel, id=-1, label='Save Orchard!', pos=(220, 165), size=(175, 28))
                 self.saveButton.Bind(wx.EVT_BUTTON, self.buttonClick)
 		self.Show(True)
+                
+                
+                
 
 	def buttonClick(self,event):
 
@@ -68,6 +71,7 @@ class ConfigFrame(wx.Frame) :
  
 			world.setup()
 			sys.exit()
+                
 			
 
 
@@ -75,4 +79,5 @@ class ConfigFrame(wx.Frame) :
 app = wx.App(False)  
 frame = ConfigFrame(None, "Orchard Configuration")
 app.MainLoop()
+
 

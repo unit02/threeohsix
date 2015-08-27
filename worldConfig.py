@@ -29,7 +29,6 @@ class WorldConfig():
         self.yBottom = -34
         self.xRight = 50
         self.xLeft = -50
-        
         self.home = os.getenv("HOME");
         
         
@@ -42,73 +41,76 @@ class WorldConfig():
         self.getNumberOfBins()
         self.setGround()
         self.makeOrchard()
+        self.makeOneExecutableWindow()
         self.makeWorld()
         self.createWorldInfo()
         self.makeLaunch()
         self.makeBash()
 
+
+    '''This method sets the number of rows for the simulation'''
     def getNumberOfRows(self, input):    
 
 	
         accepted = 0
         while (accepted == 0):
-            self.numberOfRows = input
-            if (input > 2 ) & (input < 21):
+            self.numberOfRows = input #get input from user - number of rows 
+            if (input > 2 ) & (input < 21): #checking minimum and maximum
                 accepted = 1
-            #else: 
-                #print "invalid input, please try again"
-		#accepted = 1
-        
-        print "#ofRows " + str(self.numberOfRows)
+            
+       
         self.maxPickers = int(self.numberOfRows) - 1
         return self.numberOfRows
 
+    '''This method sets the number of pickers for the simulation'''
     def getNumberOfPickers(self, input):    
 
 	
         accepted = 0
         while (accepted == 0):
-            self.numberOfPickers = input
-            if (self.numberOfPickers > 1 ) & (self.numberOfPickers <= self.maxPickers):
+            self.numberOfPickers = input  #get input from user - number of pickers 
+            if (self.numberOfPickers > 1 ) & (self.numberOfPickers <= self.maxPickers): #checking minimum and maximum
                 accepted = 1
-            #else: 
-                #print "invalid input, please try again"
-		#accepted = 1
-   
-        print "#ofPickers " + str(self.numberOfPickers)
+            
         return self.numberOfPickers
-
+    
+    '''This method sets the row width for the simulation'''
     def getRowWidth(self, input):    
 
 	
         accepted = 0
         while (accepted == 0):
-            self.rowWidth = input
-            if (self.rowWidth > 4 ):
+            self.rowWidth = input  #get input from user - row width
+            if (self.rowWidth > 4 ): #checking minimum 
                 accepted = 1
-            #else: 
-                #print "invalid input, please try again"
-
         
-        print "row width " + str(self.rowWidth)
         return self.rowWidth
-
+    
+    '''This method sets the number of carriers for the simulation'''
     def getNumberOfCarriers(self):    
 
+        #number of carriers is the same as number of pickers
         self.numberOfCarriers = int(self.numberOfPickers) 
-        print "#ofCarriers " + str(int(self.numberOfCarriers))
+
         return int(self.numberOfCarriers)
 
+    '''This method sets the number of bins for the simulation'''
     def getNumberOfBins(self): 
+
+        #number of bins is the twice the number of pickers
         self.numberOfBins = int(self.numberOfPickers) * 2
-        print "#ofBins" + str(int(self.numberOfBins))
+
         return int(self.numberOfBins)
     
+    '''This method changes the dimensions of the ground/orchard according to number of rows the user wants'''
     def setGround(self):
+
+        #open ground.inc
         f = open(str(self.home) +'/threeohsix/src/robotsim/world/ground.inc', 'w')
 
-        f.write('define fenceHorizontal model( \n')
 
+        #horizontal fence model
+        f.write('define fenceHorizontal model( \n')
         f.write('\tgui_move 0 \n')
  	f.write('\tcolor "yellow"\n ')
  	f.write('\tsize [101 1 2.5] \n')	
@@ -120,9 +122,10 @@ class WorldConfig():
 	f.write('\tpoint[3] [0 1]\n')
 	f.write('\tz [0 1] )\n)\n')
 
-
+        #calculate the length of the vertical fence
         self.vertFence = float(self.rowWidth * (self.numberOfRows -1)) + float((0.5 * self.numberOfRows)) + 41 
 
+        #vertical fence model
         f.write('define fenceVertical model( \n')
         f.write('\tgui_move 0 \n')
  	f.write('\tcolor "yellow"  \n')
@@ -135,6 +138,7 @@ class WorldConfig():
 	f.write('\tpoint[3] [0 1] \n')
 	f.write('z [0 1] ) \n)\n')
        
+        #ground model
         f.write('define ground model \n')
         f.write('( \n')
         f.write('\tgui_move 0 \n')
@@ -149,10 +153,8 @@ class WorldConfig():
         f.write('\tpoint[3] [1 0] \n')
         f.write('\tz [0 0.5])\n)\n')
 
-
+        #pergola model
         f.write('define pergola model\n')
-
-        
         f.write('(\n')
         f.write('\tgui_move 0 \n')
         f.write('\tsize [1.7 '+ str(self.rowWidth - 0.5) +' 0.5]\n')
@@ -204,24 +206,36 @@ class WorldConfig():
         f.write(')\n')
         f.write(')\n')
 
+        #close ground.inc
         f.close()
 
+    '''This method makes the static orchard'''
     def makeOrchard(self):
 
-        self.yBottom = (self.vertFence * -1 + 34)
+
+        #open instances.inc
         f = open(str(self.home) +'/threeohsix/src/robotsim/world/instances.inc', 'w')
+
+        #calculate y bottom - the y co-ordinate of the horizontal fence
+        self.yBottom = (self.vertFence * -1 + 34)
+
         f.write('include "myblock.inc" \n') 
         f.write('include "ground.inc" \n') 
-        
+
+        #add ground instance
         f.write('ground( pose [ 0 '+ str(self.vertFence * 0.5 * -1 + 34) +' 0 0] ) \n')
- 
+        #add driveway instance
         f.write('driveway( pose [ -34.67 28.51 0 0] ) \n') 
         
-
+        #add horizontal fence instances
         f.write('fenceHorizontal( pose [ 0 34 0 0] )  \n') 
         f.write('fenceHorizontal( pose [ 0 '+ str(self.vertFence * -1 + 34) +' 0 0 ] ) \n') 
+ 
+        #add vertical fence instances
         f.write('fenceVertical( pose [ 50 '+ str(34 - self.vertFence * 0.5 ) +' 0 0 ] ) \n') 
         f.write('fenceVertical( pose [ -50 '+ str(34 - self.vertFence * 0.5) + ' 0 0 ] )  \n') 
+
+        #add tree trunk instances for first row
         f.write('treetrunk( pose [ -34.5 ' + str(self.lastTrunk) + ' 0 0 ]) \n') 
         f.write('treetrunk( pose [ -28.5 ' + str(self.lastTrunk) + ' 0 0] )\n') 
         f.write('treetrunk( pose [ -22.5 ' + str(self.lastTrunk) + ' 0 0 ] )\n') 
@@ -235,6 +249,7 @@ class WorldConfig():
         f.write('treetrunk( pose [ 25.5 ' + str(self.lastTrunk) + ' 0 0 ] )\n') 
         f.write('treetrunk( pose [ 31.5 ' + str(self.lastTrunk) + ' 0 0 ] )\n')         
         
+        #add tree instances for first row
         f.write('tree( pose [ -34.5 ' + str(self.lastTrunk) + ' 1.8 0 ]) \n') 
         f.write('tree( pose [ -28.5 ' + str(self.lastTrunk) + ' 1.8 0] )\n') 
         f.write('tree( pose [ -22.5 ' + str(self.lastTrunk) + ' 1.8 0 ] )\n') 
@@ -248,6 +263,7 @@ class WorldConfig():
         f.write('tree( pose [ 25.5 ' + str(self.lastTrunk) + ' 1.8 0 ] )\n') 
         f.write('tree( pose [ 31.5 ' + str(self.lastTrunk) + ' 1.8 0 ] )\n') 
       
+        #add post instances for first row
         f.write('post( pose [ -31.5 ' + str(self.lastTrunk) + ' 0 0 ]) \n') 
         f.write('post( pose [ -25.5 ' + str(self.lastTrunk) + ' 0 0] )\n') 
         f.write('post( pose [ -19.5 ' + str(self.lastTrunk) + ' 0 0 ] )\n') 
@@ -260,10 +276,14 @@ class WorldConfig():
         f.write('post( pose [ 22.5 ' + str(self.lastTrunk) + ' 0 0 ] )\n') 
         f.write('post( pose [ 28.5 ' + str(self.lastTrunk) + ' 0 0 ] )\n') 
 
+
         for i in range(int(self.numberOfRows)- 1):
+
+            #calculate next paragola and tree trunk position
             self.lastParagola = (float(self.lastTrunk) - 0.25 - (float(self.rowWidth)/2))
             self.lastTrunk = (float(self.lastTrunk) - 0.25 - float(self.rowWidth) - 0.25)
              
+            #add tree trunk instances 
             f.write('treetrunk( pose [ -34.5 ' + str(self.lastTrunk) + ' 0 0 ]) \n') 
             f.write('treetrunk( pose [ -28.5 ' + str(self.lastTrunk) + ' 0 0] )\n') 
             f.write('treetrunk( pose [ -22.5 ' + str(self.lastTrunk) + ' 0 0 ] )\n') 
@@ -277,6 +297,7 @@ class WorldConfig():
             f.write('treetrunk( pose [ 25.5 ' + str(self.lastTrunk) + ' 0 0 ] )\n') 
             f.write('treetrunk( pose [ 31.5 ' + str(self.lastTrunk) + ' 0 0 ] )\n') 
 
+            #add tree instances 
             f.write('tree( pose [ -34.5 ' + str(self.lastTrunk) + ' 1.8 0 ]) \n') 
             f.write('tree( pose [ -28.5 ' + str(self.lastTrunk) + ' 1.8 0] )\n') 
             f.write('tree( pose [ -22.5 ' + str(self.lastTrunk) + ' 1.8 0 ] )\n') 
@@ -290,6 +311,7 @@ class WorldConfig():
             f.write('tree( pose [ 25.5 ' + str(self.lastTrunk) + ' 1.8 0 ] )\n') 
             f.write('tree( pose [ 31.5 ' + str(self.lastTrunk) + ' 1.8 0 ] )\n') 
 
+            #add pergola instances 
             f.write('pergola( pose [ -34.5 ' + str(self.lastParagola) + ' 2.3 0 ]) \n') 
             f.write('pergola( pose [ -28.5 ' + str(self.lastParagola) + ' 2.3 0] )\n') 
             f.write('pergola( pose [ -22.5 ' + str(self.lastParagola) + ' 2.3 0 ] )\n') 
@@ -303,6 +325,7 @@ class WorldConfig():
             f.write('pergola( pose [ 25.5 ' + str(self.lastParagola) + ' 2.3 0 ] )\n') 
             f.write('pergola( pose [ 31.5 ' + str(self.lastParagola) + ' 2.3 0 ] )\n') 
 
+            #add post instances 
             f.write('post( pose [ -31.5 ' + str(self.lastTrunk) + ' 0 0 ]) \n') 
             f.write('post( pose [ -25.5 ' + str(self.lastTrunk) + ' 0 0] )\n') 
             f.write('post( pose [ -19.5 ' + str(self.lastTrunk) + ' 0 0 ] )\n') 
@@ -314,10 +337,14 @@ class WorldConfig():
             f.write('post( pose [ 16.5 ' + str(self.lastTrunk) + ' 0 0 ] )\n') 
             f.write('post( pose [ 22.5 ' + str(self.lastTrunk) + ' 0 0 ] )\n') 
             f.write('post( pose [ 28.5 ' + str(self.lastTrunk) + ' 0 0 ] )\n') 
+
+        #close instances.inc
         f.close()
 
+    '''This method creates the dynamic objects in the world'''
     def makeWorld(self):
 
+        #open orchard.world
         f = open(str(self.home) +'/threeohsix/src/robotsim/world/orchard.world', 'w')
         f.write('include "instances.inc"\n') 
         f.write('include "objects.inc"\n') 
@@ -351,6 +378,8 @@ class WorldConfig():
 
         for i in range(int(self.numberOfWeeds/2)):
             f.write('weed( pose  [ '+str(locationx)+' '+str(locationy)+' 0 0  ]name "weed '+str(robot)+'")\n')
+
+            #randomly allocate x and y co-ordinates 
             locationx = randint(int(self.xLeft), int(self.xRight))
             locationy = randint(int(self.yBottom ), int(self.yBottom + 20))
 
@@ -358,6 +387,8 @@ class WorldConfig():
 
 
         for i in range(int(self.numberOfWeeds/2)):
+
+            #randomly allocate x and y co-ordinates 
             locationx = randint(int(self.xLeft), int(self.xRight))
             locationy = randint(int(self.yTop - 20) , int(self.yTop - 10))
 
@@ -370,31 +401,36 @@ class WorldConfig():
         #adding pickers
         location = (13.5 - 0.25 - (float(self.rowWidth)/2))
 
-        self.pickerNormal = (self.numberOfRows -1) / self.numberOfPickers
-        self.pickerRemainder = (self.numberOfRows -1) % self.numberOfPickers
+        self.pickerNormal = (self.numberOfRows -1) / self.numberOfPickers #how many rows each picker has to do
+        self.pickerRemainder = (self.numberOfRows -1) % self.numberOfPickers #remainder row that the last picker does
 
         
         for i in range(int(self.numberOfPickers)):
             f.write('picker( pose [-35.5 '+ str(location) +' 0 0  ] name "picker '+str(robot)+'" color "violet")\n')
-            location = location - self.pickerNormal * (self.rowWidth + 0.5)
+            location = location - self.pickerNormal * (self.rowWidth + 0.5) #calculate next location
             robot = robot + 1
         self.lastPickerName = "/robot_" + str(robot-1)
+
 
         #adding carriers
         location = 40
         for i in range(int(self.numberOfCarriers)):
             f.write('carrier( pose [ '+str(location)+' 30 0 0  ] name "carrier '+str(robot)+'" color "cyan")\n')
-            location = location - 6 
+            location = location - 6 #calculate next location
             robot = robot + 1
+
+
         #adding bins
-
+        
+        #bins following pickers
         location = (13.5 - 0.25 - (float(self.rowWidth)/2))
-
         for i in range(int(self.numberOfBins)/2):
             f.write('bucket( pose [-38 '+ str(location) +' 0 0  ] name "bin '+str(robot)+'")\n')
             location = location - self.pickerNormal * (self.rowWidth + 0.5) 
             robot = robot + 1
 
+
+        #bins following carriers
         location = 37
         for i in range(int(self.numberOfBins)/2):
             f.write('bucket( pose  [ '+str(location)+' 30 0 0  ]name "bin '+str(robot)+'")\n')
@@ -403,9 +439,9 @@ class WorldConfig():
 
 
 
-        
+        #close orchard.world
         f.close()     
-
+    '''This method makes the launch file'''
     def makeLaunch(self):
         
         f = open( str(self.home) +'/threeohsix/src/robotsim/launch.launch', 'w')
@@ -436,7 +472,7 @@ class WorldConfig():
             f.write('\t\t<node pkg="robotsim" name="node" type="weed.py"/>\n')
             f.write('\t</group>\n')
             robot += 1
-        f.write('</launch>\n')
+       
 
         # Launch pickers
         for i in range(int(self.numberOfPickers)):
@@ -458,13 +494,70 @@ class WorldConfig():
             f.write('\t\t<node pkg="robotsim" name="node" type="bin.py"/>\n')
             f.write('\t</group>\n')
             robot += 1
-
+        f.write('</launch>\n')
      
         f.close()
+    
+    ''' This method makes the executable file that only uses one terminal'''
+    def makeOneExecutableWindow(self):
 
+        #open run_one_window.sh
+        f = open(str(self.home) +'/threeohsix/run_one_window.sh', 'w')
+
+ 
+        f.write('#!/bin/bash\n')
+        f.write('rm -r build\n')
+        f.write('rm -r devel\n')
+        f.write('gnome-terminal -x sh -c \'roscore\'\n')
+        f.write('catkin_make\n')
+        f.write('source devel/setup.bash; roslaunch robotsim launch.launch &\n')
+        f.write('source devel/setup.bash; rosrun robotsim node.py &\n')
+
+        # animal node
+        robot = 0
+        for i in range(3):
+            f.write('source devel/setup.bash; rosrun robotsim animal.py '+str(robot) +' &\n')
+            robot += 1
+       
+        # person node
+        for i in range(7):
+            f.write('source devel/setup.bash; rosrun robotsim person.py '+str(robot) +' &\n')
+            robot += 1
+
+        # tractor node
+        f.write('source devel/setup.bash; rosrun robotsim tractor.py '+str(robot) +' &\n')
+        robot += 1
+
+
+        # weeds node
+        for i in range(int(self.numberOfWeeds)):
+            f.write('source devel/setup.bash; rosrun robotsim weed.py '+str(robot) +' &\n')
+            robot += 1
+
+        # picker node
+        for i in range(int(self.numberOfPickers)):
+            f.write('source devel/setup.bash; rosrun robotsim picker.py '+str(robot) +' &\n')
+            robot += 1
+
+        # carrier node 
+        for i in range(int(self.numberOfCarriers)):
+            f.write('source devel/setup.bash; rosrun robotsim carrier.py '+str(robot) +' &\n')
+            robot += 1
+
+        # bin node
+        for i in range(int(self.numberOfBins)):
+            f.write('source devel/setup.bash; rosrun robotsim bin.py '+str(robot) +' &\n')
+            robot += 1
+
+        
+        f.write('source devel/setup.bash; rosrun stage_ros stageros src/robotsim/world/orchard.world &\n')
+        #close run_one_window.sh
+        f.close()
+
+    ''' This method makes the executable file that uses multiple terminal - for debugging'''
     def makeBash(self):
 
-  
+        #open run.sh
         f = open(str(self.home) +'/threeohsix/run.sh', 'w')
         f.write('#!/bin/bash\n')
         f.write('rm -r build\n')
@@ -519,15 +612,16 @@ class WorldConfig():
             f.write('gnome-terminal -x sh -c \'rosrun robotsim bin.py '+ str(robot)+ '\'\n')
             robot += 1
 
-      
+       
         f.write('source devel/setup.bash\n')
         f.write('gnome-terminal -x sh -c \'rosrun stage_ros stageros src/robotsim/world/orchard.world\'\n')
+        #close run.sh
         f.close()
 
-
+    '''This method makes a worldInfo file which other classes can use to extract world info'''
     def createWorldInfo(self):
 
-       
+        #open worldInfo.py
         f = open(str(self.home) +'/threeohsix/src/robotsim/scripts/worldInfo.py', 'w')
         
 
@@ -539,6 +633,7 @@ class WorldConfig():
 
         f.write('    def __init__(self):\n')
     
+        #write all the variable values to worldinfofile
         f.write('\tself.numberOfRows = ' + str(self.numberOfRows) + '\n')
         f.write('\tself.numberOfPickers = ' + str(self.numberOfPickers)+ '\n')
         f.write('\tself.maxPickers = ' + str(self.maxPickers)+ '\n')
@@ -559,10 +654,12 @@ class WorldConfig():
      
 
         f.write('worldInfo = WorldInfo()')
+        #close worldInfo.py
         f.close()
-         
 
-#world = WorldConfig()
+
+
+         
 
 
 

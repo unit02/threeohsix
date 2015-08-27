@@ -6,7 +6,7 @@ class WorldInfo():
 	self.numberOfRows = 5
 	self.numberOfPickers = 2
 	self.maxPickers = 4
-	self.rowWidth = 5
+	self.rowWidth = 5.0
 	self.numberOfCarriers = 2
 	self.numberOfBins = 4
 	self.numberOfWeeds = 10

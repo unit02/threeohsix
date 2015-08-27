@@ -62,7 +62,6 @@
 	<group ns="robot_20">
 		<node pkg="robotsim" name="node" type="weed.py"/>
 	</group>
-</launch>
 	<group ns="robot_21">
 		<node pkg="robotsim" name="node" type="picker.py"/>
 	</group>
@@ -87,3 +86,4 @@
 	<group ns="robot_28">
 		<node pkg="robotsim" name="node" type="bin.py"/>
 	</group>
+</launch>
