@@ -24,6 +24,17 @@ import sys
 from geometry_msgs.msg import Point, Twist
 from worldInfo import *
 
+
+class State:
+    Picked, Unpicked = range(2)
+
+    @classmethod
+    def tostring(cls, val):
+        for name,v in vars(cls).iteritems():
+            if v==val:
+                return name
+
+
 #Models the bin/buckets in which kiwifruit are stored
 class bin(node):
 
@@ -33,6 +44,7 @@ class bin(node):
         self.following = None
         self.time_to_detach = None
         self.lowerYname = None
+        self.state = State.Unpicked
         self.lowerY = 0.0
 
         #Creates topic to publish to when it needs to be picked up by a carrier
@@ -65,8 +77,10 @@ class bin(node):
      
         #if this is the first message, assign me the first robot name
         if self.lowerYname is None:  
+            #if msg.robot_state = 
             self.lowerYname = msg.robot_name
             self.lowerY = msg.x_coordinate
+            
             rospy.loginfo("first lowerY!" + self.lowerYname +str(msg.x_coordinate)+ str(self.lowerY))
       
         #if it is not my first message, compare and get the closest robot
@@ -76,6 +90,7 @@ class bin(node):
                 rospy.loginfo("before y coord!" + str(self.lowerY))
                 self.lowerY = msg.x_coordinate
                 self.lowerYname = msg.robot_name
+                
                 rospy.loginfo("first lowerY!" + self.lowerYname)
                 rospy.loginfo("after y coord!" + str(self.lowerY))
 
@@ -88,7 +103,8 @@ class bin(node):
             self.isFull = var.is_full
             rospy.loginfo("Sending message to be picked up!")
             # only call carrier when it is full
-            if self.isFull:
+            if self.isFull :
+                self.state = State.Picked ##########################
                 self.pick_me_up(self.position)
 
 
@@ -100,6 +116,9 @@ class bin(node):
             twist_msg.linear.x = -1 * twist_msg.linear.x
         if twist_msg.linear.y < 0:
             twist_msg.linear.y = -1 * twist_msg.linear.y
+        if twist_msg.linear.z < 0:
+            twist_msg.linear.z = -1 * twist_msg.linear.z
+
         # when facing north and south it considers the cmd_vel as y instead of x
         if twist_msg.linear.y > twist_msg.linear.x:
             twist_msg.linear.x = twist_msg.linear.y
@@ -130,12 +149,14 @@ class bin(node):
 
     #creates message to post to the bin_info topic
     def pick_me_up(self, bin_position):
+        
         msg = bin_call()
         msg.bin_name = self.name
         msg.x_coordinate = bin_position.x
         msg.y_coordinate = bin_position.y
         msg.to_attach_name = self.robot_to_follow
-        self.need_to_be_picker.publish(msg)
+        if self.state == State.Picked:
+            self.need_to_be_picker.publish(msg)
         rospy.loginfo("BIN HEREEEEEEEEEEEEEEEEEE" +self.name)
         #self.wait(5)  #after publishing, give sometime to figure out which robot is closer to us
         #rospy.loginfo("!!!!!!!!!!!!!!robot name "+ self.lowerYname + str(self.lowerY))
@@ -150,7 +171,12 @@ class bin(node):
         new_msg.y_coordinate = self.position.y
         new_msg.picker_name = msg.to_attach_name
         new_msg.to_attach_name = self.lowerYname
-        self.whoToPickMe.publish(new_msg)
+        #self.lowerYname = None
+        #self.lowerY = 0.0
+        if self.state == State.Picked:
+            self.whoToPickMe.publish(new_msg)
+
+        
 
 
 # The block below will be executed when the python file is executed

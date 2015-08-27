@@ -63,7 +63,7 @@ class carrier(havesting_robot):
        
         if self.name == msg.to_attach_name and self.state == State.Waiting:
             self.state = State.Working  #change my state to working so I stop receiving bin calls
-            self.positionInQueue = self.position  #save my position for late
+            self.positionInQueue = self.position  #save my position for later
             self.goPickBin(msg)  #go pick bin up
 
 
@@ -96,7 +96,7 @@ class carrier(havesting_robot):
             sign_changer = -1
 
          #Move to the empty bin
-         new_position = Point(bin_call.x_coordinate + 8*sign_changer, bin_call.y_coordinate-row_width-0.25, 0.0)
+         new_position = Point(bin_call.x_coordinate + 8*sign_changer, bin_call.y_coordinate-row_width-0.5, 0.0)
          rospy.loginfo("Moving to pick up the bin")
          self.picking_bin = True
          self.to_pick_bin_pos = new_position
@@ -139,26 +139,30 @@ class carrier(havesting_robot):
          rospy.loginfo("BOTTOM RIGHHHHHHHHHHHHHHHHHHHHHHHHHHTTTTTTTTT")
          new_position = Point(float(worldInfo.xRight)-5, float(worldInfo.yBottom) + 5, 0.0)
          self.move_to(new_position)
-         self.wait(5)
+         #self.wait(5)
          self.turnRight()
-         self.wait(5)
+         #self.wait(5)
          self.y = self.position.y
+         twist_msg = Twist()
+         twist_msg.linear.x = self.position.x
+         twist_msg.linear.y = self.position.y
+         self.cmd_vel_pub.publish(twist_msg)
 
          #move to bottom left corner
          rospy.loginfo("BOTTOM LEFTTTTTTTTTT")
          new_position = Point(float(worldInfo.xLeft) +5, float(self.y) , 0.0)
          self.move_to(new_position)
-         self.wait(5)
+         #self.wait(5)
          self.turnRight()
-         self.wait(5)
+         #self.wait(5)
 
          #move to top left corner, tractor place and wait for 5 seconds (unloading kiwis)
          rospy.loginfo("TRACTORRRRRRRRRRRRRRRRRRRRRRRRRR")
          new_position = Point(float(worldInfo.xLeft)+5, float(worldInfo.yTop) -15, 0.0)
          self.move_to(new_position)
-         self.wait(5)
+         #self.wait(5)
          self.turnRight()
-         self.wait(5)
+         #self.wait(5)
          #move back to queue, top right
          #maybe go back to original position in Q
          rospy.loginfo("BACK TO QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ")
