@@ -29,29 +29,34 @@ class TestRobotMoves(unittest.TestCase):
         self.assertEquals(int(data_from_callback.pose.pose.position.x), 0.0)
         # move robot to position (4,0,0)
         commandX = weed.weed("robot_11", False)
-        commandX.move_to(Point(4.0, 0.0, 0.0))
-        # testing robot is in the correct position
-        self.assertEquals(int(data_from_callback.pose.pose.position.x), 4.0)
+        commandX.move_to(Point(3.0, 0.0, 0.0))
+        # testing robot is in the correct position (allowing off by <1 error)
+        result = False
+        if (data_from_callback.pose.pose.position.x > 2.5) & (data_from_callback.pose.pose.position.x < 3.5):
+        	result = True
+        self.assertTrue(result)
 
     def test_move_to_backwards(self):
-        # ensure that node starts from the earliest position (4,0,0)
-        self.assertEquals(int(data_from_callback.pose.pose.position.x), 4.0)
-        # move robot backward to position (-4,0,0)
+        # ensure that node starts from the earliest position (3,0,0)
+        self.assertEquals(int(data_from_callback.pose.pose.position.x), 3.0)
+        # move robot backward to position (-3,0,0)
         commandX = weed.weed("robot_11", False)
-        commandX.move_to(Point(-4.0, 0.0, 0.0))
+        commandX.move_to(Point(-3.0, 0.0, 0.0))
         # testing robot is in the correct position
-        self.assertEquals(int(data_from_callback.pose.pose.position.x), -4.0)
+        result = False
+        if (data_from_callback.pose.pose.position.x > 2.5) & (data_from_callback.pose.pose.position.x < 3.5):
+        	result = True
+        self.assertEquals(int(data_from_callback.pose.pose.position.x), -3.0)
 
-
-    # def move_x_steps(self):
-    #     # ensure that node starts from position 0
-    #     self.assertEquals(int(data_from_callback.pose.pose.position.x), 0.0)
-    #     # move robot 5 meters using the method
-    #     commandX = weed.weed("robot_19", False)
-    #     commandX.move_x_steps(5)
-    #     # testing robot is in the correct position
-    #     self.assertEquals(int(data_from_callback.pose.pose.position.x), 5.0)
-    #     #self.assertEquals(int(data_from_callback.pose.pose.position.y), 0.0)
+    def test_move_x_steps(self):
+		# ensure that node starts from position 0
+		self.assertEquals(int(data_from_callback.pose.pose.position.x),-3.0)
+		# move robot 5 meters using the method
+		commandX = weed.weed("robot_11", False)
+		commandX.move_x_steps(3)
+		# testing robot is in the correct position
+		self.assertEquals(int(data_from_callback.pose.pose.position.x), -6.0)
+		# self.assertEquals(int(data_from_callback.pose.pose.position.y), 0.0)
 		# #self.assertEquals(int(data_from_callback.pose.pose.position.z), 0.0)
 
 if __name__ == '__main__':
